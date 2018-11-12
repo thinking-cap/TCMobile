@@ -5,11 +5,11 @@ using Xamarin.Forms;
 
 namespace TCMobile.ViewModels
 {
-    public class AboutViewModel : BaseViewModel
+    public class HomeViewModel : BaseViewModel
     {
-        public AboutViewModel()
+        public HomeViewModel()
         {
-            Title = "About";
+           Title = "Catalogue";
 
             OpenWebCommand = new Command(() => Device.OpenUri(new Uri("https://xamarin.com/platform")));
         }

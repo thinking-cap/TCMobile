@@ -5,9 +5,12 @@ using System.Text;
 namespace TCMobile.Models
 {
     public enum MenuItemType
-    {
-        Browse,
-        About
+    {       
+        MyCourses,
+        MyTranscripts,
+        Catalogue,
+        SomeNewPage
+
     }
     public class HomeMenuItem
     {
