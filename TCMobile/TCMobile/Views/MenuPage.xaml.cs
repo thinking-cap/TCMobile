@@ -20,8 +20,7 @@ namespace TCMobile.Views
             {
                 new HomeMenuItem {Id = MenuItemType.MyCourses, Title="My Courses" },
                 new HomeMenuItem {Id = MenuItemType.Catalogue, Title="Catalogue" },
-                new HomeMenuItem {Id = MenuItemType.MyTranscripts, Title="My Transcripts"},
-                new HomeMenuItem {Id = MenuItemType.SomeNewPage,Title="Some new Page"}
+                new HomeMenuItem {Id = MenuItemType.MyTranscripts, Title="My Transcripts"}
             };
 
             ListViewMenu.ItemsSource = menuItems;

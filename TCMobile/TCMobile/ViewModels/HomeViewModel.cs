@@ -9,11 +9,11 @@ namespace TCMobile.ViewModels
     {
         public HomeViewModel()
         {
-           Title = "Catalogue";
+           Title = "My Courses";
 
-            OpenWebCommand = new Command(() => Device.OpenUri(new Uri("https://xamarin.com/platform")));
+            //OpenWebCommand = new Command(() => Device.OpenUri(new Uri("https://xamarin.com/platform")));
         }
 
-        public ICommand OpenWebCommand { get; }
+       // public ICommand OpenWebCommand { get; }
     }
 }

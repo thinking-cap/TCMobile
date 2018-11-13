@@ -7,11 +7,11 @@ using Xamarin.Forms;
 
 namespace TCMobile.ViewModels
 {
-	public class MyCoursesViewModel : BaseViewModel
-	{
-		public MyCoursesViewModel ()
-		{
-            Title = "My Courses";
+    public class LoginViewModel : BaseViewModel
+    {
+        public LoginViewModel()
+        {
+            Title = "Login";
         }
-	}
+    }
 }

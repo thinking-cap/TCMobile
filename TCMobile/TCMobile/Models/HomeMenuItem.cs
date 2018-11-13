@@ -8,8 +8,7 @@ namespace TCMobile.Models
     {       
         MyCourses,
         MyTranscripts,
-        Catalogue,
-        SomeNewPage
+        Catalogue
 
     }
     public class HomeMenuItem

@@ -5,7 +5,7 @@
              xmlns:vm="clr-namespace:TCMobile.ViewModels"
              Title="{Binding Title}">
     <ContentPage.BindingContext>
-        <vm:HomeViewModel />
+        <vm:MyTranscriptsViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
