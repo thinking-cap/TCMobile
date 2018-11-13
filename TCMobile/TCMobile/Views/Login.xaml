@@ -8,17 +8,16 @@
         <vm:LoginViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout Spacing="0">
-            <Label Text="Login" VerticalOptions="Start"/>
-            <Entry x:Name="Email" Text="{Binding Email}" Placeholder="Email"   
-                           PlaceholderColor="White" HeightRequest="40"   
-                           Keyboard="Email"  
-                           TextColor="White"/>
-            <Entry x:Name="Password" Text="{Binding Password}" Placeholder="Password"   
-                           PlaceholderColor="White" HeightRequest="40"   
-                           IsPassword="True"  
-                           TextColor="White"/>
-            <Button Text="Login" VerticalOptions="End"/>
+        <StackLayout Spacing="10" VerticalOptions="StartAndExpand">            
+               <Entry x:Name="Email" Text="{Binding Email}" Placeholder="Email"   
+                               PlaceholderColor="White" HeightRequest="40"   
+                               Keyboard="Email"  
+                               TextColor="White"/>
+                <Entry x:Name="Password" Text="{Binding Password}" Placeholder="Password"   
+                               PlaceholderColor="White" HeightRequest="40"   
+                               IsPassword="True"  
+                               TextColor="White"/>
+            <Button Text="Login" VerticalOptions="End" Clicked="OnLoginButtonClicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

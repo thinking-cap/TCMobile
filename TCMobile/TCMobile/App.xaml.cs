@@ -9,12 +9,19 @@ namespace TCMobile
     public partial class App : Application
     {
 
+        public static bool IsUserLoggedIn { get; set; }
         public App()
         {
             InitializeComponent();
 
-
-            MainPage = new MainPage();
+            if (IsUserLoggedIn)
+            {
+                MainPage = new MainPage();
+            }
+            else {
+                MainPage = new NavigationPage(new Login());
+            }
+                
         }
 
         protected override void OnStart()

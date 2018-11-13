@@ -16,5 +16,14 @@ namespace TCMobile.Views
 		{
 			InitializeComponent ();
 		}
-	}
+        async void OnLoginButtonClicked(object sender, EventArgs e)
+        {
+            
+            
+                App.IsUserLoggedIn = true;
+                Application.Current.MainPage = new MainPage();
+                await Navigation.PushAsync(new MainPage());
+           
+        }
+    }
 }
