@@ -1,0 +1,17 @@
+﻿/*Form Elements*/
+Entry{
+    font-size:14;
+    color:#000000;
+    border:solid 1px red;
+    background-color:#FFFFFF;
+    -xf-placeholder-color:#0f0f0f;
+    margin:10 5 10 5;
+}
+
+button {
+    border-radius: 10;
+    color: #000000;
+    background-color: #FFFFFF;
+    width: 100;
+    margin: 10 25 10 25;
+}
