@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 
 namespace TCMobile.Views
 {
@@ -23,17 +25,46 @@ namespace TCMobile.Views
         {
             if (e.FileSaved)
             {
-                DisplayAlert("XF Downloader", "File Saved Successfully", "Close");
+                DisplayAlert("TC LMS", "File Saved Successfully", "Close");
             }
             else
             {
-                DisplayAlert("XF Downloader", "Error while saving the file", "Close");
+                DisplayAlert("TC LMS", "Error while saving the file", "Close");
             }
         }
-
-        private void DownloadClicked(object sender, EventArgs e)
+        bool busy;
+        async void DownloadClicked(object sender, EventArgs e)
         {
-            downloader.DownloadFile("https://tcmagnum.blob.core.windows.net/domaincatalogue/00000000-0000-0000-0000-000000000000_domaincatalogue.json", "TCLMS");
+            if (busy)
+                return;
+            busy = true;
+            // disable the button to prevent double clicking
+            ((Button)sender).IsEnabled = false;
+           
+            // let's check the permission
+            var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
+            // if we don't have perissions let's ask
+            if (status != PermissionStatus.Granted)
+            {
+                if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Storage))
+                {
+                    await DisplayAlert("Need To Save Stuff", "Gunna need that permission", "OK");
+                }
+
+                var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Storage);
+                status = results[Permission.Storage];
+            }
+
+            if (status == PermissionStatus.Granted)
+            {
+                downloader.DownloadFile("https://tcmagnum.blob.core.windows.net/domaincatalogue/00000000-0000-0000-0000-000000000000_domaincatalogue.json", "TCLMS");
+            }
+            else if (status != PermissionStatus.Unknown)
+            {
+                await DisplayAlert("Access Denied", "Can not continue, try again.", "OK");
+            }
+            ((Button)sender).IsEnabled = true;
+            busy = false;
         }
     }
 }
