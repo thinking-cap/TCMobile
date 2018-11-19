@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
+using Newtonsoft.Json;
 
 namespace TCMobile.Views
 {
@@ -65,6 +66,24 @@ namespace TCMobile.Views
             }
             ((Button)sender).IsEnabled = true;
             busy = false;
+        }
+
+        async void LoadCourses(object sender, EventArgs e)
+        {
+            // show the spinner and turn it on 
+            CatalogueProgress.IsVisible = true;
+            CatalogueProgress.IsRunning = true;
+            // Load the catalogue
+            TCMobile.Catalogue catalogue = await Courses.GetCatalogue(Constants.ProgramID, Constants.StudentID);
+            //Hide the spinner
+            CatalogueProgress.IsVisible = false;
+            CatalogueProgress.IsRunning = false;
+            
+            // Bind the courses to the ListView
+            CatalogueList.ItemsSource = catalogue.courses;
+           
+
+
         }
     }
 }

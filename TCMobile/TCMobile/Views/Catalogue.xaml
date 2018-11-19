@@ -8,11 +8,22 @@
         <vm:CatalogueViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to the Catalogue"
-                VerticalOptions="Start" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout>           
             <Button Text="Download Course" Clicked="DownloadClicked"/>
+            <Button Text="Load Catalogue" Clicked="LoadCourses"/>
+            <ActivityIndicator x:Name="CatalogueProgress" IsVisible="False" HeightRequest="20"/>
+            <ListView x:Name="CatalogueList">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding title}"/>
+                                <Button Text="Download"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
