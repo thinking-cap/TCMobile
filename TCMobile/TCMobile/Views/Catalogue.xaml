@@ -10,15 +10,15 @@
     <ContentPage.Content>
         <StackLayout>           
             <Button Text="Download Course" Clicked="DownloadClicked"/>
-            <Button Text="Load Catalogue" Clicked="LoadCourses"/>
+            <!--<Button Text="Load Catalogue" Clicked="LoadCourses"/>-->
             <ActivityIndicator x:Name="CatalogueProgress" IsVisible="False" HeightRequest="20"/>
-            <ListView x:Name="CatalogueList">
+            <ListView x:Name="CatalogueList" HorizontalOptions="FillAndExpand">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding title}"/>
-                                <Button Text="Download"/>
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">                                
+                                <Label Text="{Binding title}" VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand"/>
+                                <Button Text="Download" CornerRadius="10" HorizontalOptions="End"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>

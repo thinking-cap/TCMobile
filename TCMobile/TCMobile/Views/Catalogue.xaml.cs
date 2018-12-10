@@ -15,6 +15,12 @@ namespace TCMobile.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class Catalogue : ContentPage
 	{
+        bool CatalogueLoaded = false;
+        protected override void OnAppearing()
+        {
+            if(!CatalogueLoaded)
+                LoadCourses();
+        }
         IDownloader downloader = DependencyService.Get<IDownloader>();
         public Catalogue ()
 		{
@@ -68,7 +74,7 @@ namespace TCMobile.Views
             busy = false;
         }
 
-        async void LoadCourses(object sender, EventArgs e)
+        async void LoadCourses()
         {
             // show the spinner and turn it on 
             CatalogueProgress.IsVisible = true;
@@ -81,8 +87,8 @@ namespace TCMobile.Views
             
             // Bind the courses to the ListView
             CatalogueList.ItemsSource = catalogue.courses;
-           
 
+            CatalogueLoaded = true;
 
         }
     }
