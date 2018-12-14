@@ -18,9 +18,12 @@ namespace TCMobile.Views
         bool CatalogueLoaded = false;
         protected override void OnAppearing()
         {
+            base.OnAppearing();
             if(!CatalogueLoaded)
                 LoadCourses();
         }
+
+        
         //IDownloader downloader = DependencyService.Get<IDownloader>();
         public Catalogue ()
 		{
@@ -39,7 +42,7 @@ namespace TCMobile.Views
                 DisplayAlert("TC LMS", "Error while saving the file", "Close");
             }
         }
-        bool busy;
+        //bool busy;
         //async void DownloadClicked(object sender, EventArgs e)
         //{
         //    if (busy)
@@ -84,11 +87,13 @@ namespace TCMobile.Views
             //Hide the spinner
             CatalogueProgress.IsVisible = false;
             CatalogueProgress.IsRunning = false;
-            
-            // Bind the courses to the ListView
-            CatalogueList.ItemsSource = catalogue.courses;
 
-            CatalogueLoaded = true;
+            // Bind the courses to the ListView
+            if (catalogue != null)
+            {
+                CatalogueList.ItemsSource = catalogue.courses;
+                CatalogueLoaded = true;
+            }
 
         }
     }

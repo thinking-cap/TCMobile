@@ -13,25 +13,27 @@ namespace TCMobile
 
         public static async Task<Catalogue> GetCatalogue(string domainid,string studentid)
         {
-            string uri = Constants.StudentCatalogue + "?studentid=" + studentid + "&programid=" + domainid;
-            dynamic results = await DataService.getDataFromService(uri).ConfigureAwait(false);
-           
-           
-            
-            if (results.courses != null)
+            try
             {
-                System.Diagnostics.Debug.WriteLine("*********** START RESULTS *************", "Info");
-                
-               
-               
-                System.Diagnostics.Debug.WriteLine("*********** END RESULTS *************", "Info");
-                return results;
+                string uri = Constants.StudentCatalogue + "?studentid=" + studentid + "&programid=" + domainid;
+                dynamic results = await DataService.getDataFromService(uri).ConfigureAwait(false);
+
+
+                if (results.courses != null)
+                {
+                    return results;
+                }
+                else
+                {
+                    return null;
+                }
             }
-            else
+            catch
             {
-                System.Diagnostics.Debug.WriteLine("*********** ERROR RESULTS *************", "Info");
                 return null;
             }
+            
+           
         }
     }
 }
