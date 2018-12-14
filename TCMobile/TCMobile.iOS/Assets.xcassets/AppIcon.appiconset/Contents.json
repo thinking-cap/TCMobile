@@ -19,22 +19,10 @@
       "filename": "Icon58.png"
     },
     {
-      "scale": "3x",
-      "size": "29x29",
-      "idiom": "iphone",
-      "filename": "Icon87.png"
-    },
-    {
       "scale": "2x",
       "size": "40x40",
       "idiom": "iphone",
       "filename": "Icon80.png"
-    },
-    {
-      "scale": "3x",
-      "size": "40x40",
-      "idiom": "iphone",
-      "filename": "Icon120.png"
     },
     {
       "scale": "1x",
@@ -107,6 +95,18 @@
       "size": "60x60",
       "idiom": "iphone",
       "filename": "icon.png"
+    },
+    {
+      "scale": "3x",
+      "size": "29x29",
+      "idiom": "iphone",
+      "filename": "settings.png"
+    },
+    {
+      "scale": "3x",
+      "size": "40x40",
+      "idiom": "iphone",
+      "filename": "icon2x1.png"
     }
   ],
   "properties": {},

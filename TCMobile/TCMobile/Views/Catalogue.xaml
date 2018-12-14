@@ -9,7 +9,7 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>           
-            <Button Text="Download Course" Clicked="DownloadClicked"/>
+            <!--<Button Text="Download Course" Clicked="DownloadClicked"/>-->
             <!--<Button Text="Load Catalogue" Clicked="LoadCourses"/>-->
             <ActivityIndicator x:Name="CatalogueProgress" IsVisible="False" HeightRequest="20"/>
             <ListView x:Name="CatalogueList" HorizontalOptions="FillAndExpand">
@@ -18,7 +18,7 @@
                         <ViewCell>
                             <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">                                
                                 <Label Text="{Binding title}" VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand"/>
-                                <Button Text="Download" CornerRadius="10" HorizontalOptions="End"/>
+                                <!--<Button Text="Download" CornerRadius="10" HorizontalOptions="End"/>-->
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
