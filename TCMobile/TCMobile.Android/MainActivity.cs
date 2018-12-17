@@ -10,6 +10,7 @@ using Android.Support.V4.App;
 using Android;
 using Plugin.Permissions;
 using Plugin.CurrentActivity;
+using System.Net;
 
 namespace TCMobile.Droid
 {
@@ -18,6 +19,8 @@ namespace TCMobile.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            ServicePointManager.ServerCertificateValidationCallback +=
+                   (sender, cert, chain, sslPolicyErrors) => true;
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
             CrossCurrentActivity.Current.Init(this,savedInstanceState);

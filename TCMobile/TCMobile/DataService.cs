@@ -22,6 +22,21 @@ namespace TCMobile
             return data;
         }
 
+        public static async Task<dynamic> loginUser(string queryString)
+        {
+            HttpClient client = new HttpClient();
+            var response = await client.GetAsync(queryString);
+
+            dynamic data = null;
+            if (response != null)
+            {
+                string json = response.Content.ReadAsStringAsync().Result;
+                data = JsonConvert.DeserializeObject<LogInObj>(json);
+            }
+
+            return data;
+        }
+
         public async Task LoginAsync(string username,  string password)
         {
             var keyvalues = new List<KeyValuePair<string ,string>>

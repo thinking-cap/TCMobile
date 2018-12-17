@@ -10,8 +10,10 @@ namespace TCMobile
     {
         public static async Task<LogInObj> check(string email,string password)
         {
-            string uri = Constants.Url + "?username=" + email + "&password=" + password + "&domainid=" + Constants.ProgramID;
-            dynamic loginObj = await DataService.getDataFromService(uri).ConfigureAwait(false);
+            email = System.Net.WebUtility.UrlEncode(email);
+            password = System.Net.WebUtility.UrlEncode(password);
+            string uri = Constants.LoginURL + "?studentid=" + email + "&password=" + password + "&programid=" + Constants.ProgramID;
+            dynamic loginObj = await DataService.loginUser(uri).ConfigureAwait(false);
 
             return loginObj;
         }
