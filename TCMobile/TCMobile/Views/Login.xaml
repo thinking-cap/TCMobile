@@ -21,6 +21,7 @@
                                HeightRequest="45" 
                                IsPassword="True"/>
             <Button Text="Login" VerticalOptions="End" Clicked="OnLoginButtonClicked"/>
+            <ActivityIndicator x:Name="Progress" IsVisible="False" HeightRequest="20"/>
             <Label x:Name="Error" HeightRequest="45"/>
         </StackLayout>
     </ContentPage.Content>

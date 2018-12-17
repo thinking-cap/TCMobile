@@ -24,11 +24,11 @@ namespace TCMobile.Views
         }
 
         
-        //IDownloader downloader = DependencyService.Get<IDownloader>();
+        IDownloader downloader = DependencyService.Get<IDownloader>();
         public Catalogue ()
 		{
 			InitializeComponent ();
-           // downloader.OnFileDownloaded += OnFileDownloaded;
+           downloader.OnFileDownloaded += OnFileDownloaded;
             
         }
         private void OnFileDownloaded(object sender, DownloadEventArgs e)
@@ -42,40 +42,45 @@ namespace TCMobile.Views
                 DisplayAlert("TC LMS", "Error while saving the file", "Close");
             }
         }
-        //bool busy;
-        //async void DownloadClicked(object sender, EventArgs e)
-        //{
-        //    if (busy)
-        //        return;
-        //    busy = true;
-        //    // disable the button to prevent double clicking
-        //    ((Button)sender).IsEnabled = false;
-           
-        //    // let's check the permission
-        //    var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
-        //    // if we don't have perissions let's ask
-        //    if (status != PermissionStatus.Granted)
-        //    {
-        //        if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Storage))
-        //        {
-        //            await DisplayAlert("Need To Save Stuff", "Gunna need that permission", "OK");
-        //        }
+        bool busy;
+        async void DownloadClicked(object sender, EventArgs e)
+        {
+            if (busy)
+                return;
+            busy = true;
 
-        //        var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Storage);
-        //        status = results[Permission.Storage];
-        //    }
+            Button button = (Button)sender;
+            string id = button.ClassId;
+            // disable the button to prevent double clicking
+            ((Button)sender).IsEnabled = false;
 
-        //    if (status == PermissionStatus.Granted)
-        //    {
-        //        downloader.DownloadFile("https://tcmagnum.blob.core.windows.net/domaincatalogue/00000000-0000-0000-0000-000000000000_domaincatalogue.json", "TCLMS");
-        //    }
-        //    else if (status != PermissionStatus.Unknown)
-        //    {
-        //        await DisplayAlert("Access Denied", "Can not continue, try again.", "OK");
-        //    }
-        //    ((Button)sender).IsEnabled = true;
-        //    busy = false;
-        //}
+            // let's check the permission
+            var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
+            // if we don't have perissions let's ask
+            if (status != PermissionStatus.Granted)
+            {
+                if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Storage))
+                {
+                    await DisplayAlert("Need To Save Stuff", "Gunna need that permission", "OK");
+                }
+
+                var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Storage);
+                status = results[Permission.Storage];
+            }
+
+            if (status == PermissionStatus.Granted)
+            {
+                string url = "http://tcstable.blob.core.windows.net/coursepackages/" + id + "/1/CoursePackage.zip";
+
+                downloader.DownloadFile(url, "TCLMS");
+            }
+            else if (status != PermissionStatus.Unknown)
+            {
+                await DisplayAlert("Access Denied", "Can not continue, try again.", "OK");
+            }
+            ((Button)sender).IsEnabled = true;
+            busy = false;
+        }
 
         async void LoadCourses()
         {
@@ -95,6 +100,17 @@ namespace TCMobile.Views
                 CatalogueLoaded = true;
             }
 
+        }
+
+        public void launchCourse(Object Sender, EventArgs args)
+        {
+            Button button = (Button)Sender;
+            string id = button.ClassId;
+            StackLayout listViewItem = (StackLayout)button.Parent;
+            Label label = (Label)listViewItem.Children[0];
+
+            String text = label.Text;
+            Navigation.PushAsync(new ViewCourse(id));
         }
     }
 }

@@ -25,7 +25,9 @@ namespace TCMobile.Views
 
             username = Email.Text;
             password = Password.Text;
-
+            Progress.IsVisible = true;
+            Progress.IsRunning = true;
+            Error.Text = "";
             TCMobile.LogInObj login = await userLogin.check(username, password);
 
             if (login.login == true)
@@ -33,11 +35,15 @@ namespace TCMobile.Views
                 App.IsUserLoggedIn = true;
                 Application.Current.MainPage = new MainPage();
                 Constants.StudentID = login.userId;
+                Progress.IsVisible = true;
+                Progress.IsRunning = true;
                 await Navigation.PushAsync(new MainPage());
             }
             else
             {
                 Error.Text = login.status;
+                Progress.IsVisible = false;
+                Progress.IsRunning = false;
             }
            
         }
