@@ -43,12 +43,12 @@ namespace TCMobile.iOS
             if (e.Error != null)
             {
                 if (OnFileDownloaded != null)
-                    OnFileDownloaded.Invoke(this, new DownloadEventArgs(false));
+                    OnFileDownloaded.Invoke(this, new DownloadEventArgs(e.Error.Message,false));
             }
             else
             {
                 if (OnFileDownloaded != null)
-                    OnFileDownloaded.Invoke(this, new DownloadEventArgs(true));
+                    OnFileDownloaded.Invoke(this, new DownloadEventArgs(e.Error.Message,true));
             }
         }
     }

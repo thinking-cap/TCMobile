@@ -41,6 +41,6 @@
 	<key>XSLaunchImageAssets</key>
 	<string>Assets.xcassets/LaunchImages.launchimage</string>
   <key>LSSupportsOpeningDocumentsInPlace</key>
-  <boolean>Yes</boolean>
+  <string>Yes</string>
 </dict>
 </plist>

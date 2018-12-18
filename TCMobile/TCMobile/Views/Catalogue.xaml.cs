@@ -51,6 +51,7 @@ namespace TCMobile.Views
 
             Button button = (Button)sender;
             string id = button.ClassId;
+            string version = button.Parent.ClassId;
             // disable the button to prevent double clicking
             ((Button)sender).IsEnabled = false;
 
@@ -70,7 +71,7 @@ namespace TCMobile.Views
 
             if (status == PermissionStatus.Granted)
             {
-                string url = "https://tcstable.blob.core.windows.net/coursepackages/" + id + "/1/CoursePackage.zip";
+                string url = "https://tcstable.blob.core.windows.net/coursepackages/" + id + "/" + version + "/CoursePackage.zip";
 
                 downloader.DownloadFile(url, "TCLMS");
             }
