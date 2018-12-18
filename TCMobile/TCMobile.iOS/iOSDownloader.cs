@@ -20,7 +20,7 @@ namespace TCMobile.iOS
 
         public void DownloadFile(string url, string folder)
         {
-            string pathToNewFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), folder);
+            string pathToNewFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), folder);
             Directory.CreateDirectory(pathToNewFolder);
 
             try
