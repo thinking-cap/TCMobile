@@ -34,7 +34,7 @@ namespace TCMobile.iOS
             catch (Exception ex)
             {
                 if (OnFileDownloaded != null)
-                    OnFileDownloaded.Invoke(this, new DownloadEventArgs(false));
+                    OnFileDownloaded.Invoke(this, new DownloadEventArgs(ex.Message, false));
             }
         }
 

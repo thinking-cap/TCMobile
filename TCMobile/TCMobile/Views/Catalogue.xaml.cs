@@ -35,11 +35,11 @@ namespace TCMobile.Views
         {
             if (e.FileSaved)
             {
-                DisplayAlert("TC LMS", "File Saved Successfully", "Close");
+                DisplayAlert("TC LMS", "File Saved Successfully " + e.FileDownloadMessage, "Close");
             }
             else
             {
-                DisplayAlert("TC LMS", "Error while saving the file", "Close");
+                DisplayAlert("TC LMS", "Error while saving the file " + e.FileDownloadMessage, "Close");
             }
         }
         bool busy;

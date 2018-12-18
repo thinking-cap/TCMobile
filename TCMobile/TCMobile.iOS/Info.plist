@@ -40,5 +40,7 @@
 	<string>Need permission to access files.</string>
 	<key>XSLaunchImageAssets</key>
 	<string>Assets.xcassets/LaunchImages.launchimage</string>
+  <key>LSSupportsOpeningDocumentsInPlace</key>
+  <boolean>Yes</boolean>
 </dict>
 </plist>
