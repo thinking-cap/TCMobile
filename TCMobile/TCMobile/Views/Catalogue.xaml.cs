@@ -70,7 +70,7 @@ namespace TCMobile.Views
 
             if (status == PermissionStatus.Granted)
             {
-                string url = "http://tcstable.blob.core.windows.net/coursepackages/" + id + "/1/CoursePackage.zip";
+                string url = "https://tcstable.blob.core.windows.net/coursepackages/" + id + "/1/CoursePackage.zip";
 
                 downloader.DownloadFile(url, "TCLMS");
             }
