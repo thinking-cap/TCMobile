@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Net;
-using System.IO;
-using System.ComponentModel;
 
 using Foundation;
 using UIKit;
+using Xamarin.Forms;
+using TCMobile.iOS;
+using System.ComponentModel;
+using System.IO;
+using System.Net;
 
+[assembly: Dependency(typeof(IosDownloader))]
 namespace TCMobile.iOS
 {
-    class iOSDownloader : IDownloader
+    public class IosDownloader : IDownloader
     {
         public event EventHandler<DownloadEventArgs> OnFileDownloaded;
 
