@@ -25,10 +25,10 @@ namespace TCMobile.Droid
     public class AndroidDownloader : IDownloader
     {
         public event EventHandler<DownloadEventArgs> OnFileDownloaded;
-
-        public void DownloadFile(string url, string folder)
+        private string CourseID;
+        public void DownloadFile(string url, string folder, string courseid)
         {
-            
+            CourseID = courseid; 
             string pathToNewFolder = Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, folder);
             Directory.CreateDirectory(pathToNewFolder);
 
@@ -62,7 +62,7 @@ namespace TCMobile.Droid
         private void Unzip()
         {
             string pathToNewFolder = Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, "TCLMS/Temp/CoursePackage.zip");
-            string newFolder = Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, "TCLMS/Courses");
+            string newFolder = Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, "TCLMS/Courses/" + CourseID);
             string pathToNewFile = Path.Combine(pathToNewFolder, Path.GetFileName("CoursePackage.zip"));
 
             ZipFile zf = null;

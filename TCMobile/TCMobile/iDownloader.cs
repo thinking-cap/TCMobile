@@ -10,7 +10,7 @@ namespace TCMobile
     {
 
         // interface for app specific download methods
-        void DownloadFile(string url, string folder);
+        void DownloadFile(string url, string folder,string courseid);
         event EventHandler<DownloadEventArgs> OnFileDownloaded;
     }
 

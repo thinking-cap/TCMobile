@@ -79,7 +79,7 @@ namespace TCMobile.Views
                 string url = Constants.Url + "/mobile/GetCourse.ashx?CourseID=" + id + "&Version=" + version;
                 //string url = "https://tcstable.blob.core.windows.net/coursepackages/" + id + "/" + version + "/CoursePackage.zip";
 
-                downloader.DownloadFile(url, "TCLMS/Temp");
+                downloader.DownloadFile(url, "TCLMS/Temp",id);
             }
             else if (status != PermissionStatus.Unknown)
             {
