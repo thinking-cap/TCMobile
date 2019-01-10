@@ -16,6 +16,7 @@ namespace TCMobile.Views
 	public partial class Catalogue : ContentPage
 	{
         bool CatalogueLoaded = false;
+        
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -43,6 +44,10 @@ namespace TCMobile.Views
             }
         }
         bool busy;
+
+       
+
+       
         async void DownloadClicked(object sender, EventArgs e)
         {
             if (busy)
@@ -71,9 +76,10 @@ namespace TCMobile.Views
 
             if (status == PermissionStatus.Granted)
             {
-                string url = "https://tcstable.blob.core.windows.net/coursepackages/" + id + "/" + version + "/CoursePackage.zip";
+                string url = Constants.Url + "/mobile/GetCourse.ashx?CourseID=" + id + "&Version=" + version;
+                //string url = "https://tcstable.blob.core.windows.net/coursepackages/" + id + "/" + version + "/CoursePackage.zip";
 
-                downloader.DownloadFile(url, "TCLMS");
+                downloader.DownloadFile(url, "TCLMS/Temp");
             }
             else if (status != PermissionStatus.Unknown)
             {

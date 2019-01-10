@@ -15,8 +15,8 @@
             <ListView x:Name="CatalogueList" HorizontalOptions="FillAndExpand">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell ClassId="{Binding version}">
-                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">                                
+                        <ViewCell>
+                            <StackLayout ClassId="{Binding version}" Orientation="Horizontal" HorizontalOptions="FillAndExpand">                                
                                 <Label Text="{Binding title}" VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand"/>
                                 <Button Text="Enter" CornerRadius="10" HorizontalOptions="End" Clicked="DownloadClicked" ClassId="{Binding courseid}"/>
                             </StackLayout>
