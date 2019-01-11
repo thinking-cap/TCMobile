@@ -17,8 +17,8 @@ namespace TCMobile.iOS
     public class IosDownloader : IDownloader
     {
         public event EventHandler<DownloadEventArgs> OnFileDownloaded;
-
-        public void DownloadFile(string url, string folder)
+        public event EventHandler<DownloadProgress> OnFileProgress;
+        public void DownloadFile(string url, string folder, string courseid)
         {
             string libraryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Library");
             string pathToNewFolder = Path.Combine(libraryPath, folder);
@@ -28,7 +28,7 @@ namespace TCMobile.iOS
             {
                 WebClient webClient = new WebClient();
                 webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
-                string pathToNewFile = Path.Combine(pathToNewFolder, Path.GetFileName(url));
+                string pathToNewFile = Path.Combine(pathToNewFolder, Path.GetFileName("CoursePackage.zip"));
                 webClient.DownloadFileAsync(new Uri(url), pathToNewFile);
             }
             catch (Exception ex)

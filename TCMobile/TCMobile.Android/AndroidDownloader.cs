@@ -25,6 +25,7 @@ namespace TCMobile.Droid
     public class AndroidDownloader : IDownloader
     {
         public event EventHandler<DownloadEventArgs> OnFileDownloaded;
+        public event EventHandler<DownloadProgress> OnFileProgress;
         private string CourseID;
         public void DownloadFile(string url, string folder, string courseid)
         {
@@ -34,7 +35,8 @@ namespace TCMobile.Droid
 
             try
             {
-                WebClient webClient = new WebClient();
+                WebClient webClient = new WebClient();                
+                webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback);
                 webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
                 string pathToNewFile = Path.Combine(pathToNewFolder, Path.GetFileName("CoursePackage.zip"));
                 webClient.DownloadFileAsync(new Uri(url), pathToNewFile);
@@ -56,6 +58,20 @@ namespace TCMobile.Droid
             else
             {
                 Unzip();
+            }
+        }
+
+        private void DownloadProgressCallback(object sender, DownloadProgressChangedEventArgs e)
+        {
+            // Displays the operation identifier, and the transfer progress.
+            
+            Console.WriteLine("Downloaded {0}mbs",
+                ((int)e.BytesReceived/1000000)
+               );
+            string percentage = ((int)e.BytesReceived / 1000000).ToString();
+            if (OnFileProgress != null)
+            {
+                OnFileProgress.Invoke(this,new DownloadProgress(percentage));
             }
         }
 

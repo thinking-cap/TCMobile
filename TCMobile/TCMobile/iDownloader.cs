@@ -12,6 +12,7 @@ namespace TCMobile
         // interface for app specific download methods
         void DownloadFile(string url, string folder,string courseid);
         event EventHandler<DownloadEventArgs> OnFileDownloaded;
+        event EventHandler<DownloadProgress> OnFileProgress;
     }
 
     
@@ -19,13 +20,34 @@ namespace TCMobile
     {
         public bool FileSaved = false;
         public string FileDownloadMessage = "";
+        public string FilePercent = "";
        
         public DownloadEventArgs(string errorMessage, bool fileSaved)
         {
             FileDownloadMessage = errorMessage;
             FileSaved = fileSaved;
         }
+
+
     }
 
-   
+    public class DownloadProgress : EventArgs
+    {
+       
+        public string FilePercent = "";
+
+       
+        public DownloadProgress(string percent)
+        {
+            FilePercent = percent;
+        }
+
+
+    }
+
+
+
+
+
+
 }

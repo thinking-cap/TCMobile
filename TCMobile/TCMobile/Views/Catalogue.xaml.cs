@@ -30,8 +30,12 @@ namespace TCMobile.Views
 		{
 			InitializeComponent ();
            downloader.OnFileDownloaded += OnFileDownloaded;
+            downloader.OnFileProgress += OnFileProgress;
             
         }
+
+        
+
         private void OnFileDownloaded(object sender, DownloadEventArgs e)
         {
             if (e.FileSaved)
@@ -42,6 +46,12 @@ namespace TCMobile.Views
             {
                 DisplayAlert("TC LMS", "Error while saving the file " + e.FileDownloadMessage, "Close");
             }
+        }
+        
+
+        private void OnFileProgress(object sender, DownloadProgress e)
+        {
+
         }
         bool busy;
 
@@ -76,6 +86,7 @@ namespace TCMobile.Views
 
             if (status == PermissionStatus.Granted)
             {
+               
                 string url = Constants.Url + "/mobile/GetCourse.ashx?CourseID=" + id + "&Version=" + version;
                 //string url = "https://tcstable.blob.core.windows.net/coursepackages/" + id + "/" + version + "/CoursePackage.zip";
 
