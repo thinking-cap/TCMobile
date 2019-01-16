@@ -14,7 +14,7 @@ using System.Net;
 
 namespace TCMobile.Droid
 {
-    [Activity(Label = "TCMobile", Icon = "@drawable/icon",    Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "TCMobile", Icon = "@drawable/icon",    Theme = "@style/MainTheme",ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity, ActivityCompat.IOnRequestPermissionsResultCallback
     {
         protected override void OnCreate(Bundle savedInstanceState)

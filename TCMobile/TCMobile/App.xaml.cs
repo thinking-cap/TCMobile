@@ -13,11 +13,16 @@ namespace TCMobile
     {
 
         public static bool IsUserLoggedIn { get; set; }
+
+        public static string AppName { get { return "TCLMS"; } }
+
+        public static ICredentialsService CredentialsService { get; private set; }
         public App()
         {
+            CredentialsService = new CredentialsService();
             InitializeComponent();
 
-            if (IsUserLoggedIn)
+            if (CredentialsService.DoCredentialsExist())
             {
                 MainPage = new MainPage();
             }

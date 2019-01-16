@@ -13,16 +13,18 @@ namespace TCMobile.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class Login : ContentPage
 	{
-		public Login ()
+        ICredentialsService storeService;
+        
+        public Login ()
 		{
-			InitializeComponent ();
+
+            InitializeComponent ();
 		}
         async void OnLoginButtonClicked(object sender, EventArgs e)
         {
-
+           
             string username;
             string password;
-
             username = Email.Text;
             password = Password.Text;
             Progress.IsVisible = true;
@@ -32,11 +34,18 @@ namespace TCMobile.Views
 
             if (login.login == true)
             {
+                bool doCredentialsExist = App.CredentialsService.DoCredentialsExist();
+                if (!doCredentialsExist)
+                {
+                    App.CredentialsService.SaveCredentials(username, password,login.userId);
+                }
+
                 App.IsUserLoggedIn = true;
                 Application.Current.MainPage = new MainPage();
                 Constants.StudentID = login.userId;
                 Progress.IsVisible = true;
                 Progress.IsRunning = true;
+
                 await Navigation.PushAsync(new MainPage());
             }
             else
