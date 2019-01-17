@@ -109,14 +109,23 @@ namespace TCMobile.Droid
                     using (FileStream streamWriter = File.Create(fullZipToPath))
                     {
                         StreamUtils.Copy(zipStream, streamWriter, buffer);
+                      
                     }
+
+                   
+
+                   
                 }
-                catch { }
+                catch {
+                   
+                }
 
             }
-                if (OnFileDownloaded != null)
-                OnFileDownloaded.Invoke(this, new DownloadEventArgs("Downloaded", true));
+            File.Delete(pathToNewFolder);
+            if (OnFileDownloaded != null)
+                OnFileDownloaded.Invoke(this, new DownloadEventArgs("Course Downloaded", true));
         }
+       
            // var Zip = new GZipStream(System.IO.File.Open(pathToNewFile, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.None),1)
     }
 }
