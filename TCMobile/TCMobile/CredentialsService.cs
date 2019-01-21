@@ -36,7 +36,25 @@ namespace TCMobile
             }
         }
 
-        public void SaveCredentials(string userName, string password, string userid)
+        public string FirstName
+        {
+            get
+            {
+                var account = AccountStore.Create().FindAccountsForService(App.AppName).FirstOrDefault();
+                return (account != null) ? account.Properties["FirstName"] : null;
+            }
+        }
+
+        public string LastName
+        {
+            get
+            {
+                var account = AccountStore.Create().FindAccountsForService(App.AppName).FirstOrDefault();
+                return (account != null) ? account.Properties["LastName"] : null;
+            }
+        }
+
+        public void SaveCredentials(string userName, string password, string userid,string firstname,string lastname)
         {
             if (!string.IsNullOrWhiteSpace(userName) && !string.IsNullOrWhiteSpace(password))
             {
@@ -45,6 +63,8 @@ namespace TCMobile
                     Username = userName
                 };
                 account.Properties.Add("Password", password);
+                account.Properties.Add("FirstName", firstname);
+                account.Properties.Add("LastName", lastname);
                 account.Properties.Add("UserID",userid);
                 AccountStore.Create().Save(account, App.AppName);
             }

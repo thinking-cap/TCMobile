@@ -13,7 +13,11 @@ namespace TCMobile
 
         string UserID { get; }
 
-        void SaveCredentials(string userName, string password, string userid);
+        string FirstName { get; }
+
+        string LastName { get; }
+
+        void SaveCredentials(string userName, string password, string userid,string firstname, string lastname);
 
         void DeleteCredentials();
 

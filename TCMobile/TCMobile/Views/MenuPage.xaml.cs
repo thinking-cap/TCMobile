@@ -23,8 +23,20 @@ namespace TCMobile.Views
                 new HomeMenuItem {Id = MenuItemType.MyTranscripts, Title="My Transcripts"},
                 new HomeMenuItem {Id = MenuItemType.Logout, Title="Logout"}
             };
+            bool doCredentialsExist = App.CredentialsService.DoCredentialsExist();
             UserImage.Source = Constants.Url + "/ViewPhoto.aspx?UserID=" + Constants.StudentID;
-            UserName.Text = Constants.firstName + " " + Constants.lastName;
+            string first = "Learner";
+            string last = "";
+            if (doCredentialsExist)
+            {
+                try
+                {
+                    first = App.CredentialsService.FirstName;
+                    last = App.CredentialsService.LastName;
+                }
+                catch { }
+            }
+            UserName.Text = "Hello " + first + " " + last;
             ListViewMenu.ItemsSource = menuItems;
 
             ListViewMenu.SelectedItem = menuItems[0];
