@@ -20,6 +20,18 @@ namespace TCMobile.Views
 
             InitializeComponent ();
 		}
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            bool doCredentialsExist = App.CredentialsService.DoCredentialsExist();
+            if (doCredentialsExist)
+            {
+                App.CredentialsService.DeleteCredentials();
+                App.IsUserLoggedIn = false;
+
+            }
+        }
         async void OnLoginButtonClicked(object sender, EventArgs e)
         {
            
@@ -43,6 +55,8 @@ namespace TCMobile.Views
                 App.IsUserLoggedIn = true;
                 Application.Current.MainPage = new MainPage();
                 Constants.StudentID = login.userId;
+                Constants.firstName = login.firstName;
+                Constants.lastName = login.lastName;
                 Progress.IsVisible = true;
                 Progress.IsRunning = true;
 

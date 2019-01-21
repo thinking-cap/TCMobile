@@ -1,11 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
              x:Class="TCMobile.Views.MenuPage"
              Title="Menu">
-    <StackLayout VerticalOptions="FillAndExpand">
-        <ListView x:Name="ListViewMenu"
-                    HasUnevenRows="True">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <controls:CircleImage Grid.Row="0" Grid.Column="0" Source="{Binding Image}" Aspect="AspectFill" x:Name="UserImage">
+            <controls:CircleImage.WidthRequest>
+                <OnPlatform x:TypeArguments="x:Double">
+                    <On Platform="Android, iOS">45</On>
+                    <!--<On Platform="WinPhone">75</On>-->
+                </OnPlatform>
+            </controls:CircleImage.WidthRequest>
+            <controls:CircleImage.HeightRequest>
+                <OnPlatform x:TypeArguments="x:Double">
+                    <On Platform="Android, iOS">45</On>
+                    <!--<On Platform="WinPhone">75</On>-->
+                </OnPlatform>
+            </controls:CircleImage.HeightRequest>
+        </controls:CircleImage>
+        <Label x:Name="UserName" Grid.Row="0" Grid.Column="1"/>
+        
+
+        <!--<Image  Aspect="AspectFill" x:Name="UserImage" Source="https://xamarin.com/content/images/pages/forms/example-app.png" />-->
+
+        <ListView Grid.Row="1" Grid.ColumnSpan="2" x:Name="ListViewMenu" HasUnevenRows="True">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -16,5 +44,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-    </StackLayout>
+
+    </Grid>
+    
 </ContentPage>

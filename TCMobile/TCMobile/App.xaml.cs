@@ -5,20 +5,25 @@ using TCMobile.Views;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using TCMobile.Data;
+using System.IO;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace TCMobile
 {
     public partial class App : Application
     {
+        
 
         public static bool IsUserLoggedIn { get; set; }
+        static LMSDataBase database;
 
         public static string AppName { get { return "TCLMS"; } }
 
         public static ICredentialsService CredentialsService { get; private set; }
         public App()
         {
+            
             CredentialsService = new CredentialsService();
             InitializeComponent();
 
@@ -30,6 +35,18 @@ namespace TCMobile
                 MainPage = new NavigationPage(new Login());
             }
                 
+        }
+
+        public static LMSDataBase Database
+        {
+            get
+            {
+                if (database == null)
+                {
+                    database = new LMSDataBase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "TodoSQLite.db3"));
+                }
+                return database;
+            }
         }
 
         protected override void OnStart()

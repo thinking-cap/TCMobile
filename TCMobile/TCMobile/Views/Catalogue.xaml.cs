@@ -70,6 +70,8 @@ namespace TCMobile.Views
             // disable the button to prevent double clicking
             ((Button)sender).IsEnabled = false;
 
+            ((Button)sender).Text= "Downloading";
+
             // let's check the permission
             var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
             // if we don't have perissions let's ask
@@ -96,7 +98,7 @@ namespace TCMobile.Views
             {
                 await DisplayAlert("Access Denied", "Can not continue, try again.", "OK");
             }
-            ((Button)sender).IsEnabled = true;
+            ((Button)sender).Text = "Downloaded";
             busy = false;
         }
 

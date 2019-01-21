@@ -4,7 +4,7 @@
              x:Class="TCMobile.App">
     <Application.Resources>
         <ResourceDictionary>
-            <!--Global Styles-->
+            <!--Global Styles-->          
             <Color x:Key="NavigationPrimary">#2196F3</Color>
             <Style TargetType="NavigationPage">
                 <Setter Property="BarBackgroundColor" Value="{StaticResource NavigationPrimary}" />

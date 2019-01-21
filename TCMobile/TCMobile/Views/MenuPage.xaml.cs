@@ -20,9 +20,11 @@ namespace TCMobile.Views
             {
                 new HomeMenuItem {Id = MenuItemType.MyCourses, Title="My Courses" },
                 new HomeMenuItem {Id = MenuItemType.Catalogue, Title="Catalogue" },
-                new HomeMenuItem {Id = MenuItemType.MyTranscripts, Title="My Transcripts"}
+                new HomeMenuItem {Id = MenuItemType.MyTranscripts, Title="My Transcripts"},
+                new HomeMenuItem {Id = MenuItemType.Logout, Title="Logout"}
             };
-
+            UserImage.Source = Constants.Url + "/ViewPhoto.aspx?UserID=" + Constants.StudentID;
+            UserName.Text = Constants.firstName + " " + Constants.lastName;
             ListViewMenu.ItemsSource = menuItems;
 
             ListViewMenu.SelectedItem = menuItems[0];

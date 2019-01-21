@@ -25,6 +25,9 @@ namespace TCMobile
         public string status { get; set; }
         public bool  login { get; set; }
 
+        public string firstName { get; set; }
+        public string lastName { get; set; }
+
         public string role { get; set; }
     }
 }

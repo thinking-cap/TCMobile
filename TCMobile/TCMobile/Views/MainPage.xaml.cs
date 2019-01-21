@@ -17,7 +17,7 @@ namespace TCMobile.Views
 
             MasterBehavior = MasterBehavior.Popover;
 
-            MenuPages.Add((int)MenuItemType.MyCourses, (NavigationPage)Detail);
+            MenuPages.Add((int)MenuItemType.Catalogue, (NavigationPage)Detail);
         }
 
         public async Task NavigateFromMenu(int id)
@@ -35,20 +35,41 @@ namespace TCMobile.Views
                     case (int)MenuItemType.MyTranscripts:
                         MenuPages.Add(id, new NavigationPage(new MyTranscripts()));
                         break;
+                    case (int)MenuItemType.Logout:
+                        MenuPages.Add(id, new NavigationPage(new Login()));
+                        break;
                 }
             }
 
-            var newPage = MenuPages[id];
 
-            if (newPage != null && Detail != newPage)
+            if (id == (int)MenuItemType.Logout)
             {
-                Detail = newPage;
-
-                if (Device.RuntimePlatform == Device.Android)
-                    await Task.Delay(100);
-
-                IsPresented = false;
+                Application.Current.MainPage = new Login();
+                await Navigation.PushAsync(new Login());
             }
+            else
+            {
+                var newPage = MenuPages[id];
+
+                if (newPage != null && Detail != newPage)
+                {
+                    Detail = newPage;
+
+                    if (Device.RuntimePlatform == Device.Android)
+                        await Task.Delay(100);
+
+                    IsPresented = false;
+                }
+            }
+        }
+
+        public void Logout(int id)
+        {
+            bool doCredentialsExist = App.CredentialsService.DoCredentialsExist();
+            if (doCredentialsExist)
+                App.CredentialsService.DeleteCredentials();
+
+           
         }
     }
 }
