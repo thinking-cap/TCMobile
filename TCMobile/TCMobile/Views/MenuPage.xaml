@@ -4,9 +4,9 @@
              xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
              x:Class="TCMobile.Views.MenuPage"
              Title="Menu">
-    <Grid HorizontalOptions="FillAndExpand">
+    <Grid HorizontalOptions="FillAndExpand" RowSpacing="0" ColumnSpacing="0">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="70"/>
+            <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -17,13 +17,13 @@
         <controls:CircleImage Grid.Row="0" Grid.Column="0" Source="{Binding Image}" Aspect="AspectFill" x:Name="UserImage">
             <controls:CircleImage.WidthRequest>
                 <OnPlatform x:TypeArguments="x:Double">
-                    <On Platform="Android, iOS">45</On>
+                    <On Platform="Android, iOS">35</On>
                     <!--<On Platform="WinPhone">75</On>-->
                 </OnPlatform>
             </controls:CircleImage.WidthRequest>
             <controls:CircleImage.HeightRequest>
                 <OnPlatform x:TypeArguments="x:Double">
-                    <On Platform="Android, iOS">45</On>
+                    <On Platform="Android, iOS">35</On>
                     <!--<On Platform="WinPhone">75</On>-->
                 </OnPlatform>
             </controls:CircleImage.HeightRequest>

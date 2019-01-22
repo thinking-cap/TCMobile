@@ -38,15 +38,15 @@
 	<string>Need permission to save files.</string>
 	<key>NSPhotoLibraryUsageDescription </key>
 	<string>Need permission to access files.</string>
-	<key>XSLaunchImageAssets</key>
-	<string>Assets.xcassets/LaunchImages.launchimage</string>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<string>Yes</string>
 	<key>UIStatusBarHidden</key>
 	<true/>
 	<key>UIRequiresFullScreen</key>
 	<true/>
-  <key>UIViewControllerBasedStatusBarAppearance</key>
-  <false/>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+	<key>XSLaunchImageAssets</key>
+	<string>Assets.xcassets/LaunchImages.launchimage</string>
 </dict>
 </plist>
