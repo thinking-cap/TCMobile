@@ -21,7 +21,17 @@ namespace TCMobile
         public bool FileSaved = false;
         public string FileDownloadMessage = "";
         public string FilePercent = "";
+        public string CourseID = "";
        
+        public DownloadEventArgs(string errorMessage, bool fileSaved,string courseID)
+        {
+            CourseID = courseID;
+            FileDownloadMessage = errorMessage;
+            FileSaved = fileSaved;
+
+            
+        }
+
         public DownloadEventArgs(string errorMessage, bool fileSaved)
         {
             FileDownloadMessage = errorMessage;

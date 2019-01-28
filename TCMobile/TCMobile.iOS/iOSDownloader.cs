@@ -117,7 +117,7 @@ namespace TCMobile.iOS
             // delete the zip file from the temp folder
             File.Delete(pathToNewFolder);
             if (OnFileDownloaded != null)
-                OnFileDownloaded.Invoke(this, new DownloadEventArgs("Downloaded", true));
+                OnFileDownloaded.Invoke(this, new DownloadEventArgs("Downloaded", true, CourseID));
         }
     }
 }

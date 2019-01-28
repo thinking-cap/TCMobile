@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -40,6 +41,8 @@ namespace TCMobile.Views
         {
             if (e.FileSaved)
             {
+                CreateCourseRecord(e.CourseID);
+
                 DisplayAlert("TC LMS", "File Saved Successfully " + e.FileDownloadMessage, "Close");
             }
             else
@@ -48,6 +51,14 @@ namespace TCMobile.Views
             }
         }
         
+        async void CreateCourseRecord(string courseid)
+        {
+            Models.Record rec = new Models.Record();
+            rec.CourseID = courseid;
+
+            await App.Database.SaveItemAsync(rec);
+
+        }
 
         private void OnFileProgress(object sender, DownloadProgress e)
         {

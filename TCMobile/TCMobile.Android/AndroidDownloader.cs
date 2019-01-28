@@ -122,8 +122,10 @@ namespace TCMobile.Droid
 
             }
             File.Delete(pathToNewFolder);
+
+            
             if (OnFileDownloaded != null)
-                OnFileDownloaded.Invoke(this, new DownloadEventArgs("Course Downloaded", true));
+                OnFileDownloaded.Invoke(this, new DownloadEventArgs("Course Downloaded", true,CourseID));
         }
        
            // var Zip = new GZipStream(System.IO.File.Open(pathToNewFile, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.None),1)

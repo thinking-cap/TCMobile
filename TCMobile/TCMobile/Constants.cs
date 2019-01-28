@@ -17,7 +17,7 @@ namespace TCMobile
         public static string firstName;
         public static string lastName;
 
-        ICredentialsService storeService;
+       
 
 
 

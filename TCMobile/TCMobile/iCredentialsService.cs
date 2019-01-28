@@ -17,7 +17,9 @@ namespace TCMobile
 
         string LastName { get; }
 
-        void SaveCredentials(string userName, string password, string userid,string firstname, string lastname);
+        String HomeDomain { get; }
+
+        void SaveCredentials(string userName, string password, string userid,string firstname, string lastname ,string homedomain);
 
         void DeleteCredentials();
 

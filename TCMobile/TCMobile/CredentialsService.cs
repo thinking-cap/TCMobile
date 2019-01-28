@@ -27,6 +27,15 @@ namespace TCMobile
             }
         }
 
+        public string HomeDomain
+        {
+            get
+            {
+                var account = AccountStore.Create().FindAccountsForService(App.AppName).FirstOrDefault();
+                return (account != null) ? account.Properties["HomeDomain"] : null;
+            }
+        }
+
         public string Password
         {
             get
@@ -54,7 +63,7 @@ namespace TCMobile
             }
         }
 
-        public void SaveCredentials(string userName, string password, string userid,string firstname,string lastname)
+        public void SaveCredentials(string userName, string password, string userid,string firstname,string lastname, string homedomain)
         {
             if (!string.IsNullOrWhiteSpace(userName) && !string.IsNullOrWhiteSpace(password))
             {
@@ -66,6 +75,7 @@ namespace TCMobile
                 account.Properties.Add("FirstName", firstname);
                 account.Properties.Add("LastName", lastname);
                 account.Properties.Add("UserID",userid);
+                account.Properties.Add("HomeDomain", homedomain);
                 AccountStore.Create().Save(account, App.AppName);
             }
 

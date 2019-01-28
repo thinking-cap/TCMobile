@@ -49,7 +49,7 @@ namespace TCMobile.Views
                 bool doCredentialsExist = App.CredentialsService.DoCredentialsExist();
                 if (!doCredentialsExist)
                 {
-                    App.CredentialsService.SaveCredentials(username, password,login.userId, login.firstName,login.lastName);
+                    App.CredentialsService.SaveCredentials(username, password,login.userId, login.firstName,login.lastName,login.homedomain);
                 }
 
                 App.IsUserLoggedIn = true;

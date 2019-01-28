@@ -48,11 +48,13 @@ namespace TCMobile
                 return database;
             }
         }
-
+         
         protected override void OnStart()
         {
             // Handle when your app starts
             AppCenter.Start("ios=7aae5c12-87d4-4d6b-9d81-7823c9b6f72c;" + "uwp={bc982458-35a2-4f4c-bbb9-82d98349e3e8;};" + "android={6f839c85-8c8a-4e6a-89ac-d4b82b3d49b1;}", typeof(Analytics), typeof(Crashes));
+
+           
         }
 
         protected override void OnSleep()
