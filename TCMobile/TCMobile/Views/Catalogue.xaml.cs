@@ -119,7 +119,8 @@ namespace TCMobile.Views
             CatalogueProgress.IsVisible = true;
             CatalogueProgress.IsRunning = true;
             // Load the catalogue
-            TCMobile.Catalogue catalogue = await Courses.GetCatalogue(Constants.ProgramID, Constants.StudentID);
+            CredentialsService credentials = new CredentialsService();
+            TCMobile.Catalogue catalogue = await Courses.GetCatalogue(credentials.HomeDomain, Constants.StudentID);
             //Hide the spinner
             CatalogueProgress.IsVisible = false;
             CatalogueProgress.IsRunning = false;
@@ -127,6 +128,7 @@ namespace TCMobile.Views
             // Bind the courses to the ListView
             if (catalogue != null)
             {
+              
                 CatalogueList.ItemsSource = catalogue.courses;
                 CatalogueLoaded = true;
             }

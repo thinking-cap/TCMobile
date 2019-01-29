@@ -17,6 +17,7 @@ namespace TCMobile.Views
             InitializeComponent();
             Icon = "hamburger.png";
             Title = "Menu";
+            CredentialsService credentials = new CredentialsService();
             menuItems = new List<HomeMenuItem>
             {
                 new HomeMenuItem {Id = MenuItemType.Catalogue, Title="Catalogue" },
@@ -25,7 +26,7 @@ namespace TCMobile.Views
                 new HomeMenuItem {Id = MenuItemType.Logout, Title="Logout"}
             };
             bool doCredentialsExist = App.CredentialsService.DoCredentialsExist();
-            UserImage.Source = Constants.Url + "/ViewPhoto.aspx?UserID=" + Constants.StudentID;
+            UserImage.Source = Constants.Url + "/ViewPhoto.aspx?UserID=" + credentials.UserID;
             string first = "Learner";
             string last = "";
             if (doCredentialsExist)
