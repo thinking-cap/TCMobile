@@ -32,7 +32,7 @@ namespace TCMobile
             get
             {
                 var account = AccountStore.Create().FindAccountsForService(App.AppName).FirstOrDefault();
-                return (account != null) ? account.Properties["HomeDomain"] : null;
+                return (account != null) ? (account.Properties.ContainsKey("HomeDomain")) ? account.Properties["HomeDomain"] : null : null;
             }
         }
 

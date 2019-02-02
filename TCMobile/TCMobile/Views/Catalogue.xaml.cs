@@ -10,6 +10,12 @@ using Xamarin.Forms.Xaml;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using Newtonsoft.Json;
+using System.IO;
+using System.Net;
+using System.ComponentModel;
+using ICSharpCode.SharpZipLib.Core;
+using ICSharpCode.SharpZipLib.Zip;
+using System.Diagnostics;
 
 namespace TCMobile.Views
 {
@@ -50,12 +56,12 @@ namespace TCMobile.Views
                 DisplayAlert("TC LMS", "Error while saving the file " + e.FileDownloadMessage, "Close");
             }
         }
-        
+        private string localFolder;
         async void CreateCourseRecord(string courseid)
         {
             Models.Record rec = new Models.Record();
             rec.CourseID = courseid;
-
+            localFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             await App.Database.SaveItemAsync(rec);
 
         }
@@ -65,18 +71,109 @@ namespace TCMobile.Views
 
         }
         bool busy;
+        private void Completed(object sender, AsyncCompletedEventArgs e)
+        {
+            string courseID = ((System.Net.WebClient)(sender)).QueryString["CourseID"];
+            Unzip(courseID);
+        }
 
-       
+        private void DownloadProgressCallback(object sender, DownloadProgressChangedEventArgs e)
+        {
+            Console.WriteLine("Downloaded {0}mbs",
+                ((int)e.BytesReceived / 1000000)
+               );
 
+        }
+
+        async void Unzip(string CourseID)
+        {
+            string localFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            string pathToNewFolder = Path.Combine(localFolder, "CoursePackage.zip");
+            string newFolder = Path.Combine(localFolder, "Courses/" + CourseID);
+            string pathToNewFile = Path.Combine(pathToNewFolder, Path.GetFileName("CoursePackage.zip"));
+
+            ZipFile zf = null;
+            FileStream fs = File.OpenRead(pathToNewFolder);
+            zf = new ZipFile(fs);
+
+            foreach (ZipEntry zipEntry in zf)
+            {
+                String entryFileName = zipEntry.Name;
+                // to remove the folder from the entry:- entryFileName = Path.GetFileName(entryFileName);
+                // Optionally match entrynames against a selection list here to skip as desired.
+                // The unpacked length is available in the zipEntry.Size property.
+
+                byte[] buffer = new byte[4096];     // 4K is optimum
+                Stream zipStream = zf.GetInputStream(zipEntry);
+
+                // Manipulate the output filename here as desired.
+                String fullZipToPath = Path.Combine(newFolder, entryFileName);
+                string directoryName = Path.GetDirectoryName(fullZipToPath);
+                if (directoryName.Length > 0)
+                    Directory.CreateDirectory(directoryName);
+
+                // Unzip file in buffered chunks. This is just as fast as unpacking to a buffer the full size
+                // of the file, but does not waste memory.
+                // The "using" will close the stream even if an exception occurs.
+                try
+                {
+                    using (FileStream streamWriter = File.Create(fullZipToPath))
+                    {
+                        StreamUtils.Copy(zipStream, streamWriter, buffer);
+
+                    }
+                }
+                catch
+                {
+
+                }
+
+            }
+
+
+            File.Delete(pathToNewFolder);
+
+            var action = await DisplayAlert("Finished", "Would you like to launch the course?", "Yes", "No");
+            //DisplayAlert("Finished", "Course had successfully been download.", "OK");
+            Debug.WriteLine("action " + action);
+            if (action)
+            {
+                string test = await Courses.openCourse(CourseID, Navigation);
+            }
+
+
+        }
+
+
+        void Download(string url, string folder, string id)
+        {
+            
+            try
+            {
+                WebClient webClient = new WebClient();
+                webClient.QueryString.Add("CourseID", id);
+                webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback);
+                webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
+                string pathToNewFile = Path.Combine(Constants.LocalFolder, Path.GetFileName("CoursePackage.zip"));
+                webClient.DownloadFileAsync(new Uri(url), pathToNewFile);
+            }
+            catch (Exception ex)
+            {
+                string x = "failed";
+            }
+        }
        
         async void DownloadClicked(object sender, EventArgs e)
         {
+
             if (busy)
                 return;
             busy = true;
 
             Button button = (Button)sender;
             string id = button.ClassId;
+            var courseObj = catalogue.courses.Where(course => course.courseid == id).FirstOrDefault();
+
             string version = button.Parent.ClassId;
             // disable the button to prevent double clicking
             ((Button)sender).IsEnabled = false;
@@ -100,10 +197,10 @@ namespace TCMobile.Views
             if (status == PermissionStatus.Granted)
             {
                
-                string url = Constants.Url + "/mobile/GetCourse.ashx?CourseID=" + id + "&Version=" + version;
+                string url = Constants.Url + "/mobile/GetCourse.ashx?CourseID=" + courseObj.courseid + "&Version=" + courseObj.version;
                 //string url = "https://tcstable.blob.core.windows.net/coursepackages/" + id + "/" + version + "/CoursePackage.zip";
-
-                downloader.DownloadFile(url, "TCLMS/Temp",id);
+                Download(url, "TCLMS/Temp", id);
+                //downloader.DownloadFile(url, "TCLMS/Temp",id);
             }
             else if (status != PermissionStatus.Unknown)
             {
@@ -113,6 +210,10 @@ namespace TCMobile.Views
             busy = false;
         }
 
+        public TCMobile.Catalogue catalogue;
+       
+
+
         async void LoadCourses()
         {
             // show the spinner and turn it on 
@@ -120,7 +221,8 @@ namespace TCMobile.Views
             CatalogueProgress.IsRunning = true;
             // Load the catalogue
             CredentialsService credentials = new CredentialsService();
-            TCMobile.Catalogue catalogue = await Courses.GetCatalogue(credentials.HomeDomain, Constants.StudentID);
+            
+            catalogue = await Courses.GetCatalogue(credentials.HomeDomain, credentials.UserID);
             //Hide the spinner
             CatalogueProgress.IsVisible = false;
             CatalogueProgress.IsRunning = false;
@@ -128,9 +230,11 @@ namespace TCMobile.Views
             // Bind the courses to the ListView
             if (catalogue != null)
             {
-              
+               
                 CatalogueList.ItemsSource = catalogue.courses;
                 CatalogueLoaded = true;
+
+               
             }
 
         }
@@ -144,6 +248,8 @@ namespace TCMobile.Views
 
             String text = label.Text;
             Navigation.PushAsync(new ViewCourse(id));
-        }
+        }       
     }
+
+   
 }

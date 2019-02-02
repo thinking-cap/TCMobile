@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Dynamic;
+using TCMobile.Views;
+using Xamarin.Forms;
 
+using Xamarin.Forms.Xaml;
 
 namespace TCMobile
 {
@@ -35,5 +38,16 @@ namespace TCMobile
             
            
         }
+
+        public static async Task<String>openCourse(string id, INavigation navigation)
+        {
+           //MainPage.Navigation.PushAsync(new ViewCourse(id));
+           await navigation.PushAsync(new ViewCourse(id));
+
+            return "test";
+           
+        }
+
+       
     }
 }

@@ -10,6 +10,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="api.js" />
+    <None Remove="course.htm" />
+    <None Remove="jquery.mobile-1.4.5.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="api.js" />
+    <EmbeddedResource Include="course.htm" />
+    <EmbeddedResource Include="jquery.mobile-1.4.5.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="1.12.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="1.12.0" />
     <PackageReference Include="Microsoft.AppCenter.Distribute" Version="1.12.0" />

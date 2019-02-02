@@ -9,9 +9,13 @@ using TCMobile.Models;
 using TCMobile.Services;
 
 namespace TCMobile.ViewModels
+
 {
+   
+
     public class BaseViewModel : INotifyPropertyChanged
     {
+        public INavigation Navigation { get; set; }
         public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>() ?? new MockDataStore();
 
         bool isBusy = false;

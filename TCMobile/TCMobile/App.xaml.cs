@@ -26,8 +26,8 @@ namespace TCMobile
             
             CredentialsService = new CredentialsService();
             InitializeComponent();
-
-            if (CredentialsService.DoCredentialsExist())
+            Constants.LocalFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            if (CredentialsService.DoCredentialsExist() && !String.IsNullOrEmpty(CredentialsService.HomeDomain) && !String.IsNullOrEmpty(CredentialsService.UserID))
             {
                 MainPage = new MainPage();
             }
