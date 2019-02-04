@@ -11,6 +11,7 @@ using Android.Views;
 using Android.Widget;
 using TCMobile.Droid;
 using Xamarin.Forms;
+using Xamarin.Forms.Platform.Android;
 
 [assembly: Dependency(typeof(BaseUrl))]
 namespace TCMobile.Droid
@@ -23,4 +24,5 @@ namespace TCMobile.Droid
                 "Courses/2d7d0a7d-145a-41d0-9abf-685a2b5dfc3c/Online_Placement_Test_no_timer_pack/YKZOP4NACH3EPJNTG6M4T2BQDI/Unit_4_5/995/";
         }
     }
+   
 }

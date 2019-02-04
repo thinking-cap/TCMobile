@@ -80,6 +80,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BaseUrl.cs" />
+    <Compile Include="HybridWebViewRenderer.cs" />
     <Compile Include="iOSDownloader.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />

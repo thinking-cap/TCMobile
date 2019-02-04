@@ -14,7 +14,7 @@ namespace TCMobile.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ViewCourse : ContentPage
 	{
-        public static WebView courseWindow;
+        public static HybridWebView courseWindow;
        
         public ViewCourse (string courseid)
 		{
@@ -24,6 +24,7 @@ namespace TCMobile.Views
             string coursePath = Path.Combine(localFolder, courseindex);
             var assembly = IntrospectionExtensions.GetTypeInfo(typeof(ViewCourse)).Assembly;
             //Stream stream = assembly.GetManifestResourceStream("TCMobile.course.htm");
+            String baseUrl = "file:/" + Path.GetDirectoryName(coursePath);
             FileStream stream = File.OpenRead(coursePath);
             if (stream == null)
             {
@@ -45,7 +46,7 @@ namespace TCMobile.Views
             StreamReader reader = new StreamReader(stream);
             string htmlString = reader.ReadToEnd();
 
-            courseWindow = new WebView
+            courseWindow = new HybridWebView
             {
                 HeightRequest = 1000,
                 WidthRequest = 1000,
@@ -62,14 +63,15 @@ namespace TCMobile.Views
             WebViewContainer.Children.Add(courseWindow);
 
             HtmlWebViewSource html = new HtmlWebViewSource();
-            string baseurl = html.BaseUrl;
+            //string baseurl = html.BaseUrl;
             // html.Html = htmlString;
-            html.Html = iframe;
-            html.BaseUrl = DependencyService.Get<iBaseURL>().Get();
-            courseWindow.Source = html;
+            html.Html = htmlString;
+            //  html.BaseUrl = DependencyService.Get<iBaseURL>().Get();
+            html.BaseUrl = baseUrl;
+            //courseWindow.Source = iframe;
+            courseWindow.Uri = coursePath;
             
             
-            //courseWindow.Source = coursePath;
            // courseWindow.Navigating += webviewNavigating;
 
             

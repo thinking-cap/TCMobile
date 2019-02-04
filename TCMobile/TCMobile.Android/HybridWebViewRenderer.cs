@@ -35,6 +35,7 @@ namespace TCMobile.Droid
             if (Control == null)
             {
                 var webView = new Android.Webkit.WebView(_context);
+                webView.Settings.AllowUniversalAccessFromFileURLs = true;
                 webView.Settings.JavaScriptEnabled = true;
                 webView.SetWebViewClient(new JavascriptWebViewClient($"javascript: {JavascriptFunction}"));
                 SetNativeControl(webView);
@@ -47,9 +48,14 @@ namespace TCMobile.Droid
             }
             if (e.NewElement != null)
             {
-                Control.AddJavascriptInterface(new JSBridge(this), "jsBridge");               
-                //Control.LoadUrl($"file:///android_asset/Content/{Element.Source}");
-                Control.LoadData(Element.Source, "text/html", "UTF-8");
+                Control.AddJavascriptInterface(new JSBridge(this), "jsBridge");
+                Control.Settings.AllowUniversalAccessFromFileURLs = true;
+                Control.Settings.AllowFileAccessFromFileURLs = true;
+                Control.Settings.AllowContentAccess = true;
+                Control.Settings.AllowFileAccess = true;
+                Control.LoadUrl($"file:///{Element.Uri}");
+                //Control.LoadData(Element.Source, "text/html", "UTF-8");
+                //Control.LoadDataWithBaseURL(Element.BaseUrl, Element.Source, "text/html", "UTF-8", null);
             }
         }
     }
