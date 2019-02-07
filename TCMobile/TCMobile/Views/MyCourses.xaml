@@ -9,9 +9,20 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="My Courses"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <ListView x:Name="CourseList" HorizontalOptions="FillAndExpand">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout ClassId="{Binding Version}" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                <Label Text="{Binding CourseName}" VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand"/>
+                                <Button Text="Open" CornerRadius="10" HorizontalOptions="End" Clicked="OpenCourseClick" ClassId="{Binding CourseID}"/>
+                                <Button Text="Delete" CornerRadius="10" HorizontalOptions="End" Clicked="RemoveCourseClick" ClassId="{Binding CourseID}"/>
+                                <!--<Button Text="Download" CornerRadius="10" HorizontalOptions="End" Command="{Binding DownloadCourse}" CommandParameter="{Binding courseid}" ClassId="{Binding courseid}"/>-->
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

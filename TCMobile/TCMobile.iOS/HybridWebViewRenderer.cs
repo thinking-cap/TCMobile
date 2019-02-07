@@ -31,13 +31,9 @@ namespace TCMobile.iOS
                 var script = new WKUserScript(new NSString(JavaScriptFunction), WKUserScriptInjectionTime.AtDocumentEnd, false);
                 userController.AddUserScript(script);
                 userController.AddScriptMessageHandler(this, "invokeAction");
-
+               
                 var config = new WKWebViewConfiguration { UserContentController = userController };
-                try
-                {
-                    config.Preferences.SetValueForKey(NSObject.FromObject(true), new NSString("allowFileAccessFromFileURLs"));
-                    config.Preferences.SetValueForKey(NSObject.FromObject(true), new NSString("allowUniversalAccessFromFileURLs"));
-                }catch(Exception ex) { }
+               
                 var webView = new WKWebView(Frame, config);
                 SetNativeControl(webView);
             }
@@ -50,11 +46,13 @@ namespace TCMobile.iOS
             }
             if (e.NewElement != null)
             {
-                //string fileName = Path.Combine(NSBundle.MainBundle.BundlePath, string.Format("Content/{0}", Element.Uri));
-                //string fileName = string.Format($"file:///{0}", Element.Uri);
-                //Control.LoadRequest(new NSUrlRequest(new NSUrl(fileName, true)));
-                //Control.LoadRequest(new NSUrlRequest(new NSUrl($"file://{Element.Uri}", true)));
-                Control.LoadFileUrl(new NSUrl(Element.Uri, true), NSUrl.CreateFileUrl(new[] { Path.GetDirectoryName(Element.Uri) }));
+                string Base = Path.GetDirectoryName(Element.Uri) + "/";
+                var fileUrl = new NSUrl(Element.Uri, false);
+                var BaseUrl = new NSUrl(Base,true,fileUrl);
+                //Control.LoadRequest(new NSUrlRequest(fileUrl));
+                Control.LoadFileUrl(fileUrl,BaseUrl);
+                //Control.LoadHtmlString(new NSString(Element.Source), BaseUrl);
+              
             }
         }
 

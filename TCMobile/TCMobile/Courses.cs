@@ -48,6 +48,14 @@ namespace TCMobile
            
         }
 
-       
+
+
+        public async Task<List<Models.Record>>CheckForCourses()
+        {
+
+            List<Models.Record> courses = await App.Database.GetItemsAsync();
+            
+            return courses;
+        }
     }
 }

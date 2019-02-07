@@ -15,6 +15,42 @@ namespace TCMobile.Views
 		public MyCourses ()
 		{
 			InitializeComponent ();
+            CheckForCourses();
+
 		}
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            CheckForCourses();
+        }
+
+        private async void CheckForCourses()
+        {
+            Courses c = new Courses();
+            List<Models.Record> courses = await c.CheckForCourses();
+            if (courses.Count > 0)
+                CourseList.ItemsSource = courses;
+        }
+
+        private async void OpenCourseClick(object sender, EventArgs args)
+        {
+            Button button = (Button)sender;
+            string id = button.ClassId;
+
+            string test = await Courses.openCourse(id, Navigation);
+        }
+
+        private async void RemoveCourseClick(object sender, EventArgs args)
+        {
+            Button button = (Button)sender;
+            string id = button.ClassId;
+            Models.Record course = await App.Database.GetCourseByID(id);
+            await App.Database.DeleteItemAsync(course);
+        }
+
+       
+
+
 	}
 }

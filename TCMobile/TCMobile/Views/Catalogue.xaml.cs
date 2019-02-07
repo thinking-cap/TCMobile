@@ -47,7 +47,7 @@ namespace TCMobile.Views
         {
             if (e.FileSaved)
             {
-                CreateCourseRecord(e.CourseID);
+                
 
                 DisplayAlert("TC LMS", "File Saved Successfully " + e.FileDownloadMessage, "Close");
             }
@@ -61,6 +61,9 @@ namespace TCMobile.Views
         {
             Models.Record rec = new Models.Record();
             rec.CourseID = courseid;
+            // find the course name
+            rec.CourseName = catalogue.courses.Find(x => x.courseid == courseid).title;
+            rec.Version = catalogue.courses.Find(x => x.courseid == courseid).version;
             localFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             await App.Database.SaveItemAsync(rec);
 
@@ -132,7 +135,7 @@ namespace TCMobile.Views
 
 
             File.Delete(pathToNewFolder);
-
+            CreateCourseRecord(CourseID);
             var action = await DisplayAlert("Finished", "Would you like to launch the course?", "Yes", "No");
             //DisplayAlert("Finished", "Course had successfully been download.", "OK");
             Debug.WriteLine("action " + action);

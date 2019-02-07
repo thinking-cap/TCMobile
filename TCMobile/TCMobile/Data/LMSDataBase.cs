@@ -27,6 +27,11 @@ namespace TCMobile.Data
             return database.QueryAsync<Models.Record>("SELECT * FROM [TodoItem] WHERE [Done] = 0");
         }
 
+        public Task<Models.Record> GetCourseByID(string courseid)
+        {
+            return database.Table<Models.Record>().Where(i => i.CourseID == courseid).FirstOrDefaultAsync();
+        }
+
         public Task<Models.Record> GetItemAsync(int id)
         {
             return database.Table<Models.Record>().Where(i => i.ID == id).FirstOrDefaultAsync();

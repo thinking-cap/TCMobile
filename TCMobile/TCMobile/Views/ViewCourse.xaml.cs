@@ -5,7 +5,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Xml;
+using System.Xml.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -19,7 +20,9 @@ namespace TCMobile.Views
         public ViewCourse (string courseid)
 		{
 			InitializeComponent ();
-            string courseindex = "Courses/2d7d0a7d-145a-41d0-9abf-685a2b5dfc3c/Online_Placement_Test_no_timer_pack/YKZOP4NACH3EPJNTG6M4T2BQDI/Unit_4_5/995/Unit.html";
+            string launch = intemPath(courseid);
+            //string courseindex = "Courses/2d7d0a7d-145a-41d0-9abf-685a2b5dfc3c/YKZOP4NACH3EPJNTG6M4T2BQDI/Unit_4_5/995/Unit.html";
+            string courseindex = "Courses/" + courseid + "/" + launch;
             string localFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             string coursePath = Path.Combine(localFolder, courseindex);
             var assembly = IntrospectionExtensions.GetTypeInfo(typeof(ViewCourse)).Assembly;
@@ -68,7 +71,7 @@ namespace TCMobile.Views
             html.Html = htmlString;
             //  html.BaseUrl = DependencyService.Get<iBaseURL>().Get();
             html.BaseUrl = baseUrl;
-            //courseWindow.Source = iframe;
+            courseWindow.Source = htmlString;
             courseWindow.Uri = coursePath;
             
             
@@ -95,5 +98,30 @@ namespace TCMobile.Views
         //{
         //    retorno = await courseWindow.EvaluateJavaScriptAsync("getState();");
         //}
+
+        public string intemPath(string courseid)
+        {
+            XNamespace ns = "http://www.imsglobal.org/xsd/imscp_v1p1";
+            string localFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            string manifestXML = Path.Combine(localFolder, "Courses/" + courseid + "/imsmanifest.xml");
+            // XDocument manifest = XDocument.Load(manifestXML);
+
+
+            XmlDocument manifest = new XmlDocument();
+            manifest.Load(manifestXML);
+
+            XmlNamespaceManager nsmgr = new XmlNamespaceManager(manifest.NameTable);
+            nsmgr.AddNamespace("imsss", "http://www.imsglobal.org/xsd/imsss");
+            nsmgr.AddNamespace("adlseq", "http://www.adlnet.org/xsd/adlseq_v1p3");
+            nsmgr.AddNamespace("mn", manifest.DocumentElement.NamespaceURI);
+            XmlNode organization = manifest.DocumentElement;
+            XmlNode item = organization.SelectSingleNode("//mn:item",nsmgr);
+            string idref = item.Attributes["identifierref"].Value;
+            XmlNode resource = organization.SelectSingleNode("//mn:resource[@identifier='" + idref + "']",nsmgr);
+            var href = resource.Attributes["href"].Value;
+            //string idref = (string)manifest.Root.Descendants("item").FirstOrDefault().Attribute("identifierref");
+            //string href = (string)manifest.Root.Descendants("resource").FirstOrDefault(b => (string)b.Attribute("identifier") == idref).Attribute("href");
+            return href;
+        }
     }
 }

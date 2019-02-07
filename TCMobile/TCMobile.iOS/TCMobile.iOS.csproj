@@ -63,6 +63,8 @@
     <CodesignProvision>
     </CodesignProvision>
     <MtouchSdkVersion>12.1</MtouchSdkVersion>
+    <IOSDebugOverWiFi>true</IOSDebugOverWiFi>
+    <MtouchProfiling>false</MtouchProfiling>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -77,6 +79,9 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
     <AppExtensionDebugBundleId />
+    <EnvironmentVariables>
+      <Variable name="CFNETWORK_DIAGNOSTICS" value="3" />
+    </EnvironmentVariables>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BaseUrl.cs" />
