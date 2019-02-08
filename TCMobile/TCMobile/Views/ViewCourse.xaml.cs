@@ -20,7 +20,8 @@ namespace TCMobile.Views
         public ViewCourse (string courseid)
 		{
 			InitializeComponent ();
-            string launch = intemPath(courseid);
+            string launch = itemPath(courseid);
+
             //string courseindex = "Courses/2d7d0a7d-145a-41d0-9abf-685a2b5dfc3c/YKZOP4NACH3EPJNTG6M4T2BQDI/Unit_4_5/995/Unit.html";
             string courseindex = "Courses/" + courseid + "/" + launch;
             string localFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
@@ -36,18 +37,28 @@ namespace TCMobile.Views
                     String.Format("Cannot create stream from specified URL: {0}", "course.htm"));
             }
 
-            string iframe = @"<html><head>
-                                    <script type='text/javascript'>
-                                            var API_1484_11 ={
-                                                Initialize : function(){return 'true';}
-                                            };
-                                    </script>
-                                    <style type='text/css'>
-                                        iframe{width:100%;height:100%;border:0px;}
-                                    </style>
-                                </head><body>
-                                <iframe width='100%' height='100%' src='" + coursePath+"'></iframe></body></html>";
+            string iframe = "<html><head>" +
+                                    "<script type='text/javascript'> " +
+                                            "var API_1484_11 ={" +
+                                                "Initialize : function(){return 'true'; " +
+                                            "};" +                                            
+                                    "</script>" +
+                                    "<style type='text/css'>" +
+                                        "iframe{width:100%;height:100%;border:0px;}" +
+                                    "</style>" +
+                                "</head><body>" +
+                                "<iframe width='100%' id='coursewindow' height='100%'></iframe>" +
+                                "<script type='text/javascript'>document.getElementById('coursewindow').src = 'https://thinkingcap.com';" + "</script>" +
+                                "</body></html>";
             StreamReader reader = new StreamReader(stream);
+
+            using (FileStream f = File.Create(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Courses/index.htm")))
+            {
+                using (StreamWriter w = new StreamWriter(f, Encoding.UTF8))
+                {
+                    w.WriteLine(iframe);
+                }
+            }
             string htmlString = reader.ReadToEnd();
 
             courseWindow = new HybridWebView
@@ -101,7 +112,7 @@ namespace TCMobile.Views
         //    retorno = await courseWindow.EvaluateJavaScriptAsync("getState();");
         //}
 
-        public string intemPath(string courseid)
+        public string itemPath(string courseid)
         {
             XNamespace ns = "http://www.imsglobal.org/xsd/imscp_v1p1";
             string localFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
