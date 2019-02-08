@@ -25,6 +25,7 @@ namespace TCMobile.Views
             string courseindex = "Courses/" + courseid + "/" + launch;
             string localFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             string coursePath = Path.Combine(localFolder, courseindex);
+           
             var assembly = IntrospectionExtensions.GetTypeInfo(typeof(ViewCourse)).Assembly;
             //Stream stream = assembly.GetManifestResourceStream("TCMobile.course.htm");
             String baseUrl = "file:/" + Path.GetDirectoryName(coursePath);
@@ -73,6 +74,7 @@ namespace TCMobile.Views
             html.BaseUrl = baseUrl;
             courseWindow.Source = htmlString;
             courseWindow.Uri = coursePath;
+            courseWindow.iOSPath = courseindex;
             
             
            // courseWindow.Navigating += webviewNavigating;

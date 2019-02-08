@@ -46,13 +46,20 @@ namespace TCMobile.iOS
             }
             if (e.NewElement != null)
             {
-                string Base = Path.GetDirectoryName(Element.Uri) + "/";
-                var fileUrl = new NSUrl(Element.Uri, false);
-                var BaseUrl = new NSUrl(Base,true,fileUrl);
+                var docsDir = NSFileManager.DefaultManager.GetUrl(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomain.User, null, true, out var error);
+                var data = NSUrl.FromFilename(Path.Combine(docsDir.Path, Element.iOSPath));
+
+                var content = NSUrl.FromFilename(Path.Combine(docsDir.Path, "Courses"));
+                Control.LoadFileUrl(data, content);
+                //string Base = Path.GetDirectoryName(Element.Uri) + "/*/";
+                //var fileUrl = new NSUrl(Element.Uri, true);
+                //var BaseUrl = new NSUrl(Base,true,fileUrl);
+                //var BaseUrl = new NSUrl(Base, true, fileUrl);
                 //Control.LoadRequest(new NSUrlRequest(fileUrl));
-                Control.LoadFileUrl(fileUrl,BaseUrl);
+                //Control.LoadFileUrl(fileUrl,fileUrl.RemoveLastPathComponent());
+                //Control.LoadHtmlString(Element.Source, fileUrl.RemoveLastPathComponent());
                 //Control.LoadHtmlString(new NSString(Element.Source), BaseUrl);
-              
+
             }
         }
 

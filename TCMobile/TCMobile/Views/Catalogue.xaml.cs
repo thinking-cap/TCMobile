@@ -59,14 +59,16 @@ namespace TCMobile.Views
         private string localFolder;
         async void CreateCourseRecord(string courseid)
         {
-            Models.Record rec = new Models.Record();
-            rec.CourseID = courseid;
-            // find the course name
-            rec.CourseName = catalogue.courses.Find(x => x.courseid == courseid).title;
-            rec.Version = catalogue.courses.Find(x => x.courseid == courseid).version;
-            localFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            await App.Database.SaveItemAsync(rec);
-
+            Models.Record courseExists = await App.Database.GetCourseByID(courseid);
+            if(courseExists== null) { 
+                Models.Record rec = new Models.Record();
+                rec.CourseID = courseid;
+                // find the course name
+                rec.CourseName = catalogue.courses.Find(x => x.courseid == courseid).title;
+                rec.Version = catalogue.courses.Find(x => x.courseid == courseid).version;
+                localFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                await App.Database.SaveItemAsync(rec);
+            }
         }
 
         private void OnFileProgress(object sender, DownloadProgress e)
