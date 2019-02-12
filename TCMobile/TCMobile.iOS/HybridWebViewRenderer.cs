@@ -43,11 +43,11 @@ namespace TCMobile.iOS
             {
                 userController = new WKUserContentController();
                 var script = new WKUserScript(new NSString(JavaScriptFunction), WKUserScriptInjectionTime.AtDocumentEnd, true);
-                var api = new WKUserScript(new NSString(API), WKUserScriptInjectionTime.AtDocumentStart, true);
-                var apiSetup = new WKUserScript(new NSString(APISetup), WKUserScriptInjectionTime.AtDocumentStart, true);
+                var api = new WKUserScript(new NSString(Element.APIJS), WKUserScriptInjectionTime.AtDocumentStart, true);
+               // var apiSetup = new WKUserScript(new NSString(APISetup), WKUserScriptInjectionTime.AtDocumentStart, true);
                 userController.AddUserScript(script);
                 userController.AddUserScript(api);
-                userController.AddUserScript(apiSetup);
+               // userController.AddUserScript(apiSetup);
 
                 userController.AddScriptMessageHandler(this, "invokeAction");
                
@@ -64,8 +64,9 @@ namespace TCMobile.iOS
                     }
                 };
                 var webView = new WKWebView(Frame, config);
-                var js = (NSString)"SetupAPI()";
-                webView.EvaluateJavaScript(js, null);
+                // var js = (NSString)"SetupAPI()";
+                //webView.EvaluateJavaScript(js, null);
+                webView.Configuration.Preferences.SetValueForKey(NSObject.FromObject(true),new NSString("allowFileAccessFromFileURLs"));
                 webView.CustomUserAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 12_1_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Mobile/15E148 Safari/604.1";
                 webView.SizeToFit();
 

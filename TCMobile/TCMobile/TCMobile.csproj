@@ -10,13 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="api.js" />
+    <None Remove="API.js" />
     <None Remove="course.htm" />
     <None Remove="jquery.mobile-1.4.5.min.js" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="api.js" />
+    <EmbeddedResource Include="API.js" />
     <EmbeddedResource Include="course.htm" />
     <EmbeddedResource Include="jquery.mobile-1.4.5.min.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

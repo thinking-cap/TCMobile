@@ -26,6 +26,7 @@ namespace TCMobile.Droid
             CrossCurrentActivity.Current.Init(this,savedInstanceState);
             base.OnCreate(savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            global::Android.Webkit.WebView.SetWebContentsDebuggingEnabled(true);
             LoadApplication(new App());
         }
 

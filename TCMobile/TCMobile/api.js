@@ -1,1 +1,464 @@
-﻿alert('hello world');
+
+
+    window.parent = window;
+    window.opener = window;
+
+    var meta = document.createElement('meta');
+    meta.setAttribute('name', 'viewport');
+    meta.setAttribute('content', 'width=device-width');
+    meta.setAttribute('initial-scale', '1.0');
+    meta.setAttribute('maximum-scale', '1.0');
+    meta.setAttribute('minimum-scale', '1.0');
+    meta.setAttribute('user-scalable', 'no');
+    try {
+        document.getElementsByTagName('head')[0].appendChild(meta);
+    } catch (e) {}
+
+    var config = {
+        init: false,
+        error: 0,
+        api_return_bool: false,
+    };
+
+   var  API_1484_11 = {
+        Initialize: function () {
+            config.init = true;
+            try {
+                jsBridge.invokeAction('Initialized');
+            } catch (e) {
+                window.webkit.messageHandlers.invokeAction.postMessage('Initialized');
+            }
+            return "true";
+        },
+        GetValue: function (key) {
+            if (config.init === true) {
+                var val = "";
+                if (key.indexOf("cmi.interactions") > -1) {
+                    val = GetCMIInteractions(key);
+                } else if (key.indexOf("cmi.objectives") > -1) {
+                    val = GetCMIObjectives(key);
+                } else if (key.indexOf("cmi.comments") > -1) {
+                    val = GetCMIComments(key);
+                } else {
+                    if (key.indexOf('adl.nav.request_valid.choice') >= 0) {
+
+                    } else {
+                        config.error = 0;
+                        switch (key) {
+                            case "cmi._children": return cmi._children; break;
+                            case "cmi.learner_name": val = cmi.learner_name; break;
+                            case "cmi.learner_id": val = cmi.learner_id; break;
+                            case "cmi.course_id": val = courseID; break;
+                            case "cmi.location": val = cmi.location; break;
+                            case "cmi.completion_status": val = cmi.completion_status; break;
+                            case "cmi.success_status": val = cmi.success_status; break;
+                            case "cmi.score.scaled": val = cmi.score.scaled; break;
+                            case "cmi.entry": val = cmi.entry; break;
+                            case "cmi.mode": val = cmi.mode; break;
+                            case "cmi.score_children": val = cmi.score_children; break;
+                            case "cmi.score.raw": val = cmi.score.raw; break;
+                            case "cmi.score.min": val = cmi.score.min; break;
+                            case "cmi.score.max": val = cmi.score.max; break;
+                            case "cmi.total_time": val = cmi.total_time; break;
+                            case "cmi.lesson_mode": val = cmi.lesson_mode; break;
+                            case "cmi.suspend_data": val = cmi.suspend_data; break;
+                            case "cmi.launch_data": val = cmi.launch_data; break;
+                            case "cmi.comments": val = cmi.comments; break;
+                            case "cmi.progress_measure": val = cmi.progress_measure; break;
+                            case "cmi.comments_from_lms": val = cmi.comments_from_lms; break;
+                            case "cmi.objectives._children": val = "id,score,success_status,completion_status,description"; break;
+                            case "cmi.objectives._count": val = cmi.objectives.length; break;
+                            case "cmi.student_data._children": val = cmi.student_data._children; break;
+                            case "cmi.student_data.mastery_score": val = cmi.student_data.mastery_score; break;
+                            case "cmi.student_data.max_time_allowed": val = cmi.student_data.max_time_allowed; break;
+                            case "cmi.student_data.time_limit_action": val = cmi.student_data.time_limit_action; break;
+                            case "cmi.learner_preference._children": val = cmi.learner_preference._children; break;
+                            case "cmi.student_preference.audio": val = cmi.learner_preference.audio; break;
+                            case "cmi.learner_preference.language": val = cmi.learner_preference.language; break;
+                            case "cmi.learner_preference.speed": val = cmi.learner_preference.speed; break;
+                            case "cmi.learner_preference.text": val = cmi.learner_preference.text; break;
+                            case "adl.nav.request_valid.continue": val = adl.nav.request_valid["continue"]; break;
+                            case "adl.nav.request_valid.previous": val = adl.nav.request_valid.previous; break;
+                            case "adl.nav.request_valid.choice": val = adl.nav.request_valid.choice; break;
+                            default: val = false; config.error = 401; break;
+                        }
+                    }
+                }
+                //if(config.committing !== true)
+                // config.pingAPI();
+                if (config.api_return_bool)
+                    return val;
+                else
+                    return val.toString();
+            } else {
+                config.error = (config.init === true) ? 0 : 301;
+                if (config.api_return_bool)
+                    return false;
+                else
+                    return 'false';
+            }
+        },
+        SetValue: function (key) {
+            return "true";
+        },
+        Terminate: function () {
+            return "true";
+       },
+       Commit: function () {
+           return "true";
+       },
+       GetLastError: function () {
+           return config.error;
+       },
+       GetErrorString: function (num) {
+           var val = "";
+           switch (num) {
+               case 0: val = "No Error"; break;
+               case 101: val = "General Exception"; break;
+               case 201: val = "Invalid argument error"; break;
+               case 202: val = "Element cannot have children"; break;
+               case 203: val = "Element not an array. Cannot have count."; break;
+               case 301: val = "Not initialized"; break;
+               case 401: val = "Not implemented error"; break;
+               case 402: val = "Invalid set value, element is a keyword"; break;
+               case 403: val = "Element is read only"; break;
+               case 404: val = "Element is write only"; break;
+               case 405: val = "Incorrect Data Type"; break;
+           }
+           return val;
+
+       },
+       GetDiagnostic: function () {
+
+       },
+       getCourseInfo: function () {
+           // this is a custom function for Thinkingcap LMS
+
+           return cmi.courseinfo;
+       }
+    };
+
+    // cmi object 
+
+  var  cmi = {
+        _version: "2004",
+        mode: "normal",
+        learner_id: "",
+        learner_name: "",
+        location: "",
+        progress_measure: 0,
+        score: {
+            raw: "",  //RW decicmal
+            max: "",  //RW decimal
+            min: "",  //RW decimal
+            scaled: ""
+        },
+        session_time: "",
+        success_status: "",
+        suspend_data: "", //RW String
+        completion_status: "unknown",
+        credit: "",
+        entry: "",
+        exit: "",
+        total_time : "",
+        launch_data: "", //RO String
+        comments: "", //RW String
+        comments_from_lms: "", //RO String
+        comments_from_learner: {
+            _children: "comment,location,timestamp",
+            comments: []
+        },
+        objectives: [], // not supporting in 1.2
+        student_data: {
+            _children: '"mastery_score", "max_time_allowed", "time_limit_action"',
+            mastery_score: null, // set by lms
+            max_time_allowed: null, // set by lms
+            time_limit_action: ""// set by lms
+        },
+        learner_preference: {
+            _children: '"audio","language","speed","text"', // RO
+            audio: null, //RW Int
+            language: "", //RW string
+            delivery_speed: null, // RW Int
+            text: "" //RW String
+        },
+        assignments_submit: "",
+        interactions: [],
+        courseinfo: {
+            lp: {
+                id: '',
+                name: '',
+                metadata: []
+            },
+            course: {
+                id: '',
+                name: '',
+                metadata: []
+            }
+        }// array of interaction objects
+    };
+
+
+
+
+
+var GetCMIInteractions = function (key) {
+    if (key === "cmi.interactions._count") {
+        return cmi.interactions.length;
+    } else if (key === "cmi.interactions._children") {
+        return '"id", "objectives", "time", "type", "correct_responses", "weighting", "learner_response", "result", "latency"';
+    } else if (key.indexOf("objectives") > 0) {
+        if (key.indexOf("count") > 0) {
+            var x = key.split(".");
+            var interaction = (function () { return eval("cmi.interactions[" + x[2] + "]"); })();
+            if (typeof interaction === 'undefined') {
+                return 401;
+            } else {
+                return interaction.objectives.length;
+            }
+        } else if (key.indexOf('id') > 0) {
+            var x = key.split(".");
+            var interaction = (function () { return eval("cmi.interactions[" + x[2] + "].objectives[" + x[4] + "].id"); })();
+            return interaction;
+        }
+    } else if (key.indexOf('correct_responses') > 0) {
+        if (key.indexOf('correct_responses._count') > 0) {
+            var correct = 0;
+            for (var xx = 0; xx < cmi.interactions.length; xx++) {
+                if (cmi.interactions[xx].result === 'correct')
+                    correct++;
+            }
+            return correct;
+        }
+
+    } else {
+        var x = key.split(".");
+        var property = x[3];
+        var objective = (function () { return eval("cmi.interactions[" + x[2] + "]"); })();
+        if (typeof objective === 'undefined') {
+            return 201;
+        } else {
+            return objective[property];
+        }
+    }
+};
+
+var GetCMIObjectives = function (key) {
+    if (key === "cmi.objectives._count") {
+        return cmi.objectives.length;
+    } else if (key === "cmi.objectives._children") {
+        return "id,score,success_status,completion_status,description";
+    } else {
+        var x = key.split(".");
+        var property = x[3];
+        var p2 = (x[4]) ? x[4] : null;
+        var isIndex = isNaN(x[2] * 1);
+        if (isIndex === false) {
+            var objective = (function () { return eval("cmi.objectives[" + x[2] + "]"); })();
+        } else {
+            var objective = $.grep(cmi.objectives, function (n, i) { return n.id === x[2] });
+            objective = objective[0];
+        }
+        if (typeof objective === 'undefined') {
+            return 201;
+        } else {
+            return (p2 !== null) ? objective[property][p2] : objective[property];
+        }
+    }
+};
+
+
+var GetCMIComments = function (key) {
+    if (key === "cmi.comments_from_learner._count") {
+        return cmi.comments_from_learner.comments.length;
+    } else if (key === "cmi.comments_from_learner._children") {
+        return "comment,location,timestamp";
+    } else {
+        var x = key.split(".");
+        var property = x[3];
+        var p2 = (x[4]) ? x[4] : null;
+        var comment = (function () { return eval("cmi.comments_from_learner.comments[" + x[2] + "]"); })();
+        if (typeof comment === 'undefined') {
+            return 201;
+        } else {
+            return (p2 !== null) ? comment[property][p2] : comment[property];
+        }
+    }
+};
+var SetCMIInteractions = function (key, value) {
+    if (key === "cmi.interactions._count") {
+        return false;
+    } else if (key.indexOf("objectives") > 0) {
+        var x = key.split(".")[2];
+        var objPos = key.split(".")[4];
+        var objectives = eval("cmi.interactions[" + x + "].objectives");
+        if (objPos > objectives.length) {
+            config.error = 201;
+            return false;
+        } else {
+            objectives.push({ 'id': value });
+            return true;
+        }
+    } else if (key.indexOf('correct_responses') > 0 && key.indexOf('pattern') > 0) {
+        var x = key.split(".")[2];
+        var objPos = key.split(".")[4];
+        var correct_responses = eval("cmi.interactions[" + x + "].correct_responses");
+        if (objPos > correct_responses.length) {
+            config.error = 201;
+            return false;
+        } else {
+            correct_responses.push({ 'pattern': value });
+            return true;
+        }
+    } else if (key === "cmi.interactions._children") {
+        return false;
+    } else {
+        var x = key.split(".");
+        var property = x[3];
+        var objective = (function () { return eval("cmi.interactions[" + x[2] + "]"); })();
+        if (typeof objective === 'undefined') {
+            if (x[2] > cmi.interactions._count) {
+                config.error = 201;
+                return false;
+            } else {
+                switch (property) {
+                    case 'id':
+                        var interaction = Interaction(value)
+                        cmi.interactions.push(interaction);
+                        config.error = 0;
+                        return true;
+                    default: config.error = 201; return false;
+                }
+            }
+        } else {
+            var returnval = true;
+            switch (property) {
+                case "id": objective[property] = value; config.error = 0; break;
+                case "type": objective[property] = value; config.error = 0; break;
+                case "time": objective[property] = value; config.error = 0; break;
+                case "latency": objective[property] = value; config.error = 0; break;
+                case "result": objective[property] = value; config.error = 0; break;
+                case "learner_response": objective[property] = value; config.error = 0; break;
+                case "weighting": objective[property] = value; config.error = 0; break;
+                case "description": objective[property] = value; config.error = 0; break;
+                case "timestamp": objective[property] = value; config.error = 0; break;
+                default: returnval = false; config.error = 201; break;
+            };
+
+            return returnval;
+        }
+    }
+};
+
+SetInteractionType = function (interaction, value) {
+    var returnvalue = true;
+    switch (value) {
+        case "true-false": interaction = value; returnvalue = true; break;
+        case "choice": interaction = value; returnvalue = true; break;
+        case "fill-in": interaction = value; returnvalue = true; break;
+        case "matching": interaction = value; returnvalue = true; break;
+        case "performance": interacton = value; returnvalue = true; break;
+        case "sequencing": interaction = value; returnvalue = true; break;
+        case "likert": interaction = value; returnvalue = true; break;
+        case "numeric": interaction = value; returnvalue = true; break;
+        default: returnvalue = false; break;
+    }
+    config.error = (returnvalue === true) ? 0 : 201;
+    return returnvalue;
+
+};
+
+var SetCMIObjectives = function (key, value) {
+    if (key === "cmi.objectives._count") {
+        return false;
+    } else if (key === "cmi.objectives._children") {
+        return false;
+    } else {
+        var x = key.split(".");
+        var property = x[3];
+        var p2 = x[4];
+        var objective = (function () { return eval("cmi.objectives[" + x[2] + "]"); })();
+        if (typeof objective === 'undefined') {
+            if (x[2] > cmi.objectives._count) {
+                config.error = 201;
+                return false;
+            } else {
+                switch (property) {
+                    case 'id':
+                        var objective = Objective(value)
+                        cmi.objectives.push(objective);
+                        config.error = 0;
+                        return true;
+                    default: config.error = 201; return false;
+                }
+            }
+        } else {
+            var returnval = true;
+
+            switch (property) {
+                case "completion_status": objective[property] = value; config.error = 0; break;
+                case "description": objective[property] = value; config.error = 0; break;
+                case "id": objective[property] = value; config.error = 0; break;
+                case "progress_measure": objective[property] = value; config.error = 0; break;
+                case "success_status": objective[property] = value; config.error = 0; break;
+                case "score": objective[property][p2] = value; config.error = 0; break;
+                default: returnval = false; config.error = 201; break;
+            };
+
+            return returnval;
+        }
+    }
+};
+
+var SetCMIComments = function (key, value) {
+    if (key === "cmi.comments_from_learner._count") {
+        return false;
+    } else if (key === "cmi.comments_from_learner._children") {
+        return false;
+    } else {
+        var x = key.split(".");
+        var property = x[3];
+        var p2 = x[4];
+        var comment = (function () { return cmi.comments_from_learner.comments[x[2]]; })();
+        if (typeof comment === 'undefined') {
+            if (x[2] > cmi.comments_from_learner._count) {
+                config.error = 201;
+                return false;
+            } else {
+                switch (property) {
+                    case 'comment':
+                        var comment = Comment(value);
+                        cmi.comments_from_learner.comments.push(comment);
+                        config.error = 0;
+                        return true;
+                    default: config.error = 201; return false;
+                }
+            }
+        } else {
+            var returnval = true;
+            switch (property) {
+                case "comment": comment[property] = value; config.error = 0; break;
+                case "location": comment[property] = value; config.error = 0; break;
+                case "timestamp": comment[property] = value; config.error = 0; break;
+                default: returnval = false; config.error = 201; break;
+            };
+
+            return returnval;
+        }
+    }
+};
+
+var SetStatus = function (value) {
+    var returnvalue = true;
+    switch (value) {
+        case "completed": cmi.completion_status = value; config.error = 0; break;
+        case "incomplete": cmi.completion_status = value; config.error = 0; break;
+        case "not attempted": cmi.completion_status = value; config.error = 0; break;
+        case "unknown": cmi.completion_status = value; config.error = 0; break;
+        default: return value = false; config.error = 405; break;
+
+    }
+    return returnvalue;
+};
+
+

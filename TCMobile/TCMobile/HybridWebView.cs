@@ -31,6 +31,12 @@ namespace TCMobile
            declaringType: typeof(HybridWebView),
            defaultValue: default(string));
 
+        public static readonly BindableProperty APIProperty = BindableProperty.Create(
+          propertyName: "API",
+          returnType: typeof(string),
+          declaringType: typeof(HybridWebView),
+          defaultValue: default(string));
+
         public string Uri
         {
             get { return (string)GetValue(UriProperty); }
@@ -47,6 +53,12 @@ namespace TCMobile
         {
             get { return (string)GetValue(SourceProperty); }
             set { SetValue(SourceProperty, value); }
+        }
+
+        public string APIJS
+        {
+            get { return (string)GetValue(APIProperty); }
+            set { SetValue(APIProperty, value); }
         }
 
         public string iOSPath

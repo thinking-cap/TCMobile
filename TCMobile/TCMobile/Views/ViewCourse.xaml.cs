@@ -21,14 +21,20 @@ namespace TCMobile.Views
 		{
 			InitializeComponent ();
             string launch = itemPath(courseid);
-
+            
             //string courseindex = "Courses/2d7d0a7d-145a-41d0-9abf-685a2b5dfc3c/YKZOP4NACH3EPJNTG6M4T2BQDI/Unit_4_5/995/Unit.html";
             string courseindex = "Courses/" + courseid + "/" + launch;
             string localFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             string coursePath = Path.Combine(localFolder, courseindex);
            
             var assembly = IntrospectionExtensions.GetTypeInfo(typeof(ViewCourse)).Assembly;
-            //Stream stream = assembly.GetManifestResourceStream("TCMobile.course.htm");
+            string APIJS = "";
+            using(var APIStream = assembly.GetManifestResourceStream("TCMobile.API.js"))
+            {
+                StreamReader apiReader = new StreamReader(APIStream);
+                APIJS = apiReader.ReadToEnd();
+            }
+            
             String baseUrl = "file:/" + Path.GetDirectoryName(coursePath);
             FileStream stream = File.OpenRead(coursePath);
             if (stream == null)
@@ -37,28 +43,28 @@ namespace TCMobile.Views
                     String.Format("Cannot create stream from specified URL: {0}", "course.htm"));
             }
 
-            string iframe = "<html><head>" +
-                                    "<script type='text/javascript'> " +
-                                            "var API_1484_11 ={" +
-                                                "Initialize : function(){return 'true'; " +
-                                            "};" +                                            
-                                    "</script>" +
-                                    "<style type='text/css'>" +
-                                        "iframe{width:100%;height:100%;border:0px;}" +
-                                    "</style>" +
-                                "</head><body>" +
-                                "<iframe width='100%' id='coursewindow' height='100%'></iframe>" +
-                                "<script type='text/javascript'>document.getElementById('coursewindow').src = 'https://thinkingcap.com';" + "</script>" +
-                                "</body></html>";
+            //string iframe = "<html><head>" +
+            //                        "<script type='text/javascript'> " +
+            //                                "var API_1484_11 ={" +
+            //                                    "Initialize : function(){return 'true'; " +
+            //                                "};" +                                            
+            //                        "</script>" +
+            //                        "<style type='text/css'>" +
+            //                            "iframe{width:100%;height:100%;border:0px;}" +
+            //                        "</style>" +
+            //                    "</head><body>" +
+            //                    "<iframe width='100%' id='coursewindow' height='100%'></iframe>" +
+            //                    "<script type='text/javascript'>document.getElementById('coursewindow').src = 'https://thinkingcap.com';" + "</script>" +
+            //                    "</body></html>";
             StreamReader reader = new StreamReader(stream);
 
-            using (FileStream f = File.Create(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Courses/index.htm")))
-            {
-                using (StreamWriter w = new StreamWriter(f, Encoding.UTF8))
-                {
-                    w.WriteLine(iframe);
-                }
-            }
+            //using (FileStream f = File.Create(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Courses/index.htm")))
+            //{
+            //    using (StreamWriter w = new StreamWriter(f, Encoding.UTF8))
+            //    {
+            //        w.WriteLine(iframe);
+            //    }
+            //}
             string htmlString = reader.ReadToEnd();
 
             courseWindow = new HybridWebView
@@ -83,6 +89,7 @@ namespace TCMobile.Views
             html.Html = htmlString;
             //  html.BaseUrl = DependencyService.Get<iBaseURL>().Get();
             html.BaseUrl = baseUrl;
+            courseWindow.APIJS = APIJS;
             courseWindow.Source = htmlString;
             courseWindow.Uri = coursePath;
             courseWindow.iOSPath = courseindex;
