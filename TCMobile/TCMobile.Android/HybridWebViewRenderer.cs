@@ -21,7 +21,6 @@ namespace TCMobile.Droid
     public class HybridWebViewRenderer : ViewRenderer<HybridWebView, Android.Webkit.WebView>
     {
 
-        const string APISetup = "(function(){setTimeout(function(){SetupAPI('droid');},1000);})()";
         const string JavascriptFunction = "function invokeCSharpAction(data){jsBridge.invokeAction(data);}";
         Context _context;
 
@@ -38,8 +37,13 @@ namespace TCMobile.Droid
             {
                 var webView = new Android.Webkit.WebView(_context);
                 webView.Settings.AllowUniversalAccessFromFileURLs = true;
+                webView.Settings.AllowFileAccessFromFileURLs = true;
+                webView.Settings.AllowContentAccess = true;
+                webView.Settings.AllowFileAccess = true;
                 webView.Settings.JavaScriptEnabled = true;
                 String API = Element.APIJS;
+                webView.Settings.AllowFileAccessFromFileURLs = true;
+                webView.SetWebViewClient(new JavascriptWebViewClient($"javascript: {JavascriptFunction}"));
                 webView.SetWebViewClient(new JavascriptWebViewClient($"javascript: {API}"));
                 SetNativeControl(webView);
             }
@@ -52,10 +56,7 @@ namespace TCMobile.Droid
             if (e.NewElement != null)
             {
                 Control.AddJavascriptInterface(new JSBridge(this), "jsBridge");
-                Control.Settings.AllowUniversalAccessFromFileURLs = true;
-                Control.Settings.AllowFileAccessFromFileURLs = true;
-                Control.Settings.AllowContentAccess = true;
-                Control.Settings.AllowFileAccess = true;
+               
                 String API = Element.APIJS;
 
                 Control.SetWebViewClient(new JavascriptWebViewClient($"javascript: {API}"));

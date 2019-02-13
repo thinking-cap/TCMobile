@@ -24,11 +24,15 @@ namespace TCMobile.Droid
         }
 
 
+        public override void OnLoadResource(WebView view, string url)
+        {
+            base.OnLoadResource(view, url);
 
+        }
         public override void OnPageStarted(WebView view, string url, Bitmap favicon)
         {
             base.OnPageStarted(view, url, favicon);
-            view.EvaluateJavascript("javascript:API_1484_11 = {Initialize:function(){return true;}};window.opener = window;",null);
+            view.EvaluateJavascript(_javascript, null);
         }
 
 

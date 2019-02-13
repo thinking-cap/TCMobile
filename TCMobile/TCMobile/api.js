@@ -98,13 +98,89 @@
                     return 'false';
             }
         },
-        SetValue: function (key) {
-            return "true";
+        SetValue: function (key,value) {
+            if (config.init === true) {
+                var val = "";
+                if (key.indexOf("cmi.interactions") > -1) {
+                    if (config.storeinteractions === true) {
+                        val = SetCMIInteractions(key, value);
+                    } else {
+                        val = true;
+                    }
+                } else if (key.indexOf("cmi.objectives") > -1) {
+                    val = SetCMIObjectives(key, value);
+                } else if (key.indexOf("cmi.comments") > -1) {
+                    SetCMIComments(key, value);
+
+                } else {
+                    config.error = 0;
+                    switch (key) {
+                        case "cmi._children": config.error = 403; val = false; break;
+                        case "cmi.student_name": config.error = 403; val = false; break;
+                        case "cmi.student_id": config.error = 403; val = false; break;
+                        case "cmi.score.scaled": config.error = 0; cmi.score.scaled = value; val = true; break;
+                        case "cmi.location": val = CheckString('cmi.location', value); break;
+                        case "cmi.completion_status": val = SetStatus(value); break;
+                        case "cmi.success_status": config.error = 0; cmi.success_status = value; val = true; break;
+                        case "cmi.entry": this.Error = 403; val = false; break;
+                        case "cmi.score_children": config.error = 403; val = false; break;
+                        case "cmi.exit": val = SetExit(value); break;
+                        case "cmi.session_time": cmi.session_time = value; val = true; break; // val = SetSessionTime(value);
+                        case "cmi.score.raw": val = true; cmi.score.raw = value; break;
+                        case "cmi.score.min": val = true; cmi.score.min = value; break;
+                        case "cmi.score.max": val = true; cmi.score.max = value; break;
+                        case "cmi.progress_measure": val = true; cmi.progress_measure = value; break;
+                        case "cmi.total_time": cmi.total_time = value; val = true; break;
+                        case "cmi.lesson_mode": val = true; cmi.lesson_mode = value; break;
+                        case "cmi.suspend_data": cmi.suspend_data = value; bookmark.setBK(cmi.learner_id + "_" + courseID + '_suspend_data', value); val = true; break;
+                        case "cmi.launch_data": val = cmi.launch_data; break;
+                        case "cmi.comments": val = cmi.comments; break;
+                        case "cmi.comments_from_lms": val = cmi.comments_from_lms; break;
+                        case "cmi.objectives._children": val = ["id", "score", "status"]; break;
+                        case "cmi.objectives._count": val = cmi.objectives.length; break;
+                        case "cmi.student_data._children": val = cmi.student_data._children; break;
+                        case "cmi.student_data.mastery_score": val = cmi.student_data.mastery_score; break;
+                        case "cmi.student_data.max_time_allowed": val = cmi.student_data.max_time_allowed; break;
+                        case "cmi.student_data.time_limit_action": val = cmi.student_data.time_limit_action; break;
+                        case "cmi.student_preference._children": val = cmi.student_preference._children; break;
+                        case "cmi.student_preference.audio": val = cmi.student_preference.audio; break;
+                        case "cmi.student_preference.language": val = cmi.student_preference.language; break;
+                        case "cmi.student_preference.speed": val = cmi.student_preference.speed; break;
+                        case "cmi.student_preference.text": val = cmi.student_preference.text; break;
+                        case "adl.nav.request": adl.nav.request = value; val = true; break;
+                        case "adl.nav.goto": adl.nav.goto = value; val = true; break;
+                        case "cmi.assignments._submit": val = true; cmi.assignments_submit = value; break; //backward compat for SCO assignments
+                        default: val = false; config.error = 401; break;
+                    }
+                }
+                //config.pingAPI();
+                // logCommit('SetValue',key,value);
+                if (config.api_return_bool)
+                    return val;
+                else
+                    return val.toString();
+            } else {
+                config.error = (config.init === true) ? 0 : 301;
+                if (config.api_return_bool)
+                    return false;
+                else
+                    return 'false';
+            }
         },
-        Terminate: function () {
+       Terminate: function () {
+           try {
+               jsBridge.invokeAction('Initialized');
+           } catch (e) {
+               window.webkit.messageHandlers.Terminate.postMessage('Initialized');
+           }
             return "true";
        },
        Commit: function () {
+           try {
+               jsBridge.invokeAction('Initialized');
+           } catch (e) {
+               window.webkit.messageHandlers.invokeAction.postMessage('Initialized');
+           }
            return "true";
        },
        GetLastError: function () {
@@ -461,4 +537,70 @@ var SetStatus = function (value) {
     return returnvalue;
 };
 
+var CheckString = function (key, value) {
+    if (typeof value === 'string') {
+        switch (key) {
+            case "cmi.location": cmi.location = value; break;
+            default: break;
+        }
+        key = value;
+        config.error = 0;
+        return true;
+    } else {
+        config.error = 406;
+        return false;
+    }
+};
 
+var SetExit = function (value) {
+    var returnvalue = (value === "time-out" || value === "suspend" || value === "logout" || value === "" || value == "normal") ? true : false;
+    // var exit = API_1484_11.Commit('finish');
+    if (returnvalue === true) { config.error = 0; cmi.exit = value; } else { config.error = 405; }
+    return returnvalue;
+};
+
+var Objective = function (id) {
+    return {
+        _children: "id,score,success_status,completion_status,description",
+        id: id,
+        score: {
+            _children: "raw,min,max,scaled",
+            raw: "",
+            max: "",
+            min: "",
+            scaled: ""
+        },
+        description: "",
+        completion_status: "unknown",
+        success_status: "unknown",
+        progress_measure: ""
+
+    };
+};
+
+var Comment = function (c, t, l) {
+    return {
+        comment: c,
+        timestamp: t,
+        location: l
+    };
+
+};
+// NOT supporting Objectives in 1.2 maybe later.
+var objectives = function () {
+    return {
+        _children: "id,score,success_status,completion_status,description",
+        id: id,
+        score: {
+            _children: "raw,min,max,scaled",
+            raw: "",
+            max: "",
+            min: "",
+            scaled: ""
+        },
+        description: "",
+        completion_status: "unknown",
+        success_status: "unknown"
+
+    };
+};

@@ -50,6 +50,8 @@ namespace TCMobile.iOS
                // userController.AddUserScript(apiSetup);
 
                 userController.AddScriptMessageHandler(this, "invokeAction");
+                userController.AddScriptMessageHandler(this, "Terminate");
+                userController.AddScriptMessageHandler(this, "Commit");
                
                
                 var config = new WKWebViewConfiguration { UserContentController = userController };
@@ -77,6 +79,8 @@ namespace TCMobile.iOS
             {
                 userController.RemoveAllUserScripts();
                 userController.RemoveScriptMessageHandler("invokeAction");
+                userController.RemoveScriptMessageHandler("Terminate");
+                userController.RemoveScriptMessageHandler("Commit");
                 var hybridWebView = e.OldElement as HybridWebView;
                 hybridWebView.Cleanup();
             }
