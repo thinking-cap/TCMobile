@@ -19,10 +19,16 @@ namespace TCMobile.Views
        
         public ViewCourse (string courseid)
 		{
+
+            MessagingCenter.Subscribe<string>(this, "Commit", (cmi) =>
+              {
+                //DisplayAlert("Commit", cmi, "OK");
+                // add logic to deal with incoming api calls
+              });
+
 			InitializeComponent ();
             string launch = itemPath(courseid);
             
-            //string courseindex = "Courses/2d7d0a7d-145a-41d0-9abf-685a2b5dfc3c/YKZOP4NACH3EPJNTG6M4T2BQDI/Unit_4_5/995/Unit.html";
             string courseindex = "Courses/" + courseid + "/" + launch;
             string localFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             string coursePath = Path.Combine(localFolder, courseindex);
@@ -94,12 +100,15 @@ namespace TCMobile.Views
             courseWindow.Uri = coursePath;
             courseWindow.iOSPath = courseindex;
             
+           
             
            // courseWindow.Navigating += webviewNavigating;
 
             
 
         }
+
+        
 
         void webviewNavigating(object sender, WebNavigatingEventArgs e)
         {

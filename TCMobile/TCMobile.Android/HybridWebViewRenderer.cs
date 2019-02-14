@@ -43,6 +43,7 @@ namespace TCMobile.Droid
                 webView.Settings.JavaScriptEnabled = true;
                 String API = Element.APIJS;
                 webView.Settings.AllowFileAccessFromFileURLs = true;
+                webView.VerticalScrollBarEnabled = true;
                 webView.SetWebViewClient(new JavascriptWebViewClient($"javascript: {JavascriptFunction}"));
                 webView.SetWebViewClient(new JavascriptWebViewClient($"javascript: {API}"));
                 SetNativeControl(webView);

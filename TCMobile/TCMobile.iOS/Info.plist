@@ -17,7 +17,7 @@
         <key>NSExceptionMinimumTLSVersion</key>
         <string>TLSv1.2</string>
         <key>NSThirdPartyExceptionAllowsInsecureHTTPLoads</key>
-        <false/>
+        <true/>
         <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
         <true/>
         <key>NSThirdPartyExceptionMinimumTLSVersion</key>
@@ -36,13 +36,68 @@
         <key>NSExceptionMinimumTLSVersion</key>
         <string>TLSv1.2</string>
         <key>NSThirdPartyExceptionAllowsInsecureHTTPLoads</key>
-        <false/>
+        <true/>
         <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
         <true/>
         <key>NSThirdPartyExceptionMinimumTLSVersion</key>
         <string>TLSv1.2</string>
         <key>NSRequiresCertificateTransparency</key>
         <false/>
+      </dict>
+      <key>fast.wistia.net</key>
+      <dict>
+          <key>NSIncludesSubdomains</key>
+          <true/>
+          <key>NSExceptionAllowsInsecureHTTPLoads</key>
+          <true/>
+          <key>NSExceptionRequiresForwardSecrecy</key>
+          <true/>
+          <key>NSExceptionMinimumTLSVersion</key>
+          <string>TLSv1.2</string>
+          <key>NSThirdPartyExceptionAllowsInsecureHTTPLoads</key>
+          <true/>
+          <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+          <true/>
+          <key>NSThirdPartyExceptionMinimumTLSVersion</key>
+          <string>TLSv1.2</string>         
+        </dict>
+      <key>embedwistia-a.akamaihd.net</key>
+    <dict>
+        <key>NSIncludesSubdomains</key>
+        <true/>
+        <key>NSExceptionAllowsInsecureHTTPLoads</key>
+        <true/>
+        <key>NSExceptionRequiresForwardSecrecy</key>
+        <true/>
+        <key>NSExceptionMinimumTLSVersion</key>
+        <string>TLSv1.2</string>
+        <key>NSThirdPartyExceptionAllowsInsecureHTTPLoads</key>
+        <false/>
+        <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+        <true/>
+        <key>NSThirdPartyExceptionMinimumTLSVersion</key>
+        <string>TLSv1.2</string>
+        <key>NSRequiresCertificateTransparency</key>
+        <false/>        
+      </dict>
+      <key>frameworkhomeownership.wistia.com</key>
+    <dict>
+        <key>NSIncludesSubdomains</key>
+        <true/>
+        <key>NSExceptionAllowsInsecureHTTPLoads</key>
+        <true/>
+        <key>NSExceptionRequiresForwardSecrecy</key>
+        <true/>
+        <key>NSExceptionMinimumTLSVersion</key>
+        <string>TLSv1.2</string>
+        <key>NSThirdPartyExceptionAllowsInsecureHTTPLoads</key>
+        <true/>
+        <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+        <true/>
+        <key>NSThirdPartyExceptionMinimumTLSVersion</key>
+        <string>TLSv1.2</string>
+        <key>NSRequiresCertificateTransparency</key>
+        <false/>        
       </dict>
     </dict>  
 	</dict>

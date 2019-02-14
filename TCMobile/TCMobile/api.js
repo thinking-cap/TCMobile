@@ -1,6 +1,6 @@
 
 
-    window.parent = window;
+   // window.parent = window;
     window.opener = window;
 
     var meta = document.createElement('meta');
@@ -132,7 +132,7 @@
                         case "cmi.progress_measure": val = true; cmi.progress_measure = value; break;
                         case "cmi.total_time": cmi.total_time = value; val = true; break;
                         case "cmi.lesson_mode": val = true; cmi.lesson_mode = value; break;
-                        case "cmi.suspend_data": cmi.suspend_data = value; bookmark.setBK(cmi.learner_id + "_" + courseID + '_suspend_data', value); val = true; break;
+                        case "cmi.suspend_data": cmi.suspend_data = value; val = true; break;
                         case "cmi.launch_data": val = cmi.launch_data; break;
                         case "cmi.comments": val = cmi.comments; break;
                         case "cmi.comments_from_lms": val = cmi.comments_from_lms; break;
@@ -168,18 +168,26 @@
             }
         },
        Terminate: function () {
-           try {
-               jsBridge.invokeAction('Initialized');
-           } catch (e) {
-               window.webkit.messageHandlers.Terminate.postMessage('Initialized');
+           var msg = {
+               status: 'Terminate',
+               cmi: cmi
            }
-            return "true";
+           try {
+               jsBridge.invokeAction(JSON.stringify(msg));
+           } catch (e) {
+               window.webkit.messageHandlers.invokeAction.postMessage(JSON.stringify(msg));
+           }
+           return "true";
        },
        Commit: function () {
+           var msg = {
+               status: 'Commit',
+               cmi : cmi
+           }
            try {
-               jsBridge.invokeAction('Initialized');
+               jsBridge.invokeAction(JSON.stringify(msg));
            } catch (e) {
-               window.webkit.messageHandlers.invokeAction.postMessage('Initialized');
+               window.webkit.messageHandlers.invokeAction.postMessage(JSON.stringify(msg));
            }
            return "true";
        },

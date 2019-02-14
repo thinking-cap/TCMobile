@@ -122,9 +122,11 @@ namespace TCMobile.iOS
             decisionHandler(WKNavigationResponsePolicy.Allow);
         }
 
+        
         public void DidReceiveScriptMessage(WKUserContentController userContentController, WKScriptMessage message)
         {
             Element.InvokeAction(message.Body.ToString());
+            MessagingCenter.Send(message.Body.ToString(), "Commit");
         }
 
         public void APIResult(WKUserContentController userContentController, WKScriptMessage message)
