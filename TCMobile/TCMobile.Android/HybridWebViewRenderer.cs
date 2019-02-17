@@ -39,6 +39,7 @@ namespace TCMobile.Droid
             if (Control == null)
             {
                 String API = Element.APIJS;
+                
                 var webView = new Android.Webkit.WebView(_context);
                 webView.Settings.AllowContentAccess = true;
                 webView.Settings.AllowUniversalAccessFromFileURLs = true;
@@ -48,7 +49,12 @@ namespace TCMobile.Droid
                 webView.Settings.JavaScriptEnabled = true;                
                 webView.Settings.AllowFileAccessFromFileURLs = true;
                 webView.VerticalScrollBarEnabled = true;
-                webView.SetWebViewClient(new JavascriptWebViewClient($"javascript: {JavascriptFunction}"));
+                if (!String.IsNullOrEmpty(Element.CMI))
+                {
+                    String CMI = Element.CMI;
+                    webView.SetWebViewClient(new JavascriptWebViewClient($"javascript:var cmi =JSON.parse({CMI})"));
+                }
+                webView.SetWebViewClient(new JavascriptWebViewClient($"javascript:{JavascriptFunction}"));
                 webView.SetWebViewClient(new JavascriptWebViewClient($"javascript: {API}"));
 
                 

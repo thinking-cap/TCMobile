@@ -108,6 +108,14 @@ namespace TCMobile.Views
             courseWindow.Uri = coursePath;
             // pass in the file iOS
             courseWindow.iOSPath = courseindex;
+            if (!String.IsNullOrEmpty(CMI))
+            {
+                courseWindow.CMI = CMI;
+            }
+            else
+            {
+                courseWindow.CMI = "";
+            }
 
         }
 

@@ -19,6 +19,12 @@ namespace TCMobile
             declaringType: typeof(HybridWebView),
             defaultValue: default(string));
 
+        public static readonly BindableProperty CMIProperty = BindableProperty.Create(
+            propertyName: "CMI",
+            returnType: typeof(string),
+            declaringType: typeof(HybridWebView),
+            defaultValue: default(string));
+
         public static readonly BindableProperty BaseUrlProperty = BindableProperty.Create(
            propertyName: "BaseUrl",
            returnType: typeof(string),
@@ -53,6 +59,12 @@ namespace TCMobile
         {
             get { return (string)GetValue(SourceProperty); }
             set { SetValue(SourceProperty, value); }
+        }
+
+        public string CMI
+        {
+            get { return (string)GetValue(CMIProperty); }
+            set { SetValue(CMIProperty, value); }
         }
 
         public string APIJS
