@@ -9,6 +9,8 @@ using System.Xml;
 using System.Xml.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Newtonsoft.Json;
+using System.Dynamic;
 
 namespace TCMobile.Views
 {
@@ -17,30 +19,56 @@ namespace TCMobile.Views
 	{
         public static HybridWebView courseWindow;
        
+
+        public class message
+        {
+            public string status { get; set; }
+            public string cmi { get; set; }
+        }     
+
+
         public ViewCourse (string courseid)
 		{
+            InitializeComponent();
+            launchCourse(courseid);
 
-            MessagingCenter.Subscribe<string>(this, "Commit", (cmi) =>
-              {
-                //DisplayAlert("Commit", cmi, "OK");
-                // add logic to deal with incoming api calls
-              });
+        }
 
-			InitializeComponent ();
+        private async void launchCourse(string courseid)
+        {
+            // create an api object
+            API api = new API();
+            // use MessagingCenter to talk to the webview //
+            MessagingCenter.Subscribe<string>(this, "API", (cmi) =>
+            {
+                message APIMessage = JsonConvert.DeserializeObject<message>(cmi);
+               
+                string status = APIMessage.status;
+                string CMIString = APIMessage.cmi;
+                // if it's a commit then save the cmi object to the course record
+                if (status == "Commit")
+                {
+                    api.Commit(CMIString, courseid);
+                }
+            });
+
+            // find the html path
             string launch = itemPath(courseid);
-            
+            // get the cmi object
+            string CMI = await cmiInit(courseid);
+            // build the path to the local file
             string courseindex = "Courses/" + courseid + "/" + launch;
             string localFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             string coursePath = Path.Combine(localFolder, courseindex);
-           
+            // get the api connector
             var assembly = IntrospectionExtensions.GetTypeInfo(typeof(ViewCourse)).Assembly;
             string APIJS = "";
-            using(var APIStream = assembly.GetManifestResourceStream("TCMobile.API.js"))
+            using (var APIStream = assembly.GetManifestResourceStream("TCMobile.API.js"))
             {
                 StreamReader apiReader = new StreamReader(APIStream);
                 APIJS = apiReader.ReadToEnd();
             }
-            
+            // get the baseurl 
             String baseUrl = "file:/" + Path.GetDirectoryName(coursePath);
             FileStream stream = File.OpenRead(coursePath);
             if (stream == null)
@@ -49,28 +77,10 @@ namespace TCMobile.Views
                     String.Format("Cannot create stream from specified URL: {0}", "course.htm"));
             }
 
-            //string iframe = "<html><head>" +
-            //                        "<script type='text/javascript'> " +
-            //                                "var API_1484_11 ={" +
-            //                                    "Initialize : function(){return 'true'; " +
-            //                                "};" +                                            
-            //                        "</script>" +
-            //                        "<style type='text/css'>" +
-            //                            "iframe{width:100%;height:100%;border:0px;}" +
-            //                        "</style>" +
-            //                    "</head><body>" +
-            //                    "<iframe width='100%' id='coursewindow' height='100%'></iframe>" +
-            //                    "<script type='text/javascript'>document.getElementById('coursewindow').src = 'https://thinkingcap.com';" + "</script>" +
-            //                    "</body></html>";
+           
             StreamReader reader = new StreamReader(stream);
 
-            //using (FileStream f = File.Create(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Courses/index.htm")))
-            //{
-            //    using (StreamWriter w = new StreamWriter(f, Encoding.UTF8))
-            //    {
-            //        w.WriteLine(iframe);
-            //    }
-            //}
+          
             string htmlString = reader.ReadToEnd();
 
             courseWindow = new HybridWebView
@@ -80,35 +90,32 @@ namespace TCMobile.Views
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 AutomationId = "TCMobile_CourseView"
-               
-                
-
             };
 
-            
-           
+
+            // add the webview
             WebViewContainer.Children.Add(courseWindow);
-
-            HtmlWebViewSource html = new HtmlWebViewSource();
-            //string baseurl = html.BaseUrl;
-            // html.Html = htmlString;
-            html.Html = htmlString;
-            //  html.BaseUrl = DependencyService.Get<iBaseURL>().Get();
+            // create the webview
+            HtmlWebViewSource html = new HtmlWebViewSource(); 
+          
+            // set the base url
             html.BaseUrl = baseUrl;
+            // pass in the API connector //
             courseWindow.APIJS = APIJS;
+            // pass in the html
             courseWindow.Source = htmlString;
+            // pass in the file Android
             courseWindow.Uri = coursePath;
+            // pass in the file iOS
             courseWindow.iOSPath = courseindex;
-            
-           
-            
-           // courseWindow.Navigating += webviewNavigating;
-
-            
 
         }
 
-        
+        private async Task<string>cmiInit(string courseid)
+        {
+            API a = new API();
+            return await a.InitializeCourse(courseid);
+        }        
 
         void webviewNavigating(object sender, WebNavigatingEventArgs e)
         {
@@ -123,18 +130,14 @@ namespace TCMobile.Views
         }
 
         public static string retorno;
-        //public static async Task JSRun()
-        //{
-        //    retorno = await courseWindow.EvaluateJavaScriptAsync("getState();");
-        //}
-
+     
+        // get the item from the manifest.xml
         public string itemPath(string courseid)
         {
             XNamespace ns = "http://www.imsglobal.org/xsd/imscp_v1p1";
             string localFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             string manifestXML = Path.Combine(localFolder, "Courses/" + courseid + "/imsmanifest.xml");
             // XDocument manifest = XDocument.Load(manifestXML);
-
 
             XmlDocument manifest = new XmlDocument();
             manifest.Load(manifestXML);
@@ -148,8 +151,7 @@ namespace TCMobile.Views
             string idref = item.Attributes["identifierref"].Value;
             XmlNode resource = organization.SelectSingleNode("//mn:resource[@identifier='" + idref + "']",nsmgr);
             var href = resource.Attributes["href"].Value;
-            //string idref = (string)manifest.Root.Descendants("item").FirstOrDefault().Attribute("identifierref");
-            //string href = (string)manifest.Root.Descendants("resource").FirstOrDefault(b => (string)b.Attribute("identifier") == idref).Attribute("href");
+
             return href;
         }
     }

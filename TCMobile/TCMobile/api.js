@@ -22,11 +22,16 @@
 
    var  API_1484_11 = {
         Initialize: function () {
-            config.init = true;
+            var msg = {
+                
+                    status: 'Initialize',
+                    cmi: JSON.stringify(cmi)
+               
+            }
             try {
-                jsBridge.invokeAction('Initialized');
+                jsBridge.invokeAction(JSON.stringify(msg));
             } catch (e) {
-                window.webkit.messageHandlers.invokeAction.postMessage('Initialized');
+                window.webkit.messageHandlers.invokeAction.postMessage(JSON.stringify(msg));
             }
             return "true";
         },
@@ -169,8 +174,10 @@
         },
        Terminate: function () {
            var msg = {
-               status: 'Terminate',
-               cmi: cmi
+               
+                   status: 'Terminate',
+                   cmi: JSON.stringify(cmi)
+              
            }
            try {
                jsBridge.invokeAction(JSON.stringify(msg));
@@ -181,8 +188,10 @@
        },
        Commit: function () {
            var msg = {
-               status: 'Commit',
-               cmi : cmi
+              
+                   status: 'Commit',
+                   cmi: JSON.stringify(cmi)
+               
            }
            try {
                jsBridge.invokeAction(JSON.stringify(msg));

@@ -28,6 +28,9 @@ namespace TCMobile.Droid
         {
             _context = context;
         }
+        
+      
+        
 
         protected override void OnElementChanged(ElementChangedEventArgs<HybridWebView> e)
         {
@@ -35,17 +38,20 @@ namespace TCMobile.Droid
 
             if (Control == null)
             {
+                String API = Element.APIJS;
                 var webView = new Android.Webkit.WebView(_context);
+                webView.Settings.AllowContentAccess = true;
                 webView.Settings.AllowUniversalAccessFromFileURLs = true;
                 webView.Settings.AllowFileAccessFromFileURLs = true;
                 webView.Settings.AllowContentAccess = true;
                 webView.Settings.AllowFileAccess = true;
-                webView.Settings.JavaScriptEnabled = true;
-                String API = Element.APIJS;
+                webView.Settings.JavaScriptEnabled = true;                
                 webView.Settings.AllowFileAccessFromFileURLs = true;
                 webView.VerticalScrollBarEnabled = true;
                 webView.SetWebViewClient(new JavascriptWebViewClient($"javascript: {JavascriptFunction}"));
                 webView.SetWebViewClient(new JavascriptWebViewClient($"javascript: {API}"));
+
+                
                 SetNativeControl(webView);
             }
             if (e.OldElement != null)
@@ -59,8 +65,15 @@ namespace TCMobile.Droid
                 Control.AddJavascriptInterface(new JSBridge(this), "jsBridge");
                
                 String API = Element.APIJS;
-
-                Control.SetWebViewClient(new JavascriptWebViewClient($"javascript: {API}"));
+                Control.Settings.AllowUniversalAccessFromFileURLs = true;
+                Control.Settings.AllowFileAccessFromFileURLs = true;
+                Control.Settings.AllowContentAccess = true;
+                Control.Settings.AllowFileAccess = true;
+                Control.Settings.JavaScriptEnabled = true;
+                Control.Settings.AllowFileAccessFromFileURLs = true;
+                Control.VerticalScrollBarEnabled = true;
+                //Control.SetWebViewClient(new JavascriptWebViewClient($"javascript: {API}"));
+                
                 Control.LoadUrl($"file:///{Element.Uri}");
                 //Control.LoadData(Element.Source, "text/html", "UTF-8");
                 //Control.LoadDataWithBaseURL(Element.BaseUrl, Element.Source, "text/html", "UTF-8", null);

@@ -1,6 +1,7 @@
 ﻿using System;
 using Android.Webkit;
 using Java.Interop;
+using Xamarin.Forms;
 
 namespace TCMobile.Droid
 {
@@ -22,6 +23,7 @@ namespace TCMobile.Droid
             if (hybridWebViewRenderer != null && hybridWebViewRenderer.TryGetTarget(out hybridRenderer))
             {
                 hybridRenderer.Element.InvokeAction(data);
+                MessagingCenter.Send(data, "API");
             }
         }
     }

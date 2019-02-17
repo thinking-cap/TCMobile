@@ -126,7 +126,7 @@ namespace TCMobile.iOS
         public void DidReceiveScriptMessage(WKUserContentController userContentController, WKScriptMessage message)
         {
             Element.InvokeAction(message.Body.ToString());
-            MessagingCenter.Send(message.Body.ToString(), "Commit");
+            MessagingCenter.Send(message.Body.ToString(), "API");
         }
 
         public void APIResult(WKUserContentController userContentController, WKScriptMessage message)
