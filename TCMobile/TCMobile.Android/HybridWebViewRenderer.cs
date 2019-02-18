@@ -49,11 +49,7 @@ namespace TCMobile.Droid
                 webView.Settings.JavaScriptEnabled = true;                
                 webView.Settings.AllowFileAccessFromFileURLs = true;
                 webView.VerticalScrollBarEnabled = true;
-                if (!String.IsNullOrEmpty(Element.CMI))
-                {
-                    String CMI = Element.CMI;
-                    webView.SetWebViewClient(new JavascriptWebViewClient($"javascript:var cmi =JSON.parse({CMI})"));
-                }
+               
                 webView.SetWebViewClient(new JavascriptWebViewClient($"javascript:{JavascriptFunction}"));
                 webView.SetWebViewClient(new JavascriptWebViewClient($"javascript: {API}"));
 

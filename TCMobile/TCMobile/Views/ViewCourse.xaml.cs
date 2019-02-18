@@ -84,9 +84,7 @@ namespace TCMobile.Views
             string htmlString = reader.ReadToEnd();
 
             courseWindow = new HybridWebView
-            {
-                HeightRequest = 1000,
-                WidthRequest = 1000,
+            {                
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 AutomationId = "TCMobile_CourseView"
@@ -96,26 +94,34 @@ namespace TCMobile.Views
             // add the webview
             WebViewContainer.Children.Add(courseWindow);
             // create the webview
-            HtmlWebViewSource html = new HtmlWebViewSource(); 
-          
+            HtmlWebViewSource html = new HtmlWebViewSource();
+
+            if (!String.IsNullOrEmpty(CMI))
+            {
+                courseWindow.APIJS = APIJS + " var cmi=" + CMI;
+            }
+            else
+            {
+                API.Cmi cmi = new API.Cmi();
+                cmi.entry = "normal";
+                cmi.learner_id = Constants.StudentID;
+                cmi.learner_name = Constants.firstName + " " + Constants.lastName;
+                cmi.score = new API.Score();
+                string cmiString = JsonConvert.SerializeObject(cmi);
+                courseWindow.APIJS = APIJS + " var cmi=" + cmiString;
+            }
+
             // set the base url
             html.BaseUrl = baseUrl;
             // pass in the API connector //
-            courseWindow.APIJS = APIJS;
+           
             // pass in the html
             courseWindow.Source = htmlString;
             // pass in the file Android
             courseWindow.Uri = coursePath;
             // pass in the file iOS
             courseWindow.iOSPath = courseindex;
-            if (!String.IsNullOrEmpty(CMI))
-            {
-                courseWindow.CMI = CMI;
-            }
-            else
-            {
-                courseWindow.CMI = "";
-            }
+           
 
         }
 

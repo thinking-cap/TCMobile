@@ -21,7 +21,8 @@
     };
 
    var  API_1484_11 = {
-        Initialize: function () {
+       Initialize: function () {
+           config.init = true;
             var msg = {
                 
                     status: 'Initialize',
@@ -231,65 +232,8 @@
        }
     };
 
-    // cmi object 
 
-  var  cmi = {
-        _version: "2004",
-        mode: "normal",
-        learner_id: "",
-        learner_name: "",
-        location: "",
-        progress_measure: 0,
-        score: {
-            raw: "",  //RW decicmal
-            max: "",  //RW decimal
-            min: "",  //RW decimal
-            scaled: ""
-        },
-        session_time: "",
-        success_status: "",
-        suspend_data: "", //RW String
-        completion_status: "unknown",
-        credit: "",
-        entry: "",
-        exit: "",
-        total_time : "",
-        launch_data: "", //RO String
-        comments: "", //RW String
-        comments_from_lms: "", //RO String
-        comments_from_learner: {
-            _children: "comment,location,timestamp",
-            comments: []
-        },
-        objectives: [], // not supporting in 1.2
-        student_data: {
-            _children: '"mastery_score", "max_time_allowed", "time_limit_action"',
-            mastery_score: null, // set by lms
-            max_time_allowed: null, // set by lms
-            time_limit_action: ""// set by lms
-        },
-        learner_preference: {
-            _children: '"audio","language","speed","text"', // RO
-            audio: null, //RW Int
-            language: "", //RW string
-            delivery_speed: null, // RW Int
-            text: "" //RW String
-        },
-        assignments_submit: "",
-        interactions: [],
-        courseinfo: {
-            lp: {
-                id: '',
-                name: '',
-                metadata: []
-            },
-            course: {
-                id: '',
-                name: '',
-                metadata: []
-            }
-        }// array of interaction objects
-    };
+  
 
 
 
@@ -621,3 +565,5 @@ var objectives = function () {
 
     };
 };
+
+var API = API_1484_11;
