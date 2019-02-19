@@ -18,6 +18,11 @@ namespace TCMobile.Views
             Icon = "hamburger.png";
             Title = "Menu";
             CredentialsService credentials = new CredentialsService();
+
+            // custom renderer
+            
+
+
             menuItems = new List<HomeMenuItem>
             {
                 new HomeMenuItem {Id = MenuItemType.Catalogue, Title="Catalogue" },
@@ -51,5 +56,6 @@ namespace TCMobile.Views
                 await RootPage.NavigateFromMenu(id);
             };
         }
+       
     }
 }

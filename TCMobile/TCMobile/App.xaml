@@ -5,9 +5,16 @@
     <Application.Resources>
         <ResourceDictionary>
             <!--Global Styles-->          
-            <Color x:Key="NavigationPrimary">#2196F3</Color>
+           <Color x:Key="launcher_background">#FFFFFF</Color>
+            <Color x:Key="colorPrimary">#4da0c4</Color>
+            <Color x:Key="colorPrimaryDark">#007193</Color>
+            <Color x:Key="colorPrimaryLight">#82d1f7</Color>
+            <Color x:Key="colorSecondary">#cc0000</Color>
+            <Color x:Key="colorSecondaryDark">#930000</Color>
+            <Color x:Key="colorSecondaryLight">#FF4f30</Color>
+            <Color x:Key="colorAccent">#FF4081</Color>
             <Style TargetType="NavigationPage">
-                <Setter Property="BarBackgroundColor" Value="{StaticResource NavigationPrimary}" />
+                <Setter Property="BarBackgroundColor" Value="{StaticResource colorPrimaryDark}" />
                 <Setter Property="BarTextColor" Value="White" />
             </Style>
         </ResourceDictionary>

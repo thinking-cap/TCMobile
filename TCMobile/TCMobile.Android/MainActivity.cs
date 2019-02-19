@@ -21,6 +21,7 @@ namespace TCMobile.Droid
         {
             ServicePointManager.ServerCertificateValidationCallback +=
                    (sender, cert, chain, sslPolicyErrors) => true;
+            this.Window.AddFlags(WindowManagerFlags.Fullscreen);
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
             CrossCurrentActivity.Current.Init(this,savedInstanceState);

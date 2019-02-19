@@ -41,7 +41,9 @@ namespace TCMobile.Views
             
         }
 
-        
+       
+
+
 
         private void OnFileDownloaded(object sender, DownloadEventArgs e)
         {
@@ -211,7 +213,7 @@ namespace TCMobile.Views
             {
                 await DisplayAlert("Access Denied", "Can not continue, try again.", "OK");
             }
-            ((Button)sender).Text = "Downloaded";
+           // ((Button)sender).Text = "Downloaded";
             busy = false;
         }
 

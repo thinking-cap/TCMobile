@@ -15,8 +15,8 @@
                         <ViewCell>
                             <StackLayout ClassId="{Binding Version}" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                                 <Label Text="{Binding CourseName}" VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand"/>
-                                <Button Text="Open" CornerRadius="10" HorizontalOptions="End" Clicked="OpenCourseClick" ClassId="{Binding CourseID}"/>
-                                <Button Text="Delete" CornerRadius="10" HorizontalOptions="End" Clicked="RemoveCourseClick" ClassId="{Binding CourseID}"/>
+                                <Button Text="Open" CornerRadius="10" HorizontalOptions="End" Clicked="OpenCourseClick" ClassId="{Binding CourseID}" Image="launch.png"/>
+                                <Button Text="Delete" CornerRadius="10" HorizontalOptions="End" Clicked="RemoveCourseClick" ClassId="{Binding CourseID}" Image="delete.png"/>
                                 <!--<Button Text="Download" CornerRadius="10" HorizontalOptions="End" Command="{Binding DownloadCourse}" CommandParameter="{Binding courseid}" ClassId="{Binding courseid}"/>-->
                             </StackLayout>
                         </ViewCell>
