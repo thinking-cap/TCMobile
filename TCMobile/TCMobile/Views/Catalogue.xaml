@@ -12,13 +12,13 @@
             <!--<Button Text="Download Course" Clicked="DownloadClicked"/>-->
             <!--<Button Text="Load Catalogue" Clicked="LoadCourses"/>-->
             <ActivityIndicator x:Name="CatalogueProgress" IsVisible="False" HeightRequest="20"/>
-            <ListView x:Name="CatalogueList" HorizontalOptions="FillAndExpand">               
+            <ListView x:Name="CatalogueList" HorizontalOptions="FillAndExpand" SeparatorVisibility="None">               
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout ClassId="{Binding version}" Orientation="Horizontal" HorizontalOptions="FillAndExpand">                                
-                                <Label Text="{Binding title}" VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand"/>
-                                <Button Text="Download" CornerRadius="10" HorizontalOptions="End" Clicked="DownloadClicked" ClassId="{Binding courseid}" Image="download.png"/>
+                            <StackLayout ClassId="{Binding version}" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                <Label Margin="10,10" Text="{Binding title}" VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand"/>
+                                <Button Text="Download" Style="{StaticResource buttonStyle}" Clicked="DownloadClicked" ClassId="{Binding courseid}" Image="download.png"/>
                                 <!--<Button Text="Download" CornerRadius="10" HorizontalOptions="End" Command="{Binding DownloadCourse}" CommandParameter="{Binding courseid}" ClassId="{Binding courseid}"/>-->
                             </StackLayout>
                         </ViewCell>

@@ -22,6 +22,14 @@
     <item name="windowActionModeOverlay">true</item>
 
     <item name="android:datePickerDialogTheme">@style/AppCompatDialogStyle</item>
+
+    <item name="android:colorPressedHighlight">@color/colorPrimary</item>
+    <item name="android:colorLongPressedHighlight">@color/colorPrimary</item>
+    <item name="android:colorFocusedHighlight">@color/colorPrimary</item>
+    <item name="android:colorActivatedHighlight">@color/colorPrimary</item>
+    <item name="android:activatedBackgroundIndicator">@color/colorPrimary</item>
+    
+    
   </style>
 
   <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
@@ -31,6 +39,7 @@
     <item name="android:colorBackground">@color/colorPrimary</item>
 <item name="android:windowBackground">@drawable/splash_centered</item>
 <item name="android:windowNoTitle">true</item>
-<item name="android:windowFullscreen">true</item> 
+<item name="android:windowFullscreen">true</item>
+    
   </style>
 </resources>

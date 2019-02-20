@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customControls="clr-namespace:TCMobile.CustomControls;assembly=TCMobile"
              xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
              x:Class="TCMobile.Views.MenuPage"
              Title="Menu">
@@ -33,7 +34,7 @@
 
         <!--<Image  Aspect="AspectFill" x:Name="UserImage" Source="https://xamarin.com/content/images/pages/forms/example-app.png" />-->
 
-        <ListView Grid.Row="1" Grid.ColumnSpan="2" x:Name="ListViewMenu" HasUnevenRows="True" BackgroundColor="White" ItemSelected="NavSelected">
+        <ListView Grid.Row="1" Grid.ColumnSpan="2" x:Name="ListViewMenu" HasUnevenRows="True" BackgroundColor="White">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -43,6 +44,19 @@
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
+
+            <!--<ListView.ItemTemplate>
+                <DataTemplate>
+                    --><!--<TextCell TextColor="Black" Detail="{Binding .LastUpdated}" DetailColor="Red" Text="{Binding .ItemName}" />--><!--
+                    <customControls:ExtendedViewCell SelectedBackgroundColor="{StaticResource colorPrimaryDark}">
+                        <ViewCell.View>
+                            <Grid Padding="10">
+                                <Label Text="{Binding Title}" FontSize="20"/>
+                            </Grid>
+                        </ViewCell.View>
+                    </customControls:ExtendedViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>-->
         </ListView>
 
     </Grid>

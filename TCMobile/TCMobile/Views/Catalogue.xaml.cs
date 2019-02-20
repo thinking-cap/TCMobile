@@ -48,8 +48,7 @@ namespace TCMobile.Views
         private void OnFileDownloaded(object sender, DownloadEventArgs e)
         {
             if (e.FileSaved)
-            {
-                
+            {                
 
                 DisplayAlert("TC LMS", "File Saved Successfully " + e.FileDownloadMessage, "Close");
             }
@@ -68,9 +67,10 @@ namespace TCMobile.Views
                 // find the course name
                 rec.CourseName = catalogue.courses.Find(x => x.courseid == courseid).title;
                 rec.Version = catalogue.courses.Find(x => x.courseid == courseid).version;
+                rec.CMI = "";
                 localFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
                 await App.Database.SaveItemAsync(rec);
-            }
+           }
         }
 
         private void OnFileProgress(object sender, DownloadProgress e)

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
               xmlns:vm="clr-namespace:TCMobile.ViewModels"
              x:Class="TCMobile.Views.Login"
-             BackgroundColor="#337ab7"
+             BackgroundColor="{StaticResource colorPrimaryDark}"
              Title="{Binding Title}"
              NavigationPage.HasNavigationBar="False"
              NavigationPage.HasBackButton="False">
@@ -13,18 +13,29 @@
     <ContentPage.Resources>
         <StyleSheetExtension Source="../style.css"></StyleSheetExtension>
     </ContentPage.Resources>
-    <ContentPage.Content>
-        <StackLayout Spacing="10" VerticalOptions="StartAndExpand">            
-               <Entry x:Name="Email" Text="{Binding Email}"
-                               Placeholder="Email"   
-                               HeightRequest="45" 
-                               Keyboard="Email"/>
-                <Entry x:Name="Password" Text="{Binding Password}" Placeholder="Password"   
-                               HeightRequest="45" 
-                               IsPassword="True"/>
-            <Button Text="Login" VerticalOptions="End" Clicked="OnLoginButtonClicked"/>
+    <ContentPage.Content>       
+        <StackLayout Spacing="10" VerticalOptions="StartAndExpand" Margin="0,150,0,20" BackgroundColor="White">
+           <Frame BackgroundColor="white" CornerRadius="10" Margin="10,20,10,0" Padding="0">
+                   <Entry x:Name="Email" Text="{Binding Email}"
+                                   Placeholder="username"   
+                                   HeightRequest="45" 
+                                   Margin="10,0,10,0"
+                                   Keyboard="Email"
+                                   />
+                </Frame>
+                <Frame BackgroundColor="white" CornerRadius="10" Margin="10,0,10,0" Padding="0">
+                    <Entry x:Name="Password" Text="{Binding Password}" Placeholder="password"   
+                                   HeightRequest="45" 
+                                   Margin="10,0,10,0"
+                                   IsPassword="True"/>
+                </Frame>
+            
+            <Button Text="Login" TextColor="White" BackgroundColor="{StaticResource colorPrimaryDark}" 
+                     Clicked="OnLoginButtonClicked" 
+                    WidthRequest="50" CornerRadius="10"/>
             <ActivityIndicator x:Name="Progress" IsVisible="False" HeightRequest="20"/>
-            <Label x:Name="Error" HeightRequest="45"/>
+                <Label x:Name="Error" HeightRequest="45" IsVisible="False"/>
+           
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

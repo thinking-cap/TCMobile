@@ -17,7 +17,10 @@ namespace TCMobile
         public async Task<string>InitializeCourse(string courseid)
         {
             Models.Record courseRecord = await App.Database.GetCourseByID(courseid);
-            return courseRecord.CMI;
+            if (courseRecord != null)
+                return courseRecord.CMI;
+            else
+                return "";
         }
 
 

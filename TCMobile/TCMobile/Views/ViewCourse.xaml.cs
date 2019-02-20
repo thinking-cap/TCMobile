@@ -55,6 +55,7 @@ namespace TCMobile.Views
             // find the html path
             string launch = itemPath(courseid);
             // get the cmi object
+
             string CMI = await cmiInit(courseid);
             // build the path to the local file
             string courseindex = "Courses/" + courseid + "/" + launch;
@@ -92,7 +93,7 @@ namespace TCMobile.Views
 
 
             // add the webview
-            WebViewContainer.Children.Add(courseWindow);
+           
             // create the webview
             HtmlWebViewSource html = new HtmlWebViewSource();
 
@@ -107,6 +108,18 @@ namespace TCMobile.Views
                 cmi.learner_id = Constants.StudentID;
                 cmi.learner_name = Constants.firstName + " " + Constants.lastName;
                 cmi.score = new API.Score();
+                cmi.comments = "";
+                cmi.completion_status = "unknown";
+                cmi.success_status = "unknown";
+                cmi.suspend_data = "";
+                cmi.session_time = "";
+                cmi.total_time = "";
+                cmi.score.scaled = "";
+                cmi.score.raw = "";
+                cmi.location = "";
+                cmi.exit = "";
+                cmi.objectives = new List<object>();
+                cmi.interactions = new List<object>();
                 string cmiString = JsonConvert.SerializeObject(cmi);
                 courseWindow.APIJS = APIJS + " var cmi=" + cmiString;
             }
@@ -121,7 +134,7 @@ namespace TCMobile.Views
             courseWindow.Uri = coursePath;
             // pass in the file iOS
             courseWindow.iOSPath = courseindex;
-           
+            WebViewContainer.Children.Add(courseWindow);
 
         }
 

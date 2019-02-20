@@ -64,6 +64,7 @@ namespace TCMobile.Views
             }
             else
             {
+                Error.IsVisible = true;
                 Error.Text = login.status;
                 Progress.IsVisible = false;
                 Progress.IsRunning = false;

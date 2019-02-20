@@ -5,7 +5,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <!--Global Styles-->          
-           <Color x:Key="launcher_background">#FFFFFF</Color>
+            <Color x:Key="launcher_background">#FFFFFF</Color>
             <Color x:Key="colorPrimary">#4da0c4</Color>
             <Color x:Key="colorPrimaryDark">#007193</Color>
             <Color x:Key="colorPrimaryLight">#82d1f7</Color>
@@ -16,6 +16,28 @@
             <Style TargetType="NavigationPage">
                 <Setter Property="BarBackgroundColor" Value="{StaticResource colorPrimaryDark}" />
                 <Setter Property="BarTextColor" Value="White" />
+            </Style>
+            <Style x:Key="buttonStyle" TargetType="Button">
+                <Setter Property="HorizontalOptions" Value="End" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+                <Setter Property="BorderColor" Value="{StaticResource colorPrimaryDark}" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="BorderWidth" Value="5" />
+                <Setter Property="WidthRequest" Value="130" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="Margin" Value="10,2,10,2"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource colorPrimaryDark}" />
+            </Style>
+            <Style x:Key="buttonStyleSmall" TargetType="Button">
+                <Setter Property="HorizontalOptions" Value="End" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+                <Setter Property="BorderColor" Value="{StaticResource colorPrimaryDark}" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="BorderWidth" Value="5" />
+                <Setter Property="WidthRequest" Value="80" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="Margin" Value="10,2,10,2"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource colorPrimaryDark}" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>

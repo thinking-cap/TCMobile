@@ -50,8 +50,6 @@ namespace TCMobile.iOS
                // userController.AddUserScript(apiSetup);
 
                 userController.AddScriptMessageHandler(this, "invokeAction");
-                userController.AddScriptMessageHandler(this, "Terminate");
-                userController.AddScriptMessageHandler(this, "Commit");
                
                
                 var config = new WKWebViewConfiguration { UserContentController = userController };

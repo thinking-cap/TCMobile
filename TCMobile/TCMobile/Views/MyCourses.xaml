@@ -9,14 +9,18 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
-            <ListView x:Name="CourseList" HorizontalOptions="FillAndExpand">
+            <ListView x:Name="CourseList" HorizontalOptions="FillAndExpand" SeparatorVisibility="None">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout ClassId="{Binding Version}" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                                <Label Text="{Binding CourseName}" VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand"/>
-                                <Button Text="Open" CornerRadius="10" HorizontalOptions="End" Clicked="OpenCourseClick" ClassId="{Binding CourseID}" Image="launch.png"/>
-                                <Button Text="Delete" CornerRadius="10" HorizontalOptions="End" Clicked="RemoveCourseClick" ClassId="{Binding CourseID}" Image="delete.png"/>
+                                
+                                    <Label Margin="10,10" Text="{Binding CourseName}" VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand"/>
+                               
+                               
+                                    <Button Text="Open" Style="{StaticResource buttonStyleSmall}" HorizontalOptions="End" Clicked="OpenCourseClick" ClassId="{Binding CourseID}" Image="launch_w.png"/>
+                                    <Button Text="Delete" Style="{StaticResource buttonStyleSmall}" HorizontalOptions="End" Clicked="RemoveCourseClick" ClassId="{Binding CourseID}" Image="delete_w.png"/>
+                               
                                 <!--<Button Text="Download" CornerRadius="10" HorizontalOptions="End" Command="{Binding DownloadCourse}" CommandParameter="{Binding courseid}" ClassId="{Binding courseid}"/>-->
                             </StackLayout>
                         </ViewCell>
