@@ -120,6 +120,9 @@ namespace TCMobile.Views
                 cmi.exit = "";
                 cmi.objectives = new List<object>();
                 cmi.interactions = new List<object>();
+                cmi.comments_from_learner = new API.CommentsFromLearner();                
+                cmi.comments_from_learner.comments = new List<object>();
+                cmi.comments_from_learner._children = "comment,location,timestamp";
                 string cmiString = JsonConvert.SerializeObject(cmi);
                 courseWindow.APIJS = APIJS + " var cmi=" + cmiString;
             }

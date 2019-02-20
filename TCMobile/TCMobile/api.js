@@ -12,22 +12,22 @@
     meta.setAttribute('user-scalable', 'no');
     try {
         document.getElementsByTagName('head')[0].appendChild(meta);
-    } catch (e) {}
-
+} catch (e) { }
+if (typeof (API_1484_11) == 'undefined') {
     var config = {
         init: false,
         error: 0,
         api_return_bool: false,
     };
 
-   var  API_1484_11 = {
-       Initialize: function () {
-           config.init = true;
+    var API_1484_11 = {
+        Initialize: function () {
+            config.init = true;
             var msg = {
-                
-                    status: 'Initialize',
-                    cmi: JSON.stringify(cmi)
-               
+
+                status: 'Initialize',
+                cmi: JSON.stringify(cmi)
+
             }
             try {
                 jsBridge.invokeAction(JSON.stringify(msg));
@@ -104,7 +104,7 @@
                     return 'false';
             }
         },
-        SetValue: function (key,value) {
+        SetValue: function (key, value) {
             if (config.init === true) {
                 var val = "";
                 if (key.indexOf("cmi.interactions") > -1) {
@@ -173,66 +173,66 @@
                     return 'false';
             }
         },
-       Terminate: function () {
-           var msg = {
-               
-                   status: 'Terminate',
-                   cmi: JSON.stringify(cmi)
-              
-           }
-           try {
-               jsBridge.invokeAction(JSON.stringify(msg));
-           } catch (e) {
-               window.webkit.messageHandlers.invokeAction.postMessage(JSON.stringify(msg));
-           }
-           return "true";
-       },
-       Commit: function () {
-           var msg = {
-              
-                   status: 'Commit',
-                   cmi: JSON.stringify(cmi)
-               
-           }
-           try {
-               jsBridge.invokeAction(JSON.stringify(msg));
-           } catch (e) {
-               window.webkit.messageHandlers.invokeAction.postMessage(JSON.stringify(msg));
-           }
-           return "true";
-       },
-       GetLastError: function () {
-           return config.error;
-       },
-       GetErrorString: function (num) {
-           var val = "";
-           switch (num) {
-               case 0: val = "No Error"; break;
-               case 101: val = "General Exception"; break;
-               case 201: val = "Invalid argument error"; break;
-               case 202: val = "Element cannot have children"; break;
-               case 203: val = "Element not an array. Cannot have count."; break;
-               case 301: val = "Not initialized"; break;
-               case 401: val = "Not implemented error"; break;
-               case 402: val = "Invalid set value, element is a keyword"; break;
-               case 403: val = "Element is read only"; break;
-               case 404: val = "Element is write only"; break;
-               case 405: val = "Incorrect Data Type"; break;
-           }
-           return val;
+        Terminate: function () {
+            var msg = {
 
-       },
-       GetDiagnostic: function () {
+                status: 'Terminate',
+                cmi: JSON.stringify(cmi)
 
-       },
-       getCourseInfo: function () {
-           // this is a custom function for Thinkingcap LMS
+            }
+            try {
+                jsBridge.invokeAction(JSON.stringify(msg));
+            } catch (e) {
+                window.webkit.messageHandlers.invokeAction.postMessage(JSON.stringify(msg));
+            }
+            return "true";
+        },
+        Commit: function () {
+            var msg = {
 
-           return cmi.courseinfo;
-       }
+                status: 'Commit',
+                cmi: JSON.stringify(cmi)
+
+            }
+            try {
+                jsBridge.invokeAction(JSON.stringify(msg));
+            } catch (e) {
+                window.webkit.messageHandlers.invokeAction.postMessage(JSON.stringify(msg));
+            }
+            return "true";
+        },
+        GetLastError: function () {
+            return config.error;
+        },
+        GetErrorString: function (num) {
+            var val = "";
+            switch (num) {
+                case 0: val = "No Error"; break;
+                case 101: val = "General Exception"; break;
+                case 201: val = "Invalid argument error"; break;
+                case 202: val = "Element cannot have children"; break;
+                case 203: val = "Element not an array. Cannot have count."; break;
+                case 301: val = "Not initialized"; break;
+                case 401: val = "Not implemented error"; break;
+                case 402: val = "Invalid set value, element is a keyword"; break;
+                case 403: val = "Element is read only"; break;
+                case 404: val = "Element is write only"; break;
+                case 405: val = "Incorrect Data Type"; break;
+            }
+            return val;
+
+        },
+        GetDiagnostic: function () {
+
+        },
+        getCourseInfo: function () {
+            // this is a custom function for Thinkingcap LMS
+
+            return cmi.courseinfo;
+        }
     };
 
-
+}
   
 
 

@@ -11,6 +11,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Graphics;
+using System.Threading.Tasks;
 
 namespace TCMobile.Droid
 {
@@ -24,18 +25,25 @@ namespace TCMobile.Droid
             
         }
 
-
+        
         public override void OnLoadResource(WebView view, string url)
         {
-            base.OnLoadResource(view, url);
+            
            
-            //view.EvaluateJavascript(_javascript, null);
+            if(apiloaded == false)
+             view.EvaluateJavascript(_javascript, null);
+            
+            base.OnLoadResource(view, url);
+
 
         }
         public override void OnPageStarted(WebView view, string url, Bitmap favicon)
         {
             //view.Visibility = ViewStates.Invisible;
-            base.OnPageStarted(view, url, favicon);            
+            //view.LoadUrl(_javascript);
+           view.EvaluateJavascript(_javascript, null);
+           // await Task.Delay(8000);
+            base.OnPageStarted(view, url, favicon);
             
         }
 
@@ -45,7 +53,7 @@ namespace TCMobile.Droid
         {
 
            
-            view.EvaluateJavascript(_javascript, null);          
+            //view.EvaluateJavascript(_javascript, null);          
             base.OnPageFinished(view, url);
             //view.Visibility = ViewStates.Visible;
         }
