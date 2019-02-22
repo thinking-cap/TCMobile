@@ -43,6 +43,10 @@ namespace TCMobile.Views
                 }
                 catch { }
             }
+
+            Constants.firstName = first;
+            Constants.lastName = last;
+
             UserName.Text = "Hello " + first + " " + last;
             ListViewMenu.ItemsSource = menuItems;
 

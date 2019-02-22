@@ -18,6 +18,7 @@ namespace TCMobile
         public static string LoginURL = Url + "/Mobile/Login.ashx";
         public static string firstName;
         public static string lastName;
+        public static bool isOnline;
 
        
 

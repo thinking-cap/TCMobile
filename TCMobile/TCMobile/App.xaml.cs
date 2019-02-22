@@ -7,14 +7,16 @@ using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using TCMobile.Data;
 using System.IO;
+using Xamarin.Essentials;
+
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace TCMobile
 {
     public partial class App : Application
     {
-        
 
+       
         public static bool IsUserLoggedIn { get; set; }
         static LMSDataBase database;
 
@@ -23,7 +25,16 @@ namespace TCMobile
         public static ICredentialsService CredentialsService { get; private set; }
         public App()
         {
-            
+            var current = Connectivity.NetworkAccess;
+            if (current == NetworkAccess.Internet)
+            {
+                Constants.isOnline = true;
+            }
+            else
+            {
+                Constants.isOnline = false;
+            }
+
             CredentialsService = new CredentialsService();
             InitializeComponent();
             Constants.LocalFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);

@@ -18,6 +18,7 @@ if (typeof (API_1484_11) == 'undefined') {
         init: false,
         error: 0,
         api_return_bool: false,
+        storeinteractions : true
     };
 
     var API_1484_11 = {
@@ -34,10 +35,12 @@ if (typeof (API_1484_11) == 'undefined') {
             } catch (e) {
                 window.webkit.messageHandlers.invokeAction.postMessage(JSON.stringify(msg));
             }
+            cmi.interactions._count = cmi.interactions.length;
+            cmi.objectives._count = cmi.objectives.length;
             return "true";
         },
         GetValue: function (key) {
-            if (config.init === true) {
+            //if (config.init === true) {
                 var val = "";
                 if (key.indexOf("cmi.interactions") > -1) {
                     val = GetCMIInteractions(key);
@@ -96,13 +99,13 @@ if (typeof (API_1484_11) == 'undefined') {
                     return val;
                 else
                     return val.toString();
-            } else {
-                config.error = (config.init === true) ? 0 : 301;
-                if (config.api_return_bool)
-                    return false;
-                else
-                    return 'false';
-            }
+            //} else {
+            //    config.error = (config.init === true) ? 0 : 301;
+            //    if (config.api_return_bool)
+            //        return false;
+            //    else
+            //        return 'false';
+            //}
         },
         SetValue: function (key, value) {
             if (config.init === true) {
@@ -281,6 +284,7 @@ var GetCMIInteractions = function (key) {
 };
 
 var GetCMIObjectives = function (key) {
+    cmi.objectives._count = cmi.objectives.length;
     if (key === "cmi.objectives._count") {
         return cmi.objectives.length;
     } else if (key === "cmi.objectives._children") {
@@ -296,6 +300,7 @@ var GetCMIObjectives = function (key) {
             var objective = $.grep(cmi.objectives, function (n, i) { return n.id === x[2] });
             objective = objective[0];
         }
+        cmi.objectives._count = cmi.objectives.length;
         if (typeof objective === 'undefined') {
             return 201;
         } else {
@@ -323,6 +328,7 @@ var GetCMIComments = function (key) {
     }
 };
 var SetCMIInteractions = function (key, value) {
+    cmi.interactions._count = cmi.interactions.length;
     if (key === "cmi.interactions._count") {
         return false;
     } else if (key.indexOf("objectives") > 0) {
@@ -360,11 +366,16 @@ var SetCMIInteractions = function (key, value) {
             } else {
                 switch (property) {
                     case 'id':
-                        var interaction = Interaction(value)
-                        cmi.interactions.push(interaction);
+                        var objective = Interaction(value)
+                        cmi.interactions.push(objective);
                         config.error = 0;
                         return true;
-                    default: config.error = 201; return false;
+                    default:
+                        var objective = Interaction('Interaction ' + guid());
+                        objective[property] = value;
+                        cmi.interactions.push(objective);
+                        config.error = 0;
+                        return true;
                 }
             }
         } else {
@@ -381,7 +392,7 @@ var SetCMIInteractions = function (key, value) {
                 case "timestamp": objective[property] = value; config.error = 0; break;
                 default: returnval = false; config.error = 201; break;
             };
-
+            cmi.interactions._count = cmi.interactions.length;
             return returnval;
         }
     }
@@ -520,6 +531,22 @@ var SetExit = function (value) {
     return returnvalue;
 };
 
+var Interaction = function (id) {
+    return {
+        id: id,
+        objectives: [],
+        time: null,
+        type: "",
+        description: "",
+        correct_responses: [],
+        weighting: null,
+        learner_response: "",
+        result: "",
+        latency: null,
+        timestamp: null
+    };
+
+};
 var Objective = function (id) {
     return {
         _children: "id,score,success_status,completion_status,description",
@@ -565,5 +592,17 @@ var objectives = function () {
 
     };
 };
+
+var guid = (function () {
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+    }
+    return function () {
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+            s4() + '-' + s4() + s4() + s4();
+    };
+})();
 
 var API = API_1484_11;

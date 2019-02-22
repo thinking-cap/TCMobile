@@ -70,7 +70,7 @@ namespace TCMobile
             public StudentData student_data { get; set; }
             public LearnerPreference learner_preference { get; set; }
             public string assignments_submit { get; set; }
-            public List<object> interactions { get; set; }
+            public List<Interactions> interactions { get; set; }
         }
 
         public class CommentsFromLearner
@@ -85,6 +85,19 @@ namespace TCMobile
             public string max { get; set; }
             public string min { get; set; }
             public string scaled { get; set; }
+        }
+
+        public class Interactions
+        {        
+            public string id { get; set; }
+            public List<object> objectives { get; set; }
+            public string time { get; set; }
+            public string type { get; set; }
+            public string description { get; set; }
+            public List<object> correct_responses { get; set; }
+            public string result { get; set; }
+            public string latency { get; set; }
+            public string timestamp { get; set; }
         }
 
         public class Objective

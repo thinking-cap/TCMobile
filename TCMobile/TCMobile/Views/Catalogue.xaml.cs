@@ -148,6 +148,10 @@ namespace TCMobile.Views
                 string test = await Courses.openCourse(CourseID, Navigation);
             }
 
+            Currentdownload.IsVisible = false;
+            StackLayout listViewItem = (StackLayout)Currentdownload.Parent;
+            Button launch = (Button)listViewItem.Children[2];
+            launch.IsVisible = true;
 
         }
 
@@ -169,14 +173,14 @@ namespace TCMobile.Views
                 string x = "failed";
             }
         }
-       
+        Button Currentdownload;
         async void DownloadClicked(object sender, EventArgs e)
         {
 
             if (busy)
                 return;
             busy = true;
-
+            Currentdownload = (Button)sender;
             Button button = (Button)sender;
             string id = button.ClassId;
             var courseObj = catalogue.courses.Where(course => course.courseid == id).FirstOrDefault();
@@ -218,7 +222,7 @@ namespace TCMobile.Views
         }
 
         public TCMobile.Catalogue catalogue;
-       
+
 
 
         async void LoadCourses()
@@ -228,8 +232,14 @@ namespace TCMobile.Views
             CatalogueProgress.IsRunning = true;
             // Load the catalogue
             CredentialsService credentials = new CredentialsService();
-            
-            catalogue = await Courses.GetCatalogue(credentials.HomeDomain, credentials.UserID);
+            if (Constants.isOnline) { 
+                catalogue = await Courses.GetCatalogue(credentials.HomeDomain, credentials.UserID);
+            }
+            else
+            {
+                Courses c = new Courses();
+                List<Models.Record> catalogue = await c.CheckForCourses();
+            }
             //Hide the spinner
             CatalogueProgress.IsVisible = false;
             CatalogueProgress.IsRunning = false;
@@ -237,10 +247,51 @@ namespace TCMobile.Views
             // Bind the courses to the ListView
             if (catalogue != null)
             {
-               
-                CatalogueList.ItemsSource = catalogue.courses;
+                // CatalogueList.ItemsSource = catalogue.courses;
                 CatalogueLoaded = true;
+                StackLayout layout;
+                Button downloadBtn;
+                Button launchBtn;
+                foreach( Course course in catalogue.courses)
+                {
+                    Models.Record courseRecord = await App.Database.GetCourseByID(course.courseid);
+                    layout = new StackLayout {
+                        Spacing = 1,
+                        ClassId = "course_" + course.courseid
+                    };
+                    Label title = new Label {
+                        Text = course.title,
+                        Style = (Style)Application.Current.Resources["headerStyle"]
+                    };
+                    Label description = new Label {
+                        Text = course.description,
+                        Style = (Style)Application.Current.Resources["textStyle"]
+                    };
+                    downloadBtn = new Button
+                    {
+                        Text = "download",
+                        Image = "download.png",
+                        Style = (Style)Application.Current.Resources["buttonStyle"],
+                        ClassId = course.courseid,
+                        IsVisible = (courseRecord != null) ? false : true
+                    };
+                    launchBtn = new Button
+                    {
+                        Text = "open",
+                        IsVisible = (courseRecord != null) ? true : false,
+                        Image = "launch_w.png",
+                        Style = (Style)Application.Current.Resources["buttonStyle"],
+                        ClassId = course.courseid
 
+                    };
+                    launchBtn.Clicked += launchCourse;
+                    downloadBtn.Clicked += DownloadClicked;
+                    layout.Children.Add(title);
+                    layout.Children.Add(description);
+                    layout.Children.Add(launchBtn);
+                    layout.Children.Add(downloadBtn);
+                    Cat.Children.Add(layout);
+                }
                
             }
 
@@ -250,9 +301,9 @@ namespace TCMobile.Views
         {
             Button button = (Button)Sender;
             string id = button.ClassId;
-            StackLayout listViewItem = (StackLayout)button.Parent;
+            StackLayout listViewItem = (StackLayout)button.Parent;            
             Label label = (Label)listViewItem.Children[0];
-
+           
             String text = label.Text;
             Navigation.PushAsync(new ViewCourse(id));
         }       
