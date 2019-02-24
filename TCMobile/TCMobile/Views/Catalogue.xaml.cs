@@ -16,6 +16,7 @@ using System.ComponentModel;
 using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
 using System.Diagnostics;
+using Xamarin.Essentials;
 
 namespace TCMobile.Views
 {
@@ -27,8 +28,8 @@ namespace TCMobile.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            if(!CatalogueLoaded)
-                LoadCourses();
+            Cat.Children.Clear();
+            LoadCourses();
         }
 
         
@@ -67,6 +68,7 @@ namespace TCMobile.Views
                 // find the course name
                 rec.CourseName = catalogue.courses.Find(x => x.courseid == courseid).title;
                 rec.Version = catalogue.courses.Find(x => x.courseid == courseid).version;
+                rec.CourseDescription = catalogue.courses.Find(x => x.courseid == courseid).description;
                 rec.CMI = "";
                 localFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
                 await App.Database.SaveItemAsync(rec);
@@ -232,38 +234,102 @@ namespace TCMobile.Views
             CatalogueProgress.IsRunning = true;
             // Load the catalogue
             CredentialsService credentials = new CredentialsService();
-            if (Constants.isOnline) { 
+            var current = Connectivity.NetworkAccess;
+            if (current == NetworkAccess.Internet) { 
                 catalogue = await Courses.GetCatalogue(credentials.HomeDomain, credentials.UserID);
+                buildCatalogue(catalogue.courses);
             }
             else
             {
-                Courses c = new Courses();
-                List<Models.Record> catalogue = await c.CheckForCourses();
+                buildCatalogueOffline();
             }
             //Hide the spinner
             CatalogueProgress.IsVisible = false;
             CatalogueProgress.IsRunning = false;
 
             // Bind the courses to the ListView
-            if (catalogue != null)
+            
+
+        }
+
+        public async void buildCatalogueOffline()
+        {
+            Courses c = new Courses();
+            List<Models.Record> courses = await c.CheckForCourses();
+            
+            CatalogueLoaded = true;
+            StackLayout layout;
+            Button downloadBtn;
+            Button launchBtn;
+            foreach (Models.Record course in courses)
+            {
+                Models.Record courseRecord = await App.Database.GetCourseByID(course.CourseID);
+                layout = new StackLayout
+                {
+                    Spacing = 1,
+                    ClassId = "course_" + course.CourseID
+                };
+                Label title = new Label
+                {
+                    Text = course.CourseName,
+                    Style = (Style)Application.Current.Resources["headerStyle"]
+                };
+                Label description = new Label
+                {
+                    Text = course.CourseDescription,
+                    Style = (Style)Application.Current.Resources["textStyle"]
+                };
+                downloadBtn = new Button
+                {
+                    Text = "download",
+                    Image = "download.png",
+                    Style = (Style)Application.Current.Resources["buttonStyle"],
+                    ClassId = course.CourseID,
+                    IsVisible = (courseRecord != null) ? false : true
+                };
+                launchBtn = new Button
+                {
+                    Text = "open",
+                    IsVisible = (courseRecord != null) ? true : false,
+                    Image = "launch_w.png",
+                    Style = (Style)Application.Current.Resources["buttonStyle"],
+                    ClassId = course.CourseID
+
+                };
+                launchBtn.Clicked += launchCourse;
+                downloadBtn.Clicked += DownloadClicked;
+                layout.Children.Add(title);
+                layout.Children.Add(description);
+                layout.Children.Add(launchBtn);
+                layout.Children.Add(downloadBtn);
+                Cat.Children.Add(layout);
+            }
+        }
+
+        public async void buildCatalogue(List<Course> courses)
+        {
+            if (courses != null)
             {
                 // CatalogueList.ItemsSource = catalogue.courses;
                 CatalogueLoaded = true;
                 StackLayout layout;
                 Button downloadBtn;
                 Button launchBtn;
-                foreach( Course course in catalogue.courses)
+                foreach (Course course in courses)
                 {
                     Models.Record courseRecord = await App.Database.GetCourseByID(course.courseid);
-                    layout = new StackLayout {
+                    layout = new StackLayout
+                    {
                         Spacing = 1,
                         ClassId = "course_" + course.courseid
                     };
-                    Label title = new Label {
+                    Label title = new Label
+                    {
                         Text = course.title,
                         Style = (Style)Application.Current.Resources["headerStyle"]
                     };
-                    Label description = new Label {
+                    Label description = new Label
+                    {
                         Text = course.description,
                         Style = (Style)Application.Current.Resources["textStyle"]
                     };
@@ -292,9 +358,8 @@ namespace TCMobile.Views
                     layout.Children.Add(downloadBtn);
                     Cat.Children.Add(layout);
                 }
-               
-            }
 
+            }
         }
 
         public void launchCourse(Object Sender, EventArgs args)

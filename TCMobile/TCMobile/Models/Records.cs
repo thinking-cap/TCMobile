@@ -11,6 +11,7 @@ namespace TCMobile.Models
         public int ID { get; set; }
         public string CourseName { get; set; }
         public string CourseID { get; set; }
+        public string CourseDescription { get; set; }
         public string CMI { get; set; }
         public string Manifest { get; set; }
         public string Version { get; set; }
