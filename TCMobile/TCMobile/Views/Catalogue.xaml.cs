@@ -69,6 +69,10 @@ namespace TCMobile.Views
                 rec.CourseName = catalogue.courses.Find(x => x.courseid == courseid).title;
                 rec.Version = catalogue.courses.Find(x => x.courseid == courseid).version;
                 rec.CourseDescription = catalogue.courses.Find(x => x.courseid == courseid).description;
+                rec.CompletionStatus = "Not Started";
+                rec.SuccessStatus = "";
+                rec.Score = "";
+
                 rec.CMI = "";
                 localFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
                 await App.Database.SaveItemAsync(rec);
@@ -150,10 +154,14 @@ namespace TCMobile.Views
                 string test = await Courses.openCourse(CourseID, Navigation);
             }
 
+            
             Currentdownload.IsVisible = false;
             StackLayout listViewItem = (StackLayout)Currentdownload.Parent;
+            ActivityIndicator spinner = (ActivityIndicator)listViewItem.Children[4];
+            spinner.IsVisible = false;
             Button launch = (Button)listViewItem.Children[2];
             launch.IsVisible = true;
+           
 
         }
 
@@ -191,7 +199,13 @@ namespace TCMobile.Views
             // disable the button to prevent double clicking
             ((Button)sender).IsEnabled = false;
 
-            ((Button)sender).Text= "Downloading";
+           ((Button)sender).IsVisible= false;
+
+            StackLayout listViewItem = (StackLayout)Currentdownload.Parent;
+            ActivityIndicator spinner = (ActivityIndicator)listViewItem.Children[4];
+            spinner.IsRunning = true;
+            spinner.IsVisible = true;
+
 
             // let's check the permission
             var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
@@ -296,6 +310,7 @@ namespace TCMobile.Views
                     ClassId = course.CourseID
 
                 };
+
                 launchBtn.Clicked += launchCourse;
                 downloadBtn.Clicked += DownloadClicked;
                 layout.Children.Add(title);
@@ -315,6 +330,7 @@ namespace TCMobile.Views
                 StackLayout layout;
                 Button downloadBtn;
                 Button launchBtn;
+                ActivityIndicator spinner;
                 foreach (Course course in courses)
                 {
                     Models.Record courseRecord = await App.Database.GetCourseByID(course.courseid);
@@ -341,6 +357,14 @@ namespace TCMobile.Views
                         ClassId = course.courseid,
                         IsVisible = (courseRecord != null) ? false : true
                     };
+
+                    spinner = new ActivityIndicator
+                    {
+                        IsVisible = false,
+                        Style = (Style)Application.Current.Resources["spinnerStyle"],
+                        HeightRequest = 20
+                    };
+
                     launchBtn = new Button
                     {
                         Text = "open",
@@ -356,6 +380,7 @@ namespace TCMobile.Views
                     layout.Children.Add(description);
                     layout.Children.Add(launchBtn);
                     layout.Children.Add(downloadBtn);
+                    layout.Children.Add(spinner);
                     Cat.Children.Add(layout);
                 }
 

@@ -22,7 +22,7 @@ namespace TCMobile
             return data;
         }
 
-        public static async Task<dynamic> loginUser(string queryString)
+        public static async Task<dynamic> contactLMS(string queryString)
         {
             HttpClient client = new HttpClient();
             var response = await client.GetAsync(queryString);

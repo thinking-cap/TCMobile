@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace TCMobile
 {
@@ -9,9 +10,34 @@ namespace TCMobile
     {
         public async void Commit(string cmi,string courseid)
         {
-            Models.Record courseRecord = await App.Database.GetCourseByID(courseid);
-            courseRecord.CMI = cmi;
-            await App.Database.SaveItemAsync(courseRecord);
+            try
+            {
+                Models.Record courseRecord = await App.Database.GetCourseByID(courseid);
+                courseRecord.CMI = cmi;
+                Cmi data = null;
+                data = JsonConvert.DeserializeObject<Cmi>(cmi);
+                courseRecord.CompletionStatus = data.completion_status;
+                courseRecord.SuccessStatus = data.success_status;
+                courseRecord.Score = data.score.scaled;
+
+
+                await App.Database.SaveItemAsync(courseRecord);
+            }catch(Exception ex)
+            {
+                // do nothing some courses just commit way to fast because they are poorly designed.
+            }
+
+
+
+        }
+
+        public  async void CommitToLMS(string cmi,string courseid)
+        {
+            cmi = System.Net.WebUtility.UrlEncode(cmi);
+            string uri = Constants.SetCMI + "?studentid=" + Constants.StudentID + "&courseid=" + courseid + "&cmi=" + cmi;
+            dynamic loginObj = await DataService.contactLMS(uri).ConfigureAwait(false);
+
+            
         }
 
         public async Task<string>InitializeCourse(string courseid)

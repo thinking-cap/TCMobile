@@ -48,6 +48,9 @@
                 <Setter Property="Margin" Value="10,2,10,2"/>
                 <Setter Property="BackgroundColor" Value="{StaticResource colorPrimaryDark}" />
             </Style>
+            <Style x:Key="spinnerStyle" TargetType="ActivityIndicator">
+                <Setter Property="Color" Value="Black"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

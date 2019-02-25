@@ -13,7 +13,7 @@ namespace TCMobile
             email = System.Net.WebUtility.UrlEncode(email);
             password = System.Net.WebUtility.UrlEncode(password);
             string uri = Constants.LoginURL + "?studentid=" + email + "&password=" + password + "&programid=" + Constants.ProgramID;
-            dynamic loginObj = await DataService.loginUser(uri).ConfigureAwait(false);
+            dynamic loginObj = await DataService.contactLMS(uri).ConfigureAwait(false);
 
             return loginObj;
         }

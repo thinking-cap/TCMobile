@@ -49,6 +49,9 @@ namespace TCMobile.Views
                 if (status == "Commit")
                 {
                     api.Commit(CMIString, courseid);
+                }else if(status == "Terminate")
+                {
+                    api.CommitToLMS(CMIString, courseid);
                 }
             });
 
