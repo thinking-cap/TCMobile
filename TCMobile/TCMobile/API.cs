@@ -40,6 +40,14 @@ namespace TCMobile
             
         }
 
+        public async Task<dynamic>GetCMIFromLMS(string courseid)
+        {
+            string uri = Constants.GetCMI + "?userPassword=" + App.CredentialsService.Password + "&userLogin=" + App.CredentialsService.UserName + "&courseid=" + courseid;
+            dynamic loginObj = await DataService.GetCMI(uri).ConfigureAwait(false);
+            return loginObj;
+
+        }
+
         public async Task<string>InitializeCourse(string courseid)
         {
             Models.Record courseRecord = await App.Database.GetCourseByID(courseid);

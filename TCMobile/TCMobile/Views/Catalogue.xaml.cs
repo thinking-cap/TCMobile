@@ -17,6 +17,7 @@ using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
 using System.Diagnostics;
 using Xamarin.Essentials;
+using System.Windows.Input;
 
 namespace TCMobile.Views
 {
@@ -28,7 +29,7 @@ namespace TCMobile.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            Cat.Children.Clear();
+            
             LoadCourses();
         }
 
@@ -39,7 +40,7 @@ namespace TCMobile.Views
 			InitializeComponent ();
            downloader.OnFileDownloaded += OnFileDownloaded;
             downloader.OnFileProgress += OnFileProgress;
-            
+
         }
 
        
@@ -88,6 +89,7 @@ namespace TCMobile.Views
         {
             string courseID = ((System.Net.WebClient)(sender)).QueryString["CourseID"];
             Unzip(courseID);
+            getCMIObjectFromLMS(courseID);
         }
 
         private void DownloadProgressCallback(object sender, DownloadProgressChangedEventArgs e)
@@ -238,11 +240,26 @@ namespace TCMobile.Views
         }
 
         public TCMobile.Catalogue catalogue;
+        bool isBusy;
 
+        public bool IsBusy
+        {
+            get { return isBusy; }
+            set
+            {
+                if (isBusy == value)
+                    return;
 
+                isBusy = value;
+                OnPropertyChanged("IsBusy");
+            }
+        }
+       
+        private ICommand pullRefreshCommand;
 
         async void LoadCourses()
         {
+            Cat.Children.Clear();
             // show the spinner and turn it on 
             CatalogueProgress.IsVisible = true;
             CatalogueProgress.IsRunning = true;
@@ -364,10 +381,12 @@ namespace TCMobile.Views
                         Style = (Style)Application.Current.Resources["spinnerStyle"],
                         HeightRequest = 20
                     };
-
+                  
                     launchBtn = new Button
                     {
-                        Text = "open",
+                        Text = (courseRecord == null) ? "open" : 
+                                (courseRecord.CompletionStatus.ToLower() == "completed") ? "review" :
+                                (courseRecord.CMI == "" )?"open":"resume",
                         IsVisible = (courseRecord != null) ? true : false,
                         Image = "launch_w.png",
                         Style = (Style)Application.Current.Resources["buttonStyle"],
@@ -396,7 +415,13 @@ namespace TCMobile.Views
            
             String text = label.Text;
             Navigation.PushAsync(new ViewCourse(id));
-        }       
+        }  
+        
+        public void getCMIObjectFromLMS(string courseid)
+        {
+            API api = new API();
+            dynamic cmi = api.GetCMIFromLMS(courseid);
+        }
     }
 
    

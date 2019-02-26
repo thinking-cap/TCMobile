@@ -13,6 +13,7 @@ namespace TCMobile
         public static string Url = "https://stable.thinkingcap.com";
         public static string StudentCatalogue = Url +"/Mobile/Catalogue.ashx";
         public static string SetCMI = Url + "/Mobile/SetCMI.ashx";
+        public static string GetCMI = Url + "/WebService/LearnerManagement.asmx/GetSCORMDetails";
         public static string StudentID = "740ad541-661a-43ea-b825-cec3788f2c3a";
         //public static string ProgramID = "612e7450-2370-45b7-b2f9-8686b1d7c7f9";
         public static string ProgramID = "00000000-0000-0000-0000-000000000000";

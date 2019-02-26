@@ -11,6 +11,7 @@ using Android;
 using Plugin.Permissions;
 using Plugin.CurrentActivity;
 using System.Net;
+using Refractored.XamForms.PullToRefresh.Droid;
 
 namespace TCMobile.Droid
 {

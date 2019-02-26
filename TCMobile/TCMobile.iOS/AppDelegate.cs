@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Refractored.XamForms.PullToRefresh.iOS;
 
 using Foundation;
 using UIKit;

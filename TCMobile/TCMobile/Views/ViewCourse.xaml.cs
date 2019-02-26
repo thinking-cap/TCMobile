@@ -51,7 +51,8 @@ namespace TCMobile.Views
                     api.Commit(CMIString, courseid);
                 }else if(status == "Terminate")
                 {
-                    api.CommitToLMS(CMIString, courseid);
+                    // api.CommitToLMS(CMIString, courseid); // not working yet
+                    Navigation.PopAsync();
                 }
             });
 

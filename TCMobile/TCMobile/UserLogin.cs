@@ -19,6 +19,12 @@ namespace TCMobile
         }
     }
 
+
+    public class ServiceResultOfString
+    {
+        public string Result { get; set; }
+        public string Success { get; set; }
+    }
     public class LogInObj
     {
         public string userId { get; set; }
