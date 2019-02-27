@@ -82,6 +82,9 @@ namespace TCMobile
         public class Cmi
         {
             public string _version { get; set; }
+            public string course_id { get; set; }
+            public string session_guid { set; get; }
+            public string sco_id { get; set; }
             public string mode { get; set; }
             public string learner_id { get; set; }
             public string learner_name { get; set; }
@@ -105,6 +108,24 @@ namespace TCMobile
             public LearnerPreference learner_preference { get; set; }
             public string assignments_submit { get; set; }
             public List<Interactions> interactions { get; set; }
+            public Interactions_Data interactions_data { get; set; }
+            public Objectives_Data objectives_data { get; set; }
+        }
+
+        public class Interactions_Data
+        {
+            //private string _children = "id,type,objectives,timestamp,correct_responses,weighting,learner_response,result,latency,description";
+            public string _children { get; set; }
+            public int _count { get; set; }
+            public List<Interactions> interactions {get;set;}
+        }
+
+        public class Objectives_Data
+        {
+            //public string _children = "id,score,success_status,completion_status,description";
+            public string _children { get; set; }
+            public int _count { get; set; }
+            public List<Objective> objectives { get; set; }
         }
 
         public class CommentsFromLearner

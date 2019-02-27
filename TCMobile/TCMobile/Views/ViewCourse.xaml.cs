@@ -58,6 +58,7 @@ namespace TCMobile.Views
 
             // find the html path
             string launch = itemPath(courseid);
+            string item_id = itemID(courseid);
             // get the cmi object
 
             string CMI = await cmiInit(courseid);
@@ -108,6 +109,9 @@ namespace TCMobile.Views
             else
             {
                 API.Cmi cmi = new API.Cmi();
+                cmi.course_id = courseid;
+                cmi.sco_id = item_id;
+                cmi.session_guid = new Guid().ToString();
                 cmi.entry = "normal";
                 cmi.learner_id = Constants.StudentID;
                 cmi.learner_name = Constants.firstName + " " + Constants.lastName;
@@ -123,8 +127,14 @@ namespace TCMobile.Views
                 cmi.location = "";
                 cmi.exit = "";
                 cmi.objectives = new List<object>();
-              
-                
+                cmi.interactions_data = new API.Interactions_Data();
+                cmi.objectives_data = new API.Objectives_Data();
+                cmi.objectives_data.objectives = new List<API.Objective>();
+                cmi.interactions_data.interactions = new List<API.Interactions>();
+                cmi.interactions_data._children = "id,type,objectives,timestamp,correct_responses,weighting,learner_response,result,latency,description";
+                cmi.objectives_data._children = "id,score,success_status,completion_status,description";
+
+
                 cmi.comments_from_learner = new API.CommentsFromLearner();
                 cmi.interactions = new List<API.Interactions>();
                 cmi.comments_from_learner.comments = new List<object>();
@@ -189,6 +199,27 @@ namespace TCMobile.Views
             var href = resource.Attributes["href"].Value;
 
             return href;
+        }
+
+        public string itemID(string courseid)
+        {
+            XNamespace ns = "http://www.imsglobal.org/xsd/imscp_v1p1";
+            string localFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            string manifestXML = Path.Combine(localFolder, "Courses/" + courseid + "/imsmanifest.xml");
+            // XDocument manifest = XDocument.Load(manifestXML);
+
+            XmlDocument manifest = new XmlDocument();
+            manifest.Load(manifestXML);
+
+            XmlNamespaceManager nsmgr = new XmlNamespaceManager(manifest.NameTable);
+            nsmgr.AddNamespace("imsss", "http://www.imsglobal.org/xsd/imsss");
+            nsmgr.AddNamespace("adlseq", "http://www.adlnet.org/xsd/adlseq_v1p3");
+            nsmgr.AddNamespace("mn", manifest.DocumentElement.NamespaceURI);
+            XmlNode organization = manifest.DocumentElement;
+            XmlNode item = organization.SelectSingleNode("//mn:item", nsmgr);
+            string id = item.Attributes["identifier"].Value;           
+
+            return id;
         }
     }
 }
