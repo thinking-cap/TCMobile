@@ -240,22 +240,7 @@ namespace TCMobile.Views
         }
 
         public TCMobile.Catalogue catalogue;
-        bool isBusy;
-
-        public bool IsBusy
-        {
-            get { return isBusy; }
-            set
-            {
-                if (isBusy == value)
-                    return;
-
-                isBusy = value;
-                OnPropertyChanged("IsBusy");
-            }
-        }
-       
-        private ICommand pullRefreshCommand;
+      
 
         async void LoadCourses()
         {

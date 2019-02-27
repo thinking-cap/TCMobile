@@ -89,7 +89,7 @@ namespace TCMobile
             public string learner_id { get; set; }
             public string learner_name { get; set; }
             public string location { get; set; }
-            public int progress_measure { get; set; }
+            public float progress_measure { get; set; }
             public Score score { get; set; }
             public string session_time { get; set; }
             public string success_status { get; set; }
@@ -103,13 +103,24 @@ namespace TCMobile
             public string comments { get; set; }
             public string comments_from_lms { get; set; }
             public CommentsFromLearner comments_from_learner { get; set; }
-            public List<object> objectives { get; set; }
+            public List<Objectives> objectives { get; set; }
             public StudentData student_data { get; set; }
             public LearnerPreference learner_preference { get; set; }
             public string assignments_submit { get; set; }
             public List<Interactions> interactions { get; set; }
             public Interactions_Data interactions_data { get; set; }
             public Objectives_Data objectives_data { get; set; }
+        }
+
+        public class Objectives
+        {
+            public string _children { get; set; }
+            public string id { get; set; }
+            public Score score { get; set; }
+            public string description { get; set; }
+            public string completion_status { get; set; }
+            public string success_status { get; set; }
+            public float progress_measure { get; set; }
         }
 
         public class Interactions_Data

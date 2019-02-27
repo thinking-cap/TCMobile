@@ -126,7 +126,7 @@ namespace TCMobile.Views
                 cmi.score.raw = "";
                 cmi.location = "";
                 cmi.exit = "";
-                cmi.objectives = new List<object>();
+                cmi.objectives = new List<API.Objectives>();
                 cmi.interactions_data = new API.Interactions_Data();
                 cmi.objectives_data = new API.Objectives_Data();
                 cmi.objectives_data.objectives = new List<API.Objective>();
