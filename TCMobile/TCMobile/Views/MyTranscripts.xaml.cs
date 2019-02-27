@@ -30,45 +30,58 @@ namespace TCMobile.Views
             Courses c = new Courses();
             List<Models.Record> courses = await c.CheckForCourses();
 
-           
+
             StackLayout layout;
-            foreach (Models.Record course in courses)
+            if (courses.Count() > 0)
             {
-                Models.Record courseRecord = await App.Database.GetCourseByID(course.CourseID);
-                layout = new StackLayout
+                foreach (Models.Record course in courses)
                 {
-                    Spacing = 1,
-                    ClassId = "course_" + course.CourseID
-                };
-                Label title = new Label
+                    Models.Record courseRecord = await App.Database.GetCourseByID(course.CourseID);
+                    layout = new StackLayout
+                    {
+                        Spacing = 1,
+                        ClassId = "course_" + course.CourseID
+                    };
+                    Label title = new Label
+                    {
+                        Text = course.CourseName,
+                        Style = (Style)Application.Current.Resources["headerStyle"]
+                    };
+                    Label description = new Label
+                    {
+                        Text = course.CourseDescription,
+                        Style = (Style)Application.Current.Resources["textStyle"]
+                    };
+                    string completion = (course.CompletionStatus == "" || course.CompletionStatus == "unknown") ? "Not Attempted" : course.CompletionStatus;
+                    string success = (course.SuccessStatus == "" || course.SuccessStatus == "unknown") ? "" : "/" + course.SuccessStatus;
+                    string score = (course.Score == "") ? "" : "  " + course.Score + "%";
+                    Label status = new Label
+                    {
+                        Text = completion + success + score,
+                        Style = (Style)Application.Current.Resources["headerStyle"]
+                    };
+
+
+
+
+
+
+
+                    layout.Children.Add(title);
+                    layout.Children.Add(status);
+                    layout.Children.Add(description);
+
+                    Courses.Children.Add(layout);
+                }
+            }
+            else
+            {
+                Label message = new Label
                 {
-                    Text = course.CourseName,
+                    Text = "You have not started any courses on this device.",
                     Style = (Style)Application.Current.Resources["headerStyle"]
                 };
-                Label description = new Label
-                {
-                    Text = course.CourseDescription,
-                    Style = (Style)Application.Current.Resources["textStyle"]
-                };
-                string completion = (course.CompletionStatus == "" || course.CompletionStatus == "unknown") ? "Not Attempted" : course.CompletionStatus;
-                string success = (course.SuccessStatus == "" || course.SuccessStatus == "unknown") ? "" : "/" +course.SuccessStatus;
-                string score = (course.Score == "") ? "" : "  " + course.Score + "%";
-                Label status = new Label
-                {
-                    Text = completion + success + score,
-                    Style = (Style)Application.Current.Resources["headerStyle"]
-                };
-
-
-
-               
-
-
-
-                layout.Children.Add(title);
-                layout.Children.Add(status);
-                layout.Children.Add(description);
-                Courses.Children.Add(layout);
+                Courses.Children.Add(message);
             }
         }
 
