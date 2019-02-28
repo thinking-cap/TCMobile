@@ -10,6 +10,8 @@ using TCMobile.iOS;
 using System.ComponentModel;
 using System.IO;
 using System.Net;
+using Microsoft.AppCenter.Crashes;
+
 
 using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
@@ -41,6 +43,7 @@ namespace TCMobile.iOS
             }
             catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 if (OnFileDownloaded != null)
                     OnFileDownloaded.Invoke(this, new DownloadEventArgs(ex.Message, false));
             }
@@ -111,7 +114,9 @@ namespace TCMobile.iOS
                         StreamUtils.Copy(zipStream, streamWriter, buffer);
                     }
                 }
-                catch { }
+                catch(Exception ex) {
+                    Crashes.TrackError(ex);
+                }
 
             }
             // delete the zip file from the temp folder

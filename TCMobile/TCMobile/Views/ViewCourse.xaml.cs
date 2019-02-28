@@ -11,6 +11,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Newtonsoft.Json;
 using System.Dynamic;
+using Microsoft.AppCenter.Crashes;
 
 namespace TCMobile.Views
 {
@@ -54,7 +55,7 @@ namespace TCMobile.Views
                     }
                     catch (Exception ex)
                     {
-                        // do nothing //
+                        Crashes.TrackError(ex);
                     }
                 }
                 else if(status == "Terminate")
@@ -67,7 +68,7 @@ namespace TCMobile.Views
                         Device.BeginInvokeOnMainThread(async () => await Navigation.PopAsync());
                     }catch(Exception ex)
                     {
-                        // do nothing //
+                        Crashes.TrackError(ex);
                     }
                 }
             });

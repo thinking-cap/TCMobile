@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Microsoft.AppCenter.Crashes;
 
 namespace TCMobile
 {
@@ -26,6 +27,7 @@ namespace TCMobile
             }catch(Exception ex)
             {
                 // do nothing some courses just commit way to fast because they are poorly designed.
+                Crashes.TrackError(ex);
                 return false;
             }
 
@@ -43,6 +45,8 @@ namespace TCMobile
                 return true;
             }catch(Exception ex)
             {
+
+                Crashes.TrackError(ex);
                 return false;
             }
 

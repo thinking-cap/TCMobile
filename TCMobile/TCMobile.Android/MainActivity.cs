@@ -12,6 +12,9 @@ using Plugin.Permissions;
 using Plugin.CurrentActivity;
 using System.Net;
 using Refractored.XamForms.PullToRefresh.Droid;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 
 namespace TCMobile.Droid
 {
@@ -29,6 +32,11 @@ namespace TCMobile.Droid
             base.OnCreate(savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             global::Android.Webkit.WebView.SetWebContentsDebuggingEnabled(true);
+
+            AppCenter.Start("6f839c85-8c8a-4e6a-89ac-d4b82b3d49b1",
+                   typeof(Analytics), typeof(Crashes));
+            AppCenter.Start("6f839c85-8c8a-4e6a-89ac-d4b82b3d49b1", typeof(Analytics), typeof(Crashes));
+
             LoadApplication(new App());
         }
 

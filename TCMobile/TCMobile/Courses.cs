@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Dynamic;
 using TCMobile.Views;
 using Xamarin.Forms;
+using Microsoft.AppCenter.Crashes;
 
 using Xamarin.Forms.Xaml;
 
@@ -31,8 +32,9 @@ namespace TCMobile
                     return null;
                 }
             }
-            catch
+            catch(Exception ex)
             {
+                Crashes.TrackError(ex);
                 return null;
             }
             

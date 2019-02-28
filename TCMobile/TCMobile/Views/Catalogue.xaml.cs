@@ -18,6 +18,7 @@ using ICSharpCode.SharpZipLib.Zip;
 using System.Diagnostics;
 using Xamarin.Essentials;
 using System.Windows.Input;
+using Microsoft.AppCenter.Crashes;
 
 namespace TCMobile.Views
 {
@@ -144,9 +145,9 @@ namespace TCMobile.Views
 
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
-
+                    Crashes.TrackError(ex);
                 }
 
             }
@@ -188,6 +189,7 @@ namespace TCMobile.Views
             }
             catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 string x = "failed";
             }
         }

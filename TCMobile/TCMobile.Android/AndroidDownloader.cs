@@ -17,6 +17,7 @@ using System.ComponentModel;
 using System.IO.Compression;
 using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
+using Microsoft.AppCenter.Crashes;
 
 
 [assembly: Dependency(typeof(AndroidDownloader))]
@@ -43,6 +44,7 @@ namespace TCMobile.Droid
             }
             catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 if (OnFileDownloaded != null)
                     OnFileDownloaded.Invoke(this, new DownloadEventArgs(ex.Message,false));
             }
@@ -116,8 +118,8 @@ namespace TCMobile.Droid
 
                    
                 }
-                catch {
-                   
+                catch(Exception ex) {
+                    Crashes.TrackError(ex);
                 }
 
             }

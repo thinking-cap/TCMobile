@@ -1,6 +1,7 @@
 ﻿using TCMobile.Models;
 using System;
 using System.Collections.Generic;
+using Microsoft.AppCenter.Crashes;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -42,7 +43,9 @@ namespace TCMobile.Views
                     first = App.CredentialsService.FirstName;
                     last = App.CredentialsService.LastName;
                 }
-                catch { }
+                catch(Exception ex) {
+                    Crashes.TrackError(ex);
+                }
             }
 
             Constants.firstName = first;
