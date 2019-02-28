@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
               xmlns:vm="clr-namespace:TCMobile.ViewModels"
+              xmlns:Custom="clr-namespace:TCMobile;assembly=TCMobile"
              x:Class="TCMobile.Views.Login"
              BackgroundColor="{StaticResource colorPrimaryDark}"
              Title="{Binding Title}"
@@ -15,24 +16,24 @@
     </ContentPage.Resources>
     <ContentPage.Content>       
         <StackLayout Spacing="10" VerticalOptions="StartAndExpand" Margin="0,150,0,20" BackgroundColor="White">
-           <Frame BackgroundColor="white" CornerRadius="10" Margin="10,20,10,0" Padding="0">
-                   <Entry x:Name="Email" Text="{Binding Email}"
+           <StackLayout BackgroundColor="white" Margin="10,20,10,0" Padding="0">
+                   <Custom:MyEntry x:Name="Email" Text="{Binding Email}"
                                    Placeholder="username"   
                                    HeightRequest="45" 
                                    Margin="10,0,10,0"
                                    Keyboard="Email"
                                    />
-                </Frame>
-                <Frame BackgroundColor="white" CornerRadius="10" Margin="10,0,10,0" Padding="0">
-                    <Entry x:Name="Password" Text="{Binding Password}" Placeholder="password"   
-                                   HeightRequest="45" 
+                </StackLayout>
+                <StackLayout BackgroundColor="white" Margin="10,0,10,0" Padding="0">
+                    <Custom:MyEntry x:Name="Password" Text="{Binding Password}" Placeholder="password"   
+                                   HeightRequest="45"
                                    Margin="10,0,10,0"
                                    IsPassword="True"/>
-                </Frame>
-            
-            <Button Text="Login" TextColor="White" BackgroundColor="{StaticResource colorPrimaryDark}" 
+                </StackLayout>
+
+            <Button Text="login" TextColor="White"  Style="{StaticResource buttonStyle}" 
                      Clicked="OnLoginButtonClicked" 
-                    WidthRequest="50" CornerRadius="10"/>
+                    WidthRequest="25" CornerRadius="10"/>
             <ActivityIndicator x:Name="Progress" IsVisible="False" HeightRequest="20"/>
                 <Label x:Name="Error" HeightRequest="45" IsVisible="False"/>
            

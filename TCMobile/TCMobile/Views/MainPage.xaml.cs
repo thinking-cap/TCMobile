@@ -35,11 +35,11 @@ namespace TCMobile.Views
                     case (int)MenuItemType.MyTranscripts:
                         MenuPages.Add(id, new NavigationPage(new MyTranscripts()));
                         break;
-                    case (int)MenuItemType.Logout:
-                        MenuPages.Add(id, new NavigationPage(new Login()));
-                        break;
                     case (int)MenuItemType.Settings:
                         MenuPages.Add(id, new NavigationPage(new Settings()));
+                        break;
+                    case (int)MenuItemType.Logout:
+                        MenuPages.Add(id, new NavigationPage(new Login()));
                         break;
                 }
             }
@@ -70,9 +70,7 @@ namespace TCMobile.Views
         {
             bool doCredentialsExist = App.CredentialsService.DoCredentialsExist();
             if (doCredentialsExist)
-                App.CredentialsService.DeleteCredentials();
-
-           
+                App.CredentialsService.DeleteCredentials();           
         }
     }
 }

@@ -15,7 +15,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <controls:CircleImage Grid.Row="0" Grid.Column="0" Source="{Binding Image}" BackgroundColor="{StaticResource colorPrimaryDark}" Aspect="AspectFill" x:Name="UserImage">
+        <controls:CircleImage Grid.Row="0" Grid.Column="0" Source="{Binding Image}" BackgroundColor="{StaticResource colorPrimaryDark}" Aspect="AspectFill" x:Name="UserImage" Margin="5,5">
             <controls:CircleImage.WidthRequest>
                 <OnPlatform x:TypeArguments="x:Double">
                     <On Platform="Android, iOS">35</On>
@@ -29,7 +29,7 @@
                 </OnPlatform>
             </controls:CircleImage.HeightRequest>
         </controls:CircleImage>
-        <Label x:Name="UserName" Grid.Row="0" Grid.Column="1" TextColor="White" BackgroundColor="{StaticResource colorPrimaryDark}" Text="Hello World"/>
+        <Label x:Name="UserName" Grid.Row="0" Grid.Column="1" TextColor="White" BackgroundColor="{StaticResource colorPrimaryDark}" Text="Hello Learner" Margin="5,10,0,0"/>
         
 
         <!--<Image  Aspect="AspectFill" x:Name="UserImage" Source="https://xamarin.com/content/images/pages/forms/example-app.png" />-->

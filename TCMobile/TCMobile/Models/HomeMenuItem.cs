@@ -9,8 +9,8 @@ namespace TCMobile.Models
         Catalogue,
         MyCourses,
         MyTranscripts,
-        Logout,
-        Settings
+        Settings,
+        Logout
 
     }
     public class HomeMenuItem
