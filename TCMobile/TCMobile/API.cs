@@ -8,7 +8,7 @@ namespace TCMobile
 {
     class API
     {
-        public async void Commit(string cmi,string courseid)
+        public async Task<bool> Commit(string cmi,string courseid)
         {
             try
             {
@@ -22,20 +22,29 @@ namespace TCMobile
 
 
                 await App.Database.SaveItemAsync(courseRecord);
+                return true;
             }catch(Exception ex)
             {
                 // do nothing some courses just commit way to fast because they are poorly designed.
+                return false;
             }
 
 
 
         }
 
-        public  async void CommitToLMS(string cmi,string courseid)
+        public  async Task<bool> CommitToLMS(string cmi,string courseid)
         {
-            cmi = System.Net.WebUtility.UrlEncode(cmi);
-            string uri = Constants.SetCMI + "?studentid=" + Constants.StudentID + "&courseid=" + courseid + "&cmi=" + cmi;
-            dynamic loginObj = await DataService.contactLMS(uri).ConfigureAwait(false);
+            try
+            {
+               // cmi = System.Net.WebUtility.UrlEncode(cmi);
+                string uri = Constants.SetCMI + "?userPassword=" + App.CredentialsService.Password + "&userLogin=" + App.CredentialsService.UserName + "&courseID=" + courseid + "&scormObjectJson=" + cmi;
+                dynamic loginObj = await DataService.commitToLMS(uri).ConfigureAwait(false);
+                return true;
+            }catch(Exception ex)
+            {
+                return false;
+            }
 
             
         }
@@ -110,7 +119,18 @@ namespace TCMobile
             public List<Interactions> interactions { get; set; }
             public Interactions_Data interactions_data { get; set; }
             public Objectives_Data objectives_data { get; set; }
-        }
+
+            public NavRequest nav_request { get; set; }
+
+           
+    }
+
+        public class NavRequest
+        {
+            public string @continue {get;set;}
+            public string choice { get; set; }
+            public string previous { get; set; }            
+    }
 
         public class Objectives
         {

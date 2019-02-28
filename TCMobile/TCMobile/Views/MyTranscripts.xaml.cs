@@ -31,11 +31,12 @@ namespace TCMobile.Views
             List<Models.Record> courses = await c.CheckForCourses();
 
 
-            StackLayout layout;
+            
             if (courses.Count() > 0)
             {
                 foreach (Models.Record course in courses)
                 {
+                    StackLayout layout;
                     Models.Record courseRecord = await App.Database.GetCourseByID(course.CourseID);
                     layout = new StackLayout
                     {

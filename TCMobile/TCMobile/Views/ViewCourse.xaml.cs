@@ -48,12 +48,27 @@ namespace TCMobile.Views
                 // if it's a commit then save the cmi object to the course record
                 if (status == "Commit")
                 {
-                    api.Commit(CMIString, courseid);
-                }else if(status == "Terminate")
+                    try
+                    {
+                        Device.BeginInvokeOnMainThread(async () =>  await api.Commit(CMIString, courseid));
+                    }
+                    catch (Exception ex)
+                    {
+                        // do nothing //
+                    }
+                }
+                else if(status == "Terminate")
                 {
                     // api.CommitToLMS(CMIString, courseid); // not working yet
                     //Navigation.PopAsync();
-                    Device.BeginInvokeOnMainThread(async () => await Navigation.PopAsync());
+                    try
+                    {
+                        Device.BeginInvokeOnMainThread(async () => await api.CommitToLMS(CMIString, courseid));
+                        Device.BeginInvokeOnMainThread(async () => await Navigation.PopAsync());
+                    }catch(Exception ex)
+                    {
+                        // do nothing //
+                    }
                 }
             });
 
@@ -111,6 +126,7 @@ namespace TCMobile.Views
             {
                 API.Cmi cmi = new API.Cmi();
                 cmi.course_id = courseid;
+                cmi._version = "2004";
                 cmi.sco_id = item_id;
                 cmi.session_guid = new Guid().ToString();
                 cmi.entry = "normal";
@@ -134,7 +150,10 @@ namespace TCMobile.Views
                 cmi.interactions_data.interactions = new List<API.Interactions>();
                 cmi.interactions_data._children = "id,type,objectives,timestamp,correct_responses,weighting,learner_response,result,latency,description";
                 cmi.objectives_data._children = "id,score,success_status,completion_status,description";
-
+                cmi.nav_request = new API.NavRequest();
+                cmi.nav_request.@continue = "false";
+                cmi.nav_request.previous = "false";
+                cmi.nav_request.choice = "unknown";
 
                 cmi.comments_from_learner = new API.CommentsFromLearner();
                 cmi.interactions = new List<API.Interactions>();

@@ -38,6 +38,9 @@ namespace TCMobile.Views
                     case (int)MenuItemType.Logout:
                         MenuPages.Add(id, new NavigationPage(new Login()));
                         break;
+                    case (int)MenuItemType.Settings:
+                        MenuPages.Add(id, new NavigationPage(new Settings()));
+                        break;
                 }
             }
 

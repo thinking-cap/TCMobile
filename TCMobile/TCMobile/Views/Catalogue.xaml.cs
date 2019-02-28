@@ -73,11 +73,17 @@ namespace TCMobile.Views
                 rec.CompletionStatus = "Not Started";
                 rec.SuccessStatus = "";
                 rec.Score = "";
+                rec.Deleted = "false";
 
                 rec.CMI = "";
                 localFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
                 await App.Database.SaveItemAsync(rec);
-           }
+            }
+            else
+            {
+                courseExists.Deleted = "false";
+                await App.Database.SaveItemAsync(courseExists);
+            }
         }
 
         private void OnFileProgress(object sender, DownloadProgress e)
@@ -301,7 +307,7 @@ namespace TCMobile.Views
                     Image = "download.png",
                     Style = (Style)Application.Current.Resources["buttonStyle"],
                     ClassId = course.CourseID,
-                    IsVisible = (courseRecord != null) ? false : true
+                    IsVisible = (courseRecord.Deleted == "false") ? false : true
                 };
                 launchBtn = new Button
                 {
@@ -351,13 +357,16 @@ namespace TCMobile.Views
                         Text = course.description,
                         Style = (Style)Application.Current.Resources["textStyle"]
                     };
+
+                   
+
                     downloadBtn = new Button
                     {
                         Text = "download",
                         Image = "download.png",
                         Style = (Style)Application.Current.Resources["buttonStyle"],
                         ClassId = course.courseid,
-                        IsVisible = (courseRecord != null) ? false : true
+                        IsVisible = (courseRecord == null) ? true : (courseRecord.Deleted == "false") ? false : true
                     };
 
                     spinner = new ActivityIndicator
@@ -372,7 +381,7 @@ namespace TCMobile.Views
                         Text = (courseRecord == null) ? "open" : 
                                 (courseRecord.CompletionStatus.ToLower() == "completed") ? "review" :
                                 (courseRecord.CMI == "" )?"open":"resume",
-                        IsVisible = (courseRecord != null) ? true : false,
+                        IsVisible = (courseRecord == null) ? false : (courseRecord.Deleted == "false") ? true : false,
                         Image = "launch_w.png",
                         Style = (Style)Application.Current.Resources["buttonStyle"],
                         ClassId = course.courseid

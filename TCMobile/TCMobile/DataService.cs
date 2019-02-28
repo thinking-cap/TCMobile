@@ -37,6 +37,21 @@ namespace TCMobile
             return data;
         }
 
+        public static async Task<dynamic> commitToLMS(string queryString)
+        {
+            HttpClient client = new HttpClient();
+            var response = await client.GetAsync(queryString);
+
+            dynamic data = null;
+            if (response != null)
+            {
+                string json = response.Content.ReadAsStringAsync().Result;
+                data = JsonConvert.DeserializeObject<ServiceResultOfString>(json);
+            }
+
+            return data;
+        }
+
         public static async Task<dynamic> GetCMI(string queryString)
         {
             HttpClient client = new HttpClient();

@@ -19,5 +19,6 @@ namespace TCMobile.Models
         public string Manifest { get; set; }
         public string Version { get; set; }
         public bool Done { get; set; }
+        public string Deleted { get; set; }
     }
 }
