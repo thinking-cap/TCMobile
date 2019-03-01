@@ -13,6 +13,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using TCMobile;
 using TCMobile.Droid;
+using Android.Graphics.Drawables;
 
 [assembly: ExportRenderer(typeof(MyEntry), typeof(MyEntryRenderer))]
 namespace TCMobile.Droid
@@ -30,6 +31,8 @@ namespace TCMobile.Droid
             if (Control != null)
             {
                 Control.SetBackgroundColor(global::Android.Graphics.Color.White);
+
+                
             }
         }
     }

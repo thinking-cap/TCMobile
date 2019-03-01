@@ -14,29 +14,29 @@
     <ContentPage.Resources>
         <StyleSheetExtension Source="../style.css"></StyleSheetExtension>
     </ContentPage.Resources>
-    <ContentPage.Content>       
-        <StackLayout Spacing="10" VerticalOptions="StartAndExpand" Margin="0,150,0,20" BackgroundColor="White">
-           <StackLayout BackgroundColor="white" Margin="10,20,10,0" Padding="0">
+    <ContentPage.Content>
+        <StackLayout>
+        <StackLayout Spacing="10" Margin="0,150,0,0" BackgroundColor="White">
+           <StackLayout BackgroundColor="white" Margin="10,10,10,10" Padding="0">
                    <Custom:MyEntry x:Name="Email" Text="{Binding Email}"
                                    Placeholder="username"   
                                    HeightRequest="45" 
-                                   Margin="10,0,10,0"
+                                   Margin="10,1,10,10"
                                    Keyboard="Email"
                                    />
                 </StackLayout>
                 <StackLayout BackgroundColor="white" Margin="10,0,10,0" Padding="0">
                     <Custom:MyEntry x:Name="Password" Text="{Binding Password}" Placeholder="password"   
                                    HeightRequest="45"
-                                   Margin="10,0,10,0"
+                                   Margin="10,0,10,10"
                                    IsPassword="True"/>
                 </StackLayout>
-
-            <Button Text="login" TextColor="White"  Style="{StaticResource buttonStyle}" 
-                     Clicked="OnLoginButtonClicked" 
-                    WidthRequest="25" CornerRadius="10"/>
+        </StackLayout>
+        <StackLayout HorizontalOptions="Center">
+            <Button Text="login" Style="{StaticResource buttonStyle}" Clicked="OnLoginButtonClicked"/>
             <ActivityIndicator x:Name="Progress" IsVisible="False" HeightRequest="20"/>
-                <Label x:Name="Error" HeightRequest="45" IsVisible="False"/>
-           
+            <Label x:Name="Error" HeightRequest="45" IsVisible="False"/>
+        </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
