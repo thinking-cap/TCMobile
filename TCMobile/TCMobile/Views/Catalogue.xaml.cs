@@ -248,6 +248,7 @@ namespace TCMobile.Views
         }
 
         public TCMobile.Catalogue catalogue;
+        public TCMobile.LearningPaths lp;
       
 
         async void LoadCourses()
@@ -261,6 +262,7 @@ namespace TCMobile.Views
             var current = Connectivity.NetworkAccess;
             if (current == NetworkAccess.Internet) { 
                 catalogue = await Courses.GetCatalogue(credentials.HomeDomain, credentials.UserID);
+                lp = await Courses.GetLearningPaths(credentials.HomeDomain, credentials.UserID);
                 buildCatalogue(catalogue.courses);
             }
             else

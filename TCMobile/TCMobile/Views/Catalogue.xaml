@@ -15,6 +15,7 @@
                     <!--<Button Text="Load Catalogue" Clicked="LoadCourses"/>-->
                     <StackLayout>
                         <StackLayout x:Name="Cat"></StackLayout>
+                        <StackLayout x:Name="LP"></StackLayout>
                         <ActivityIndicator x:Name="CatalogueProgress" IsVisible="False" HeightRequest="20"/>
                     </StackLayout>            
         </ScrollView>

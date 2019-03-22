@@ -22,6 +22,21 @@ namespace TCMobile
             return data;
         }
 
+        public static async Task<dynamic> getLPs(string queryString)
+        {
+            HttpClient client = new HttpClient();
+            var response = await client.GetAsync(queryString);
+
+            dynamic data = null;
+            if (response != null)
+            {
+                string json = response.Content.ReadAsStringAsync().Result;
+                data = JsonConvert.DeserializeObject<LearningPaths>(json);
+            }
+
+            return data;
+        }
+
         public static async Task<dynamic> contactLMS(string queryString)
         {
             HttpClient client = new HttpClient();

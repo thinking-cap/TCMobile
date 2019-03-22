@@ -41,6 +41,21 @@ namespace TCMobile
            
         }
 
+        public static async Task<LearningPaths> GetLearningPaths(string domainid, string studentid)
+        {
+            try
+            {
+                string uri = Constants.LearningPaths + "?studentid=" + studentid + "&programid=" + domainid;
+                dynamic results = await DataService.getLPs(uri).ConfigureAwait(false);
+                return results;
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
         public static async Task<String>openCourse(string id, INavigation navigation)
         {
            //MainPage.Navigation.PushAsync(new ViewCourse(id));

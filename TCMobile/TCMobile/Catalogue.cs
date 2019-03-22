@@ -16,6 +16,11 @@ namespace TCMobile
         public List<Course>courses { get; set; }
     }
 
+    public class LearningPaths
+    {
+        public List<LearningPath> learningpaths { get; set; }
+    }
+
     public class Course
     {
         public string courseid { get; set; }
@@ -41,5 +46,13 @@ namespace TCMobile
 
         public string version { get; set; }
     }
+
+    public class LearningPath
+    {
+        public string title { get; set; }
+        public string description { get; set; }
+        public string id { get; set; }
+    }
+
 }
    

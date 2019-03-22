@@ -34,7 +34,7 @@ namespace TCMobile
             {
                 Constants.isOnline = false;
             }
-
+            
             CredentialsService = new CredentialsService();
             InitializeComponent();
             Constants.LocalFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
