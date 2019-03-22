@@ -40,8 +40,16 @@ namespace TCMobile
             Constants.LocalFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             if (CredentialsService.DoCredentialsExist() && !String.IsNullOrEmpty(CredentialsService.HomeDomain) && !String.IsNullOrEmpty(CredentialsService.UserID))
             {
-                Constants.BlobLocation = CredentialsService.BlobLoc;
-                MainPage = new MainPage();
+                // added a try catch just incase the param hasn't been created. 
+                // then we need to force a log in to retrieve the blob location
+                try
+                {
+                    Constants.BlobLocation = CredentialsService.BlobLoc;
+                    MainPage = new MainPage();
+                }catch(Exception e)
+                {
+                    MainPage = new NavigationPage(new Login());
+                }
             }
             else {
                 MainPage = new NavigationPage(new Login());
