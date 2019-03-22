@@ -40,6 +40,7 @@ namespace TCMobile
             Constants.LocalFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             if (CredentialsService.DoCredentialsExist() && !String.IsNullOrEmpty(CredentialsService.HomeDomain) && !String.IsNullOrEmpty(CredentialsService.UserID))
             {
+                Constants.BlobLocation = CredentialsService.BlobLoc;
                 MainPage = new MainPage();
             }
             else {

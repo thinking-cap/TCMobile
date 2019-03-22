@@ -54,6 +54,15 @@ namespace TCMobile
             }
         }
 
+        public string BlobLoc
+        {
+            get
+            {
+                var account = AccountStore.Create().FindAccountsForService(App.AppName).FirstOrDefault();
+                return (account != null) ? account.Properties["BlobLoc"] : null;
+            }
+        }
+
         public string LastName
         {
             get
@@ -63,7 +72,7 @@ namespace TCMobile
             }
         }
 
-        public void SaveCredentials(string userName, string password, string userid,string firstname,string lastname, string homedomain)
+        public void SaveCredentials(string userName, string password, string userid,string firstname,string lastname, string homedomain, string blobloc)
         {
             if (!string.IsNullOrWhiteSpace(userName) && !string.IsNullOrWhiteSpace(password))
             {
@@ -76,6 +85,7 @@ namespace TCMobile
                 account.Properties.Add("LastName", lastname);
                 account.Properties.Add("UserID",userid);
                 account.Properties.Add("HomeDomain", homedomain);
+                account.Properties.Add("BlobLoc", blobloc);
                 AccountStore.Create().Save(account, App.AppName);
             }
 

@@ -166,9 +166,9 @@ namespace TCMobile.Views
             
             Currentdownload.IsVisible = false;
             StackLayout listViewItem = (StackLayout)Currentdownload.Parent;
-            ActivityIndicator spinner = (ActivityIndicator)listViewItem.Children[4];
+            ActivityIndicator spinner = (ActivityIndicator)listViewItem.Children[2];
             spinner.IsVisible = false;
-            Button launch = (Button)listViewItem.Children[2];
+            Button launch = (Button)listViewItem.Children[1];
             launch.IsVisible = true;
            
 
@@ -212,7 +212,7 @@ namespace TCMobile.Views
            ((Button)sender).IsVisible= false;
 
             StackLayout listViewItem = (StackLayout)Currentdownload.Parent;
-            ActivityIndicator spinner = (ActivityIndicator)listViewItem.Children[4];
+            ActivityIndicator spinner = (ActivityIndicator)listViewItem.Children[2];
             spinner.IsRunning = true;
             spinner.IsVisible = true;
 
@@ -282,52 +282,10 @@ namespace TCMobile.Views
             List<Models.Record> courses = await c.CheckForCourses();
             
             CatalogueLoaded = true;
-            StackLayout layout;
-            Button downloadBtn;
-            Button launchBtn;
+            
             foreach (Models.Record course in courses)
             {
-                Models.Record courseRecord = await App.Database.GetCourseByID(course.CourseID);
-                layout = new StackLayout
-                {
-                    Spacing = 1,
-                    ClassId = "course_" + course.CourseID
-                };
-                Label title = new Label
-                {
-                    Text = course.CourseName,
-                    Style = (Style)Application.Current.Resources["headerStyle"]
-                };
-                Label description = new Label
-                {
-                    Text = course.CourseDescription,
-                    Style = (Style)Application.Current.Resources["textStyle"]
-                };
-                downloadBtn = new Button
-                {
-                    Text = "download",
-                    Image = "download.png",
-                    Style = (Style)Application.Current.Resources["buttonStyle"],
-                    ClassId = course.CourseID,
-                    IsVisible = (courseRecord.Deleted == "false") ? false : true
-                };
-                launchBtn = new Button
-                {
-                    Text = "open",
-                    IsVisible = (courseRecord != null) ? true : false,
-                    Image = "launch_w.png",
-                    Style = (Style)Application.Current.Resources["buttonStyle"],
-                    ClassId = course.CourseID
-
-                };
-
-                launchBtn.Clicked += launchCourse;
-                downloadBtn.Clicked += DownloadClicked;
-                layout.Children.Add(title);
-                layout.Children.Add(description);
-                layout.Children.Add(launchBtn);
-                layout.Children.Add(downloadBtn);
-                Cat.Children.Add(layout);
+                bool x = await buildCourseCard(course.CourseID, course.CourseName, course.CourseDescription);
             }
         }
 
@@ -337,79 +295,124 @@ namespace TCMobile.Views
             {
                 // CatalogueList.ItemsSource = catalogue.courses;
                 CatalogueLoaded = true;
-                StackLayout layout;
-                Button downloadBtn;
-                Button launchBtn;
-                ActivityIndicator spinner;
+               
                 foreach (Course course in courses)
                 {
-                    Models.Record courseRecord = await App.Database.GetCourseByID(course.courseid);
-                    layout = new StackLayout
-                    {
-                        Spacing = 1,
-                        ClassId = "course_" + course.courseid
-                    };
-                    Label title = new Label
-                    {
-                        Text = course.title,
-                        Style = (Style)Application.Current.Resources["headerStyle"]
-                    };
-                    Label description = new Label
-                    {
-                        Text = course.description,
-                        Style = (Style)Application.Current.Resources["textStyle"]
-                    };
-
-                   
-
-                    downloadBtn = new Button
-                    {
-                        Text = "download",
-                        Image = "download.png",
-                        Style = (Style)Application.Current.Resources["buttonStyle"],
-                        ClassId = course.courseid,
-                        IsVisible = (courseRecord == null) ? true : (courseRecord.Deleted == "false") ? false : true
-                    };
-
-                    spinner = new ActivityIndicator
-                    {
-                        IsVisible = false,
-                        Style = (Style)Application.Current.Resources["spinnerStyle"],
-                        HeightRequest = 20
-                    };
-                  
-                    launchBtn = new Button
-                    {
-                        Text = (courseRecord == null) ? "open" : 
-                                (courseRecord.CompletionStatus.ToLower() == "completed") ? "review" :
-                                (courseRecord.CMI == "" )?"open":"resume",
-                        IsVisible = (courseRecord == null) ? false : (courseRecord.Deleted == "false") ? true : false,
-                        Image = "launch_w.png",
-                        Style = (Style)Application.Current.Resources["buttonStyle"],
-                        ClassId = course.courseid
-
-                    };
-                    launchBtn.Clicked += launchCourse;
-                    downloadBtn.Clicked += DownloadClicked;
-                    layout.Children.Add(title);
-                    layout.Children.Add(description);
-                    layout.Children.Add(launchBtn);
-                    layout.Children.Add(downloadBtn);
-                    layout.Children.Add(spinner);
-                    Cat.Children.Add(layout);
+                    bool x = await buildCourseCard(course.courseid, course.title, course.description);
                 }
 
             }
+        }
+
+        public async Task<bool> buildCourseCard(string courseid,string coursetitle,string coursedescription)
+        {
+            Frame frame;
+            StackLayout layout;
+            Button downloadBtn;
+            Button launchBtn;
+            ActivityIndicator spinner;
+            Image marquee;
+            Models.Record courseRecord = await App.Database.GetCourseByID(courseid);
+            marquee = new Image
+            {
+                // lets cache the image so we for 72 hours //
+                Source = new UriImageSource
+                {
+                    Uri = new Uri(Constants.BlobLocation + "/coursecontent/" + courseid + "/courselogo.gif"),
+                    CacheValidity = new TimeSpan(72, 0, 0),
+                    CachingEnabled = true
+                }
+
+            };
+            frame = new Frame
+            {
+                HasShadow = true,
+                Padding = new Thickness(0, 0, 0, 0),
+                Margin = new Thickness(0, 0, 0, 8)
+            };
+
+            layout = new StackLayout
+            {
+                ClassId = "course_" + courseid
+
+            };
+
+            StackLayout cardBody = new StackLayout
+            {
+                Padding = new Thickness(16, 0, 16, 0),
+                ClassId = "course_" + courseid
+            };
+
+            Label title = new Label
+            {
+                Text = coursetitle,
+                Style = (Style)Application.Current.Resources["headerStyle"]
+            };
+            Label description = new Label
+            {
+                Text = coursedescription,
+                Style = (Style)Application.Current.Resources["textStyle"]
+            };
+
+
+
+            downloadBtn = new Button
+            {
+                Text = "download",
+                Image = "download.png",
+                Style = (Style)Application.Current.Resources["buttonStyle"],
+                ClassId = courseid,
+                IsVisible = (courseRecord == null) ? true : (courseRecord.Deleted == "false") ? false : true
+            };
+
+            spinner = new ActivityIndicator
+            {
+                IsVisible = false,
+                Style = (Style)Application.Current.Resources["spinnerStyle"],
+                HeightRequest = 20
+            };
+
+            StackLayout cardFooter = new StackLayout
+            {
+                Padding = new Thickness(16, 0, 16, 8),
+                ClassId = "course_" + courseid
+            };
+
+            launchBtn = new Button
+            {
+                Text = (courseRecord == null) ? "open" :
+                        (courseRecord.CompletionStatus.ToLower() == "completed") ? "review" :
+                        (courseRecord.CMI == "") ? "open" : "resume",
+                IsVisible = (courseRecord == null) ? false : (courseRecord.Deleted == "false") ? true : false,
+                Image = "launch_w.png",
+                Style = (Style)Application.Current.Resources["buttonStyle"],
+                ClassId = courseid
+
+            };
+            launchBtn.Clicked += launchCourse;
+            downloadBtn.Clicked += DownloadClicked;
+            cardBody.Children.Add(title);
+            cardBody.Children.Add(description);
+            layout.Children.Add(marquee);
+            layout.Children.Add(cardBody);
+            layout.Children.Add(cardFooter);
+            cardFooter.Children.Add(launchBtn);
+            cardFooter.Children.Add(downloadBtn);
+            cardFooter.Children.Add(spinner);
+            frame.Content = layout;
+            Cat.Children.Add(frame);
+
+            return true;
         }
 
         public void launchCourse(Object Sender, EventArgs args)
         {
             Button button = (Button)Sender;
             string id = button.ClassId;
-            StackLayout listViewItem = (StackLayout)button.Parent;            
-            Label label = (Label)listViewItem.Children[0];
+            //StackLayout listViewItem = (StackLayout)button.Parent;            
+            //Label label = (Label)listViewItem.Children[0];
            
-            String text = label.Text;
+            //String text = label.Text;
             Navigation.PushAsync(new ViewCourse(id));
         }  
         

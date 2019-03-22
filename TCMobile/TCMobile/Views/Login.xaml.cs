@@ -49,7 +49,7 @@ namespace TCMobile.Views
                 bool doCredentialsExist = App.CredentialsService.DoCredentialsExist();
                 if (!doCredentialsExist)
                 {
-                    App.CredentialsService.SaveCredentials(username, password,login.userId, login.firstName,login.lastName,login.homedomain);
+                    App.CredentialsService.SaveCredentials(username, password,login.userId, login.firstName,login.lastName,login.homedomain, login.blobLoc);
                 }
 
                 App.IsUserLoggedIn = true;
@@ -57,6 +57,7 @@ namespace TCMobile.Views
                 Constants.StudentID = login.userId;
                 Constants.firstName = login.firstName;
                 Constants.lastName = login.lastName;
+                Constants.BlobLocation = login.blobLoc;
                 Progress.IsVisible = true;
                 Progress.IsRunning = true;
 

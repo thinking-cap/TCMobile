@@ -36,6 +36,8 @@ namespace TCMobile
         public string firstName { get; set; }
         public string lastName { get; set; }
 
+        public string blobLoc { get; set; }
+
         public string role { get; set; }
     }
 }
