@@ -17,8 +17,12 @@ using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
 using System.Diagnostics;
 using Xamarin.Essentials;
+using XamForms.HtmlLabel;
 using System.Windows.Input;
 using Microsoft.AppCenter.Crashes;
+using System.Web;
+using TCMobile.CustomControls;
+
 
 namespace TCMobile.Views
 {
@@ -342,7 +346,8 @@ namespace TCMobile.Views
             StackLayout cardBody = new StackLayout
             {
                 Padding = new Thickness(16, 0, 16, 0),
-                ClassId = "course_" + courseid
+                ClassId = "course_" + courseid,
+                VerticalOptions = LayoutOptions.FillAndExpand
             };
 
             Label title = new Label
@@ -350,11 +355,37 @@ namespace TCMobile.Views
                 Text = coursetitle,
                 Style = (Style)Application.Current.Resources["headerStyle"]
             };
-            Label description = new Label
+
+            //HtmlLabel description = new HtmlLabel
+            //{
+            //    Text = coursedescription
+            //};
+
+            string htmlText = @"<html>
+                                    <head>
+                                        <meta name='viewport' content='width=device-width; height=device-height; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;'/>                                    
+                                        <style type='text/css'>
+                                             body{font-family:Segoe UI, Helvetica Neue,'Lucida Sans Unicode', Skia, sans-serif;
+                                                    border:0px;padding:0px;margin:0px;
+                                                    background-color:transparent;
+                                                    overflow:hidden;
+                                                }
+                                        </style>    
+                                    </head>
+                                    <body>" + HttpUtility.HtmlDecode(coursedescription) + "</body></html>";
+            var description = new CustomWebview
             {
-                Text = coursedescription,
-                Style = (Style)Application.Current.Resources["textStyle"]
+                HeightRequest = 300,
+                Source = new HtmlWebViewSource
+                {
+                    Html = htmlText
+                },
+                Style = (Style)Application.Current.Resources["descriptionWebView"]
+
             };
+
+            
+
 
 
 

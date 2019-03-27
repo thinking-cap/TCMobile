@@ -93,6 +93,7 @@
     <Compile Include="AndroidDownloader.cs" />
     <Compile Include="BaseUrl.cs" />
     <Compile Include="CustomRenderers\ExtendedViewCellRenderer.cs" />
+    <Compile Include="CustomWebViewRenderer.cs" />
     <Compile Include="Decompress.cs" />
     <Compile Include="HybridWebViewRenderer.cs" />
     <Compile Include="JavascriptWebViewClient.cs" />

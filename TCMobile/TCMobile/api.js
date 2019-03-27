@@ -30,9 +30,9 @@ if (typeof (API_1484_11) == 'undefined') {
                 cmi: JSON.stringify(cmi)
 
             }
-            try {
+            if (typeof (jsBridge) !== 'undefined') {
                 jsBridge.invokeAction(JSON.stringify(msg));
-            } catch (e) {
+            } else {
                 window.webkit.messageHandlers.invokeAction.postMessage(JSON.stringify(msg));
             }
             cmi.interactions._count = cmi.interactions.length;
@@ -183,11 +183,11 @@ if (typeof (API_1484_11) == 'undefined') {
                 cmi: JSON.stringify(cmi)
 
             }
-            try {
-                jsBridge.invokeAction(JSON.stringify(msg));
-            } catch (e) {
-                window.webkit.messageHandlers.invokeAction.postMessage(JSON.stringify(msg));
-            }
+            //try {
+            //    jsBridge.invokeAction(JSON.stringify(msg));
+            //} catch (e) {
+            //    window.webkit.messageHandlers.invokeAction.postMessage(JSON.stringify(msg));
+            //}
             return "true";
         },
         Commit: function () {
@@ -197,9 +197,9 @@ if (typeof (API_1484_11) == 'undefined') {
                 cmi: JSON.stringify(cmi)
 
             }
-            try {
+            if (typeof (jsBridge) !== 'undefined') {
                 jsBridge.invokeAction(JSON.stringify(msg));
-            } catch (e) {
+            }else{
                 window.webkit.messageHandlers.invokeAction.postMessage(JSON.stringify(msg));
             }
             return "true";
