@@ -16,9 +16,9 @@ namespace TCMobile
         public List<Course>courses { get; set; }
     }
 
-    public class LearningPaths
+    public class LPS
     {
-        public List<LearningPath> learningpaths { get; set; }
+        public List<LearningPath> LearningPaths { get; set; }
     }
 
     public class Course

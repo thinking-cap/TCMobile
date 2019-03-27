@@ -252,7 +252,7 @@ namespace TCMobile.Views
         }
 
         public TCMobile.Catalogue catalogue;
-        public TCMobile.LearningPaths lp;
+        public TCMobile.LPS lp;
       
 
         async void LoadCourses()
@@ -267,6 +267,7 @@ namespace TCMobile.Views
             if (current == NetworkAccess.Internet) { 
                 catalogue = await Courses.GetCatalogue(credentials.HomeDomain, credentials.UserID);
                 lp = await Courses.GetLearningPaths(credentials.HomeDomain, credentials.UserID);
+                buildLPS(lp.LearningPaths);
                 buildCatalogue(catalogue.courses);
             }
             else
@@ -295,6 +296,80 @@ namespace TCMobile.Views
             }
         }
 
+        public void buildLPS(List<LearningPath> lp)
+        {
+            if(lp != null)
+            {
+                foreach(LearningPath l in lp)
+                {
+                   buildLPCard(l.id, l.title, l.description);
+                }
+            }
+        }
+
+        public void buildLPCard(string id, string lptitle, string lpdescription)
+        {
+            MaterialFrame frame;
+            StackLayout layout;
+            frame = new MaterialFrame
+            {
+                HasShadow = true,
+                Padding = new Thickness(0, 0, 0, 0),
+                Margin = new Thickness(0, 8, 0, 24),
+                CornerRadius = 0
+            };
+
+            layout = new StackLayout
+            {
+
+            };
+
+            StackLayout cardBody = new StackLayout
+            {
+                Padding = new Thickness(16, 0, 16, 0),
+                ClassId = "course_" + id,
+                VerticalOptions = LayoutOptions.FillAndExpand
+            };
+
+            Label title = new Label
+            {
+                Text = lptitle,
+                Style = (Style)Application.Current.Resources["headerStyle"]
+            };
+            // html description
+
+            string htmlText = @"<html>
+                                    <head>
+                                        <meta name='viewport' content='width=device-width; height=device-height; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;'/>                                    
+                                        <style type='text/css'>
+                                             body{font-family:Segoe UI, Helvetica Neue,'Lucida Sans Unicode', Skia, sans-serif;
+                                                    border:0px;padding:0px;margin:0px;
+                                                    background-color:transparent;
+                                                    overflow:hidden;
+                                                }
+                                        </style>    
+                                    </head>
+                                    <body>" + HttpUtility.HtmlDecode(lpdescription) + "</body></html>";
+            CustomWebview description = new CustomWebview
+            {
+                HeightRequest = 300,
+                Source = new HtmlWebViewSource
+                {
+                    Html = htmlText
+                },
+                Style = (Style)Application.Current.Resources["descriptionWebView"]
+
+            };
+
+            cardBody.Children.Add(title);
+            cardBody.Children.Add(description);
+            layout.Children.Add(cardBody);
+            frame.Content = layout;
+
+
+            LP.Children.Add(frame);
+        }
+
         public async void buildCatalogue(List<Course> courses)
         {
             if (courses != null)
@@ -312,7 +387,7 @@ namespace TCMobile.Views
 
         public async Task<bool> buildCourseCard(string courseid,string coursetitle,string coursedescription)
         {
-            Frame frame;
+            MaterialFrame frame;
             StackLayout layout;
             Button downloadBtn;
             Button launchBtn;
@@ -330,11 +405,13 @@ namespace TCMobile.Views
                 }
 
             };
-            frame = new Frame
+            frame = new MaterialFrame
             {
                 HasShadow = true,
                 Padding = new Thickness(0, 0, 0, 0),
-                Margin = new Thickness(0, 0, 0, 8)
+                Margin = new Thickness(0, 8, 0, 24),
+                CornerRadius = 0
+                
             };
 
             layout = new StackLayout

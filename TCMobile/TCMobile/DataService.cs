@@ -31,7 +31,7 @@ namespace TCMobile
             if (response != null)
             {
                 string json = response.Content.ReadAsStringAsync().Result;
-                data = JsonConvert.DeserializeObject<LearningPaths>(json);
+                data = JsonConvert.DeserializeObject<LPS>(json);
             }
 
             return data;

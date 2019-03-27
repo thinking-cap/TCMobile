@@ -41,7 +41,7 @@ namespace TCMobile
            
         }
 
-        public static async Task<LearningPaths> GetLearningPaths(string domainid, string studentid)
+        public static async Task<LPS> GetLearningPaths(string domainid, string studentid)
         {
             try
             {
