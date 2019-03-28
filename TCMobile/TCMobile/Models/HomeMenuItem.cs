@@ -8,6 +8,7 @@ namespace TCMobile.Models
     {       
         Catalogue,
         MyCourses,
+        LearningPaths,
         MyTranscripts,
         Settings,
         Logout

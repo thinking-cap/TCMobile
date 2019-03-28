@@ -32,6 +32,9 @@ namespace TCMobile.Views
                     case (int)MenuItemType.MyCourses:
                         MenuPages.Add(id, new NavigationPage(new MyCourses()));
                         break;
+                    case (int)MenuItemType.LearningPaths:
+                        MenuPages.Add(id, new NavigationPage(new LearningPaths()));
+                        break;
                     case (int)MenuItemType.MyTranscripts:
                         MenuPages.Add(id, new NavigationPage(new MyTranscripts()));
                         break;
