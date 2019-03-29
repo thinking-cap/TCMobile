@@ -18,7 +18,7 @@ namespace TCMobile
 
     public class LPS
     {
-        public List<LearningPath> LearningPaths { get; set; }
+        public List<LPRecord> LearningPaths { get; set; }
     }
 
     public class Course
@@ -47,7 +47,7 @@ namespace TCMobile
         public string version { get; set; }
     }
 
-    public class LearningPath
+    public class LPRecord
     {
         public string title { get; set; }
         public string description { get; set; }

@@ -74,5 +74,13 @@ namespace TCMobile
             
             return courses;
         }
+
+        public async Task<List<Models.LPDBRecord>> CheckForLPS()
+        {
+            List<Models.LPDBRecord> lps = await App.Database.GetLPSAsync();
+
+            return lps;
+
+        }
     }
 }

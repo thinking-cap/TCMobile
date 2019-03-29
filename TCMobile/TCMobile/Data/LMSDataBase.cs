@@ -14,12 +14,21 @@ namespace TCMobile.Data
         public LMSDataBase(string dbPath)
         {
             database = new SQLiteAsyncConnection(dbPath);
+            /// build the course record table used to track courses
             database.CreateTableAsync<Record>().Wait();
+            // build the lp record table
+            // initially just to store the lp's for offline display.
+            database.CreateTableAsync<LPDBRecord>().Wait();
         }
 
-        public Task<List<Models.Record>> GetItemsAsync()
+        public Task<List<Record>> GetItemsAsync()
         {
             return database.Table<Record>().ToListAsync();
+        }
+
+        public Task<List<LPDBRecord>> GetLPSAsync()
+        {
+            return database.Table<LPDBRecord>().ToListAsync();
         }
 
         public Task<List<Models.Record>> GetItemsNotDoneAsync()
@@ -30,6 +39,11 @@ namespace TCMobile.Data
         public Task<Models.Record> GetCourseByID(string courseid)
         {
             return database.Table<Models.Record>().Where(i => i.CourseID == courseid).FirstOrDefaultAsync();
+        }
+
+        public Task<LPDBRecord> GetLPByID(string lpid)
+        {
+            return database.Table<LPDBRecord>().Where(i => i.LPID == lpid).FirstOrDefaultAsync();
         }
 
         public Task<Models.Record> GetItemAsync(int id)
@@ -46,6 +60,18 @@ namespace TCMobile.Data
             else
             {
                 return database.InsertAsync(item);
+            }
+        }
+
+        public Task<int> SaveLPAsync(LPDBRecord lp)
+        {
+            if(lp.ID != 0)
+            {
+                return database.UpdateAsync(lp);
+            }
+            else
+            {
+                return database.InsertAsync(lp);
             }
         }
 

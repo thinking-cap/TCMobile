@@ -172,7 +172,7 @@ namespace TCMobile.Views
             StackLayout listViewItem = (StackLayout)Currentdownload.Parent;
             ActivityIndicator spinner = (ActivityIndicator)listViewItem.Children[2];
             spinner.IsVisible = false;
-            Button launch = (Button)listViewItem.Children[1];
+            Button launch = (Button)listViewItem.Children[0];
             launch.IsVisible = true;
            
 
@@ -252,7 +252,6 @@ namespace TCMobile.Views
         }
 
         public TCMobile.Catalogue catalogue;
-        public TCMobile.LPS lp;
       
 
         async void LoadCourses()
@@ -265,8 +264,7 @@ namespace TCMobile.Views
             CredentialsService credentials = new CredentialsService();
             var current = Connectivity.NetworkAccess;
             if (current == NetworkAccess.Internet) { 
-                catalogue = await Courses.GetCatalogue(credentials.HomeDomain, credentials.UserID);
-                lp = await Courses.GetLearningPaths(credentials.HomeDomain, credentials.UserID);
+                catalogue = await Courses.GetCatalogue(credentials.HomeDomain, credentials.UserID);                
                 buildCatalogue(catalogue.courses);
             }
             else
@@ -288,10 +286,10 @@ namespace TCMobile.Views
             List<Models.Record> courses = await c.CheckForCourses();
             
             CatalogueLoaded = true;
-            
+            Cards card = new Cards();
             foreach (Models.Record course in courses)
             {
-                bool x = await buildCourseCard(course.CourseID, course.CourseName, course.CourseDescription);
+                bool x = await card.buildCourseCard(course.CourseID, course.CourseName, course.CourseDescription,Cat,DownloadClicked, launchCourse);
             }
         }
 
@@ -305,144 +303,16 @@ namespace TCMobile.Views
             {
                 // CatalogueList.ItemsSource = catalogue.courses;
                 CatalogueLoaded = true;
-               
+                Cards card = new Cards();
                 foreach (Course course in courses)
                 {
-                    bool x = await buildCourseCard(course.courseid, course.title, course.description);
+                    bool x = await card.buildCourseCard(course.courseid, course.title, course.description,Cat,DownloadClicked,launchCourse);
                 }
 
             }
         }
 
-        public async Task<bool> buildCourseCard(string courseid,string coursetitle,string coursedescription)
-        {
-            MaterialFrame frame;
-            StackLayout layout;
-            Button downloadBtn;
-            Button launchBtn;
-            ActivityIndicator spinner;
-            Image marquee;
-            Models.Record courseRecord = await App.Database.GetCourseByID(courseid);
-            marquee = new Image
-            {
-                // lets cache the image so we for 72 hours //
-                Source = new UriImageSource
-                {
-                    Uri = new Uri(Constants.BlobLocation + "/coursecontent/" + courseid + "/courselogo.gif"),
-                    CacheValidity = new TimeSpan(72, 0, 0),
-                    CachingEnabled = true
-                }
-
-            };
-            frame = new MaterialFrame
-            {
-                HasShadow = true,
-                Padding = new Thickness(0, 0, 0, 0),
-                Margin = new Thickness(0, 8, 0, 24),
-                CornerRadius = 0
-                
-            };
-
-            layout = new StackLayout
-            {
-                ClassId = "course_" + courseid
-
-            };
-
-            StackLayout cardBody = new StackLayout
-            {
-                Padding = new Thickness(16, 0, 16, 0),
-                ClassId = "course_" + courseid,
-                VerticalOptions = LayoutOptions.FillAndExpand
-            };
-
-            Label title = new Label
-            {
-                Text = coursetitle,
-                Style = (Style)Application.Current.Resources["headerStyle"]
-            };
-
-            //HtmlLabel description = new HtmlLabel
-            //{
-            //    Text = coursedescription
-            //};
-
-            string htmlText = @"<html>
-                                    <head>
-                                        <meta name='viewport' content='width=device-width; height=device-height; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;'/>                                    
-                                        <style type='text/css'>
-                                             body{font-family:Segoe UI, Helvetica Neue,'Lucida Sans Unicode', Skia, sans-serif;
-                                                    border:0px;padding:0px;margin:0px;
-                                                    background-color:transparent;
-                                                    overflow:hidden;
-                                                }
-                                        </style>    
-                                    </head>
-                                    <body>" + HttpUtility.HtmlDecode(coursedescription) + "</body></html>";
-            var description = new CustomWebview
-            {
-                HeightRequest = 300,
-                Source = new HtmlWebViewSource
-                {
-                    Html = htmlText
-                },
-                Style = (Style)Application.Current.Resources["descriptionWebView"]
-
-            };
-
-            
-
-
-
-
-            downloadBtn = new Button
-            {
-                Text = "download",
-                Image = "download.png",
-                Style = (Style)Application.Current.Resources["buttonStyle"],
-                ClassId = courseid,
-                IsVisible = (courseRecord == null) ? true : (courseRecord.Deleted == "false") ? false : true
-            };
-
-            spinner = new ActivityIndicator
-            {
-                IsVisible = false,
-                Style = (Style)Application.Current.Resources["spinnerStyle"],
-                HeightRequest = 20
-            };
-
-            StackLayout cardFooter = new StackLayout
-            {
-                Padding = new Thickness(16, 0, 16, 8),
-                ClassId = "course_" + courseid
-            };
-
-            launchBtn = new Button
-            {
-                Text = (courseRecord == null) ? "open" :
-                        (courseRecord.CompletionStatus.ToLower() == "completed") ? "review" :
-                        (courseRecord.CMI == "") ? "open" : "resume",
-                IsVisible = (courseRecord == null) ? false : (courseRecord.Deleted == "false") ? true : false,
-                Image = "launch_w.png",
-                Style = (Style)Application.Current.Resources["buttonStyle"],
-                ClassId = courseid
-
-            };
-            launchBtn.Clicked += launchCourse;
-            downloadBtn.Clicked += DownloadClicked;
-            cardBody.Children.Add(title);
-            cardBody.Children.Add(description);
-            layout.Children.Add(marquee);
-            layout.Children.Add(cardBody);
-            layout.Children.Add(cardFooter);
-            cardFooter.Children.Add(launchBtn);
-            cardFooter.Children.Add(downloadBtn);
-            cardFooter.Children.Add(spinner);
-            frame.Content = layout;
-            Cat.Children.Add(frame);
-
-            return true;
-        }
+       
 
         public void launchCourse(Object Sender, EventArgs args)
         {

@@ -11,7 +11,7 @@
         <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout>
                 <StackLayout x:Name="LP"></StackLayout>
-                <ActivityIndicator x:Name="CatalogueProgress" IsVisible="False" HeightRequest="20"/>
+                <ActivityIndicator x:Name="LPProgress" IsVisible="False" HeightRequest="20"/>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

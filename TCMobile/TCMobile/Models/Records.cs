@@ -21,4 +21,15 @@ namespace TCMobile.Models
         public bool Done { get; set; }
         public string Deleted { get; set; }
     }
+
+    public class LPDBRecord
+    {
+        [PrimaryKey, AutoIncrement]
+        public int ID { get; set; }
+        public string LPTitle { get; set; }
+        public string LPDescription { get; set; }
+        public string LPID { get; set; }
+        public string LPCourses { get; set; }
+
+    }
 }

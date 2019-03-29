@@ -17,94 +17,70 @@ namespace TCMobile.Views
         public LearningPaths ()
 		{
 			InitializeComponent ();
-            loadLearningPaths();
            
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            loadLearningPaths();
         }
 
         async void loadLearningPaths()
         {
+            LP.Children.Clear();
+            // show the spinner and turn it on 
+            LPProgress.IsVisible = true;
+            LPProgress.IsRunning = true;
             CredentialsService credentials = new CredentialsService();
             var current = Connectivity.NetworkAccess;
             if (current == NetworkAccess.Internet)
             {
                 lp = await Courses.GetLearningPaths(credentials.HomeDomain, credentials.UserID);
                 buildLPS(lp.LearningPaths);
-
+            }
+            else
+            {
+                buildLPSOffline();
             }
         }
 
-        public void buildLPS(List<LearningPath> lp)
+        public async void buildLPSOffline()
         {
+            Courses l = new Courses();
+            List<Models.LPDBRecord> lps = await l.CheckForLPS();
+        }
+
+        public void buildLPS(List<LPRecord> lp)
+        {
+            LPProgress.IsVisible = false;
+            LPProgress.IsRunning = false;
+
             if (lp != null)
             {
-                foreach (LearningPath l in lp)
-                {
-                    buildLPCard(l.id, l.title, l.description);
+                foreach (LPRecord l in lp)
+                {                    
+                    CreateLPRecord(l);
                 }
             }
         }
-
-        public void buildLPCard(string id, string lptitle, string lpdescription)
+        async void CreateLPRecord(LPRecord lp)
         {
-            MaterialFrame frame;
-            StackLayout layout;
-            frame = new MaterialFrame
+            Models.LPDBRecord exists = await App.Database.GetLPByID(lp.id);
+            if(exists == null)
             {
-                HasShadow = true,
-                Padding = new Thickness(0, 0, 0, 0),
-                Margin = new Thickness(0, 8, 0, 24),
-                CornerRadius = 0
-            };
+                Models.LPDBRecord lprecord = new Models.LPDBRecord();
+                lprecord.LPID = lp.id;
+                lprecord.LPTitle = lp.title;
+                lprecord.LPDescription = lp.description;
+                lprecord.LPCourses = "";
+                await App.Database.SaveLPAsync(lprecord);
+            }
 
-            layout = new StackLayout
-            {
-
-            };
-
-            StackLayout cardBody = new StackLayout
-            {
-                Padding = new Thickness(16, 0, 16, 0),
-                ClassId = "course_" + id,
-                VerticalOptions = LayoutOptions.FillAndExpand
-            };
-
-            Label title = new Label
-            {
-                Text = lptitle,
-                Style = (Style)Application.Current.Resources["headerStyle"]
-            };
-            // html description
-
-            string htmlText = @"<html>
-                                    <head>
-                                        <meta name='viewport' content='width=device-width; height=device-height; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;'/>                                    
-                                        <style type='text/css'>
-                                             body{font-family:Segoe UI, Helvetica Neue,'Lucida Sans Unicode', Skia, sans-serif;
-                                                    border:0px;padding:0px;margin:0px;
-                                                    background-color:transparent;
-                                                    overflow:hidden;
-                                                }
-                                        </style>    
-                                    </head>
-                                    <body>" + HttpUtility.HtmlDecode(lpdescription) + "</body></html>";
-            CustomWebview description = new CustomWebview
-            {
-                HeightRequest = 300,
-                Source = new HtmlWebViewSource
-                {
-                    Html = htmlText
-                },
-                Style = (Style)Application.Current.Resources["descriptionWebView"]
-
-            };
-
-            cardBody.Children.Add(title);
-            cardBody.Children.Add(description);
-            layout.Children.Add(cardBody);
-            frame.Content = layout;
-
-
-            LP.Children.Add(frame);
+            Cards card = new Cards();
+            card.buildLPCard(lp.id, lp.title, lp.description,LP);
         }
+
+       
     }
 }
