@@ -12,12 +12,14 @@
   <ItemGroup>
     <None Remove="API.js" />
     <None Remove="course.htm" />
+    <None Remove="Images\placeholder.png" />
     <None Remove="jquery.mobile-1.4.5.min.js" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="API.js" />
     <EmbeddedResource Include="course.htm" />
+    <EmbeddedResource Include="Images\placeholder.png" />
     <EmbeddedResource Include="jquery.mobile-1.4.5.min.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -36,12 +38,18 @@
     <PackageReference Include="Xam.Plugins.Forms.ImageCircle" Version="3.1.0.3-beta" />
     <PackageReference Include="Xamarin.Auth" Version="1.6.0.4" />
     <PackageReference Include="Xamarin.Essentials" Version="1.0.1" />
+    <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.5.870-pre" />
+    <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms" Version="2.4.5.870-pre" />
+    <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.5.870-pre" />
     <PackageReference Include="Xamarin.Forms" Version="4.0.0.62955-pre2" />
     <PackageReference Include="XamForms.HtmlLabel" Version="1.0.0" />  
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Update="Views\Catalogue.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\LearningPath.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\LearningPaths.xaml">

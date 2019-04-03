@@ -6,6 +6,9 @@ using Xamarin.Forms;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using FFImageLoading.Forms;
+using System.Reflection;
+using System.IO;
 
 namespace TCMobile
 {
@@ -18,19 +21,47 @@ namespace TCMobile
             Button downloadBtn;
             Button launchBtn;
             ActivityIndicator spinner;
-            Image marquee;
-            Models.Record courseRecord = await App.Database.GetCourseByID(courseid);
-            marquee = new Image
-            {
-                // lets cache the image so we for 72 hours //
-                Source = new UriImageSource
-                {
-                    Uri = new Uri(Constants.BlobLocation + "/coursecontent/" + courseid + "/courselogo.gif"),
-                    CacheValidity = new TimeSpan(72, 0, 0),
-                    CachingEnabled = true
-                }
+           // Image marquee;
+            StackLayout marqueeContainer;
+            
+          
+
+
+                Models.Record courseRecord = await App.Database.GetCourseByID(courseid);
+            CachedImage marquee = new CachedImage(){
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.Center,
+                MinimumWidthRequest = Constants.deviceWidth,
+                WidthRequest = Constants.deviceWidth,
+                Margin = new Thickness(0, 0, 0, 0),          
+                CacheDuration = TimeSpan.FromDays(30),
+                DownsampleToViewSize = true,
+                RetryCount = 0,
+                RetryDelay = 250,
+                LoadingPlaceholder = "placeholder.png",
+                ErrorPlaceholder = "placeholder.png",
+                Source = Constants.BlobLocation + "/coursecontent/" + courseid + "/courselogo.gif"
 
             };
+
+
+            marqueeContainer = new StackLayout
+            {
+            };
+
+          
+            Image marqueePlaceholder = new Image
+            {
+                Source = ImageSource.FromResource("TCMobile.Images.placeholder.png")
+
+            };
+
+            marqueeContainer.Children.Add(marquee);
+           // marqueeContainer.Children.Add(marqueePlaceholder);
+            marqueePlaceholder.SetBinding(Image.IsVisibleProperty, "IsLoading");
+            marqueePlaceholder.BindingContext = marquee;
+            
+
             frame = new MaterialFrame
             {
                 HasShadow = true,
@@ -129,7 +160,7 @@ namespace TCMobile
             downloadBtn.Clicked += downloadClicked;
             cardBody.Children.Add(title);
             cardBody.Children.Add(description);
-            layout.Children.Add(marquee);
+            layout.Children.Add(marqueeContainer);
             layout.Children.Add(cardBody);
             layout.Children.Add(cardFooter);
             cardFooter.Children.Add(launchBtn);
@@ -142,7 +173,7 @@ namespace TCMobile
         }
 
 
-        public void buildLPCard(string id, string lptitle, string lpdescription,StackLayout LP)
+        public void buildLPCard(string id, string lptitle, string lpdescription,StackLayout LP, EventHandler detailsClicked)
         {
             MaterialFrame frame;
             StackLayout layout;
@@ -153,8 +184,18 @@ namespace TCMobile
                 Margin = new Thickness(0, 8, 0, 24),
                 CornerRadius = 0
             };
+            Button moreBtn;
+            moreBtn = new Button
+            {
+                Text = "more",
+                Image = "launch_w.png",
+                Style = (Style)Application.Current.Resources["buttonStyle"],
+                ClassId = id
 
-            layout = new StackLayout
+            };
+            moreBtn.Clicked += detailsClicked;
+
+             layout = new StackLayout
             {
 
             };
@@ -172,6 +213,12 @@ namespace TCMobile
                 Style = (Style)Application.Current.Resources["headerStyle"]
             };
             // html description
+
+            StackLayout cardFooter = new StackLayout
+            {
+                Padding = new Thickness(16, 0, 16, 8),
+                ClassId = "course_" + id
+            };
 
             string htmlText = @"<html>
                                     <head>
@@ -196,10 +243,11 @@ namespace TCMobile
                 Style = (Style)Application.Current.Resources["descriptionWebView"]
 
             };
-
+            cardFooter.Children.Add(moreBtn);
             cardBody.Children.Add(title);
             cardBody.Children.Add(description);
             layout.Children.Add(cardBody);
+            layout.Children.Add(cardFooter);
             frame.Content = layout;
 
 

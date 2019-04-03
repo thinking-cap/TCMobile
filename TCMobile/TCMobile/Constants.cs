@@ -13,6 +13,7 @@ namespace TCMobile
         public static string Url = "https://stable.thinkingcap.com";
         public static string StudentCatalogue = Url +"/Mobile/Catalogue.ashx";
         public static string LearningPaths = Url + "/Mobile/GetLPS.ashx";
+        public static string LearningPath = Url + "/Mobile/LPDetails.ashx";
         public static string SetCMI = Url + "/WebService/LearnerManagement.asmx/SetSCORMValues";
         public static string GetCMI = Url + "/WebService/LearnerManagement.asmx/GetSCORMDetails";
         public static string StudentID = "740ad541-661a-43ea-b825-cec3788f2c3a";
@@ -23,6 +24,7 @@ namespace TCMobile
         public static string lastName;
         public static string BlobLocation;
         public static bool isOnline;
+        public static double deviceWidth;
 
        
 

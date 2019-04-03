@@ -10,14 +10,14 @@ using Xamarin.Forms.Xaml;
 
 namespace TCMobile.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class LearningPaths : ContentPage
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class LearningPaths : ContentPage
+    {
         public TCMobile.LPS lp;
-        public LearningPaths ()
-		{
-			InitializeComponent ();
-           
+        public LearningPaths()
+        {
+            InitializeComponent();
+
         }
 
         protected override void OnAppearing()
@@ -59,7 +59,7 @@ namespace TCMobile.Views
             if (lp != null)
             {
                 foreach (LPRecord l in lp)
-                {                    
+                {
                     CreateLPRecord(l);
                 }
             }
@@ -67,7 +67,7 @@ namespace TCMobile.Views
         async void CreateLPRecord(LPRecord lp)
         {
             Models.LPDBRecord exists = await App.Database.GetLPByID(lp.id);
-            if(exists == null)
+            if (exists == null)
             {
                 Models.LPDBRecord lprecord = new Models.LPDBRecord();
                 lprecord.LPID = lp.id;
@@ -78,9 +78,15 @@ namespace TCMobile.Views
             }
 
             Cards card = new Cards();
-            card.buildLPCard(lp.id, lp.title, lp.description,LP);
+            card.buildLPCard(lp.id, lp.title, lp.description, LP,DetailsClicked);
         }
 
-       
+        public void DetailsClicked(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            string id = button.ClassId;
+           
+            Navigation.PushAsync(new LearningPath(id));
+        }
     }
 }

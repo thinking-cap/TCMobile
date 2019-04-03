@@ -34,7 +34,7 @@ namespace TCMobile.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            
+            Constants.deviceWidth = this.Width;
             LoadCourses();
         }
 

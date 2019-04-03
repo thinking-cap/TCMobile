@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Refractored.XamForms.PullToRefresh.iOS;
-
+using FFImageLoading.Forms.Platform;
 using Foundation;
 using UIKit;
 
@@ -21,10 +21,13 @@ namespace TCMobile.iOS
         //
         // You have 17 seconds to return from this method, or iOS will terminate your application.
         //
+
+        
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-          
+            
             global::Xamarin.Forms.Forms.Init();
+            CachedImageRenderer.Init();
             LoadApplication(new App());
             UIApplication.SharedApplication.StatusBarHidden = true;
             return base.FinishedLaunching(app, options);

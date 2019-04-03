@@ -46,13 +46,18 @@ namespace TCMobile
                 {
                     Constants.BlobLocation = CredentialsService.BlobLoc;
                     MainPage = new MainPage();
-                }catch(Exception e)
+                    Constants.deviceWidth = Application.Current.MainPage.Width;
+                }
+                catch(Exception e)
                 {
                     MainPage = new NavigationPage(new Login());
+                    Constants.deviceWidth = Application.Current.MainPage.Width;
                 }
+
             }
             else {
                 MainPage = new NavigationPage(new Login());
+                Constants.deviceWidth = Application.Current.MainPage.Width;
             }
                 
         }
