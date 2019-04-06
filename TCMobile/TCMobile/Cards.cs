@@ -253,5 +253,56 @@ namespace TCMobile
 
             LP.Children.Add(frame);
         }
+
+        public void buildObjectiveCard(Objective obj, StackLayout container)
+        {
+            MaterialFrame frame;
+            StackLayout layout;
+
+            frame = new MaterialFrame
+            {
+                HasShadow = true,
+                Padding = new Thickness(0, 0, 0, 0),
+                Margin = new Thickness(0, 8, 0, 24),
+                CornerRadius = 0
+            };
+            Label objectiveTitle = new Label
+            {
+                Text = obj.Name
+            };
+            layout = new StackLayout
+            {
+
+            };
+
+
+            StackLayout cardBody = new StackLayout
+            {
+                Padding = new Thickness(16, 0, 16, 0),
+                ClassId = "course_" + obj.id,
+                VerticalOptions = LayoutOptions.FillAndExpand
+            };
+            foreach (Activity act in obj.Activities.Activity)
+            {
+                StackLayout activityContainer = new StackLayout
+                {
+                    Padding = new Thickness(16, 0, 16, 0),
+                    ClassId = "course_" + act.id,
+                    VerticalOptions = LayoutOptions.FillAndExpand
+                };
+                Label coursetitle = new Label
+                {
+                    Text = act.Name
+                };
+                activityContainer.Children.Add(coursetitle);
+                cardBody.Children.Add(activityContainer);
+            }
+            
+            frame.Content = layout;
+            layout.Children.Add(objectiveTitle);
+            layout.Children.Add(cardBody);
+            container.Children.Add(frame);
+
+        }
     }
 }

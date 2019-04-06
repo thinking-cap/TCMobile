@@ -17,12 +17,25 @@ namespace TCMobile.Views
             InitializeComponent();
             loadCourses(lpid);
         }
-        public TCMobile.Activities lp;
+        public TCMobile.Map lp;
         async void loadCourses(string lpid)
         {
             CredentialsService credentials = new CredentialsService();
             lp = await Courses.GetLearningPath(credentials.HomeDomain, credentials.UserID, lpid);
+            if(lp != null)
+            {
+                buidLPDetails(lp.StudentActivityMap);
+            }
 
+        }
+
+        public void buidLPDetails(StudentActivityMap lp)
+        {
+            Cards card = new Cards();
+            foreach (Objective obj in lp.Objective)
+            {
+                card.buildObjectiveCard(obj,LP);
+            }
         }
     }
 }

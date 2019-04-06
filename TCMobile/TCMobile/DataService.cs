@@ -45,8 +45,10 @@ namespace TCMobile
             dynamic data = null;
             if (response != null)
             {
+                JsonSerializerSettings ser = new JsonSerializerSettings();
+                ser.DefaultValueHandling = DefaultValueHandling.Populate;
                 string json = response.Content.ReadAsStringAsync().Result;
-                data = JsonConvert.DeserializeObject<ActivityMap>(json);
+                data = JsonConvert.DeserializeObject<Map>(json,ser);
             }
 
             return data;
