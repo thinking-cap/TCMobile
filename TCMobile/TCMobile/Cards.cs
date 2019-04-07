@@ -7,8 +7,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using FFImageLoading.Forms;
+using TCMobile.CustomControls;
 using System.Reflection;
 using System.IO;
+using Expandable;
 
 namespace TCMobile
 {
@@ -258,7 +260,7 @@ namespace TCMobile
         {
             MaterialFrame frame;
             StackLayout layout;
-
+            // overall card layout //
             frame = new MaterialFrame
             {
                 HasShadow = true,
@@ -266,22 +268,47 @@ namespace TCMobile
                 Margin = new Thickness(0, 8, 0, 24),
                 CornerRadius = 0
             };
+
+            // objective title //
             Label objectiveTitle = new Label
             {
                 Text = obj.Name
             };
+
+            // container for the content in the card
             layout = new StackLayout
             {
 
             };
 
-
-            StackLayout cardBody = new StackLayout
+            Frame cardBody = new Frame
             {
                 Padding = new Thickness(16, 0, 16, 0),
                 ClassId = "course_" + obj.id,
                 VerticalOptions = LayoutOptions.FillAndExpand
+               
             };
+
+            StackLayout cardHeader = new StackLayout
+            {
+                Padding = new Thickness(16, 0, 16, 0),
+                ClassId = "course_" + obj.id,
+            };
+
+            cardHeader.Children.Add(objectiveTitle);
+            AccordionButton AcBtn = new AccordionButton
+            {
+                Text = "Hide Show"
+            };
+
+            cardHeader.Children.Add(AcBtn);
+            AcBtn.ContentFrame= cardBody;
+            cardBody.IsVisible = false;
+            AcBtn.Clicked += AcBtn_Clicked;
+
+
+            
+            StackLayout frameContainer = new StackLayout();
             foreach (Activity act in obj.Activities.Activity)
             {
                 StackLayout activityContainer = new StackLayout
@@ -295,14 +322,25 @@ namespace TCMobile
                     Text = act.Name
                 };
                 activityContainer.Children.Add(coursetitle);
-                cardBody.Children.Add(activityContainer);
+                frameContainer.Children.Add(activityContainer);
             }
-            
+            cardBody.Content = frameContainer;
             frame.Content = layout;
-            layout.Children.Add(objectiveTitle);
+            layout.Children.Add(cardHeader);
             layout.Children.Add(cardBody);
             container.Children.Add(frame);
 
+        }
+
+        private void AcBtn_Clicked(object sender, EventArgs e)
+        {
+            AccordionButton btn = (AccordionButton)sender;
+            Frame f = btn.ContentFrame;
+            if (f.IsVisible)
+                f.IsVisible = false;
+            else
+                f.IsVisible = true;
+            string s = "test";
         }
     }
 }

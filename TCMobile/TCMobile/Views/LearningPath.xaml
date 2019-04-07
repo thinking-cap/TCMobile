@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:TCMobile.ViewModels"
+             xmlns:expandable="clr-namespace:Expandable;assembly=ExpandableView"
              x:Class="TCMobile.Views.LearningPath">
     <ContentPage.BindingContext>
         <vm:LearningPathViewModel />
