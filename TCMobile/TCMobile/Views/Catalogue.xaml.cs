@@ -170,10 +170,10 @@ namespace TCMobile.Views
             
             Currentdownload.IsVisible = false;
             StackLayout listViewItem = (StackLayout)Currentdownload.Parent;
-            ActivityIndicator spinner = (ActivityIndicator)listViewItem.Children[2];
-            spinner.IsVisible = false;
-            Button launch = (Button)listViewItem.Children[0];
-            launch.IsVisible = true;
+            Currentdownload.Spinner.IsVisible = false;
+            //Button launch = (Button)listViewItem.Children[0];
+            //launch.IsVisible = true;
+            Currentdownload.LaunchButton.IsVisible = true;
            
 
         }
@@ -197,15 +197,15 @@ namespace TCMobile.Views
                 string x = "failed";
             }
         }
-        Button Currentdownload;
+        DownloadButton Currentdownload;
         async void DownloadClicked(object sender, EventArgs e)
         {
 
             if (busy)
                 return;
             busy = true;
-            Currentdownload = (Button)sender;
-            Button button = (Button)sender;
+            Currentdownload = (DownloadButton)sender;
+            DownloadButton button = (DownloadButton)sender;
             string id = button.ClassId;
             var courseObj = catalogue.courses.Where(course => course.courseid == id).FirstOrDefault();
 
@@ -216,9 +216,9 @@ namespace TCMobile.Views
            ((Button)sender).IsVisible= false;
 
             StackLayout listViewItem = (StackLayout)Currentdownload.Parent;
-            ActivityIndicator spinner = (ActivityIndicator)listViewItem.Children[2];
-            spinner.IsRunning = true;
-            spinner.IsVisible = true;
+            //ActivityIndicator spinner = (ActivityIndicator)listViewItem.Children[2];
+            button.Spinner.IsRunning = true;
+            button.Spinner.IsVisible = true;
 
 
             // let's check the permission

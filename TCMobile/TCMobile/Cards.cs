@@ -20,7 +20,7 @@ namespace TCMobile
         {
             MaterialFrame frame;
             StackLayout layout;
-            Button downloadBtn;
+            DownloadButton downloadBtn;
             Button launchBtn;
             ActivityIndicator spinner;
            // Image marquee;
@@ -108,17 +108,18 @@ namespace TCMobile
 
 
 
-
-
-           downloadBtn = BuildDownload(courseid, courseRecord);
-            
-
             spinner = new ActivityIndicator
             {
                 IsVisible = false,
                 Style = (Style)Application.Current.Resources["spinnerStyle"],
                 HeightRequest = 20
             };
+
+            downloadBtn = BuildDownload(courseid, courseRecord,spinner);
+            
+            
+
+            
 
             StackLayout cardFooter = new StackLayout
             {
@@ -137,6 +138,7 @@ namespace TCMobile
                 ClassId = courseid
 
             };
+            downloadBtn.LaunchButton = launchBtn;
             launchBtn.Clicked += launchCourse;
             downloadBtn.Clicked += downloadClicked;
             cardBody.Children.Add(title);
@@ -312,7 +314,7 @@ namespace TCMobile
                 {
                     Text = act.Name
                 };
-                Button downloadBtn = BuildDownload(act.CourseID, courseRecord);
+                DownloadButton downloadBtn = BuildDownload(act.CourseID, courseRecord,null);
                 
 
                 // add the image
@@ -379,14 +381,15 @@ namespace TCMobile
             return marquee;
         }
 
-        public Button BuildDownload(string id, Models.Record courseRecord)
+        public DownloadButton BuildDownload(string id, Models.Record courseRecord, ActivityIndicator spinner)
         {
-            Button downloadBtn = new Button
+            DownloadButton downloadBtn = new DownloadButton
             {
                 Text = "download",
                 Image = "download.png",
                 Style = (Style)Application.Current.Resources["buttonStyle"],
                 ClassId = id,
+                Spinner = spinner,
                 IsVisible = (courseRecord == null) ? true : (courseRecord.Deleted == "false") ? false : true
             };
 

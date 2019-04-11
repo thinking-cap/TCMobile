@@ -92,6 +92,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Renderers\AccordionButtonRenderer.cs" />
+    <Compile Include="Renderers\DownloadButtonRenderer.cs" />
     <Compile Include="Renderers\FrameRenderer.cs" />
     <Compile Include="Renderers\NavBarRenderer.cs" />
     <Compile Include="Renderers\WebViewRenderer.cs" />
