@@ -54,14 +54,13 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <MtouchArch>ARM64</MtouchArch>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Developer: Campbell Macmillan (QUGL7N6WAP)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>
     </CodesignEntitlements>
     <CodesignExtraArgs />
     <CodesignResourceRules />
-    <CodesignProvision>
-    </CodesignProvision>
+    <CodesignProvision>TCMOBILE</CodesignProvision>
     <MtouchSdkVersion>12.1</MtouchSdkVersion>
     <IOSDebugOverWiFi>true</IOSDebugOverWiFi>
     <MtouchProfiling>false</MtouchProfiling>
@@ -82,6 +81,9 @@
     <EnvironmentVariables>
       <Variable name="CFNETWORK_DIAGNOSTICS" value="3" />
     </EnvironmentVariables>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>TCMobile.iOS.Application</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BaseUrl.cs" />
@@ -237,5 +239,11 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\placeholder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\chevron_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\chevron_down.png" />
   </ItemGroup>
 </Project>

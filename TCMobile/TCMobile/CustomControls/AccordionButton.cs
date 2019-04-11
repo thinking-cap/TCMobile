@@ -8,12 +8,21 @@ namespace TCMobile.CustomControls
     public class AccordionButton : Button
     {
         public static readonly BindableProperty Frame =
-                BindableProperty.Create("ContentFrame", typeof(Frame), typeof(AccordionButton));
+                BindableProperty.Create("ContentFrame", typeof(StackLayout), typeof(AccordionButton));
 
-        public Frame ContentFrame
+        public static readonly BindableProperty Open =
+            BindableProperty.Create("FrameOpen", typeof(Boolean), typeof(AccordionButton));
+
+        public StackLayout ContentFrame
         {
-            get { return (Frame)GetValue(Frame); }
+            get { return (StackLayout)GetValue(Frame); }
             set { SetValue(Frame, value); }
+        }
+
+        public Boolean FrameOpen
+        {
+            get { return (Boolean)GetValue(Open); }
+            set { SetValue(Open, value); }
         }
 
     }

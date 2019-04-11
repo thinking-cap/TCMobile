@@ -30,21 +30,7 @@ namespace TCMobile
 
 
                 Models.Record courseRecord = await App.Database.GetCourseByID(courseid);
-            CachedImage marquee = new CachedImage(){
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.Center,
-                MinimumWidthRequest = Constants.deviceWidth,
-                WidthRequest = Constants.deviceWidth,
-                Margin = new Thickness(0, 0, 0, 0),          
-                CacheDuration = TimeSpan.FromDays(30),
-                DownsampleToViewSize = true,
-                RetryCount = 0,
-                RetryDelay = 250,
-                LoadingPlaceholder = "placeholder.png",
-                ErrorPlaceholder = "placeholder.png",
-                Source = Constants.BlobLocation + "/coursecontent/" + courseid + "/courselogo.gif"
-
-            };
+            CachedImage marquee = BuildMarquee(courseid,true);
 
 
             marqueeContainer = new StackLayout
@@ -124,15 +110,8 @@ namespace TCMobile
 
 
 
-
-            downloadBtn = new Button
-            {
-                Text = "download",
-                Image = "download.png",
-                Style = (Style)Application.Current.Resources["buttonStyle"],
-                ClassId = courseid,
-                IsVisible = (courseRecord == null) ? true : (courseRecord.Deleted == "false") ? false : true
-            };
+           downloadBtn = BuildDownload(courseid, courseRecord);
+            
 
             spinner = new ActivityIndicator
             {
@@ -175,7 +154,7 @@ namespace TCMobile
         }
 
 
-        public void buildLPCard(string id, string lptitle, string lpdescription,StackLayout LP, EventHandler detailsClicked)
+        public void buildLPCard(string id, string lptitle, string lpdescription,FlexLayout LP, EventHandler detailsClicked)
         {
             MaterialFrame frame;
             StackLayout layout;
@@ -197,9 +176,9 @@ namespace TCMobile
             };
             moreBtn.Clicked += detailsClicked;
 
-             layout = new StackLayout
+            layout = new StackLayout
             {
-
+                HorizontalOptions = LayoutOptions.FillAndExpand
             };
 
             StackLayout cardBody = new StackLayout
@@ -256,54 +235,61 @@ namespace TCMobile
             LP.Children.Add(frame);
         }
 
-        public void buildObjectiveCard(Objective obj, StackLayout container)
+        public async void buildObjectiveCard(Objective obj, StackLayout container)
         {
-            MaterialFrame frame;
-            StackLayout layout;
+           
+            Grid layout;
             // overall card layout //
-            frame = new MaterialFrame
-            {
-                HasShadow = true,
-                Padding = new Thickness(0, 0, 0, 0),
-                Margin = new Thickness(0, 8, 0, 24),
-                CornerRadius = 0
-            };
+            
 
             // objective title //
             Label objectiveTitle = new Label
             {
-                Text = obj.Name
+                Margin = new Thickness(0,0,0,0),
+                Text = obj.Name,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                VerticalTextAlignment = TextAlignment.Center,
+                HeightRequest = 40
             };
 
             // container for the content in the card
-            layout = new StackLayout
+            layout = new Grid
             {
-
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                WidthRequest = Constants.deviceWidth,
+                Margin = new Thickness(0,10,0,0)
+                
             };
-
-            Frame cardBody = new Frame
+            layout.Padding = new Thickness(16, 0, 16, 0);
+            layout.RowDefinitions.Add(new RowDefinition { Height = 40 });
+            layout.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+            layout.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            layout.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+            StackLayout cardBody = new StackLayout
             {
-                Padding = new Thickness(16, 0, 16, 0),
+                Padding = new Thickness(0, 0, 0, 0),
+                Margin = new Thickness(0),
                 ClassId = "course_" + obj.id,
-                VerticalOptions = LayoutOptions.FillAndExpand
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                IsVisible = false,
+                Opacity = 0
                
             };
 
-            StackLayout cardHeader = new StackLayout
-            {
-                Padding = new Thickness(16, 0, 16, 0),
-                ClassId = "course_" + obj.id,
-            };
 
-            cardHeader.Children.Add(objectiveTitle);
+            // used to expand accordion
             AccordionButton AcBtn = new AccordionButton
             {
-                Text = "Hide Show"
+                Image = "chevron_down.png",
+                Padding = new Thickness(0, 0, 0, 0),
+                Margin = new Thickness(0, 0, 0, 0),
+                WidthRequest = 20,
+                HeightRequest = 20
             };
 
-            cardHeader.Children.Add(AcBtn);
-            AcBtn.ContentFrame= cardBody;
-            cardBody.IsVisible = false;
+            AcBtn.ContentFrame = cardBody;
+            AcBtn.FrameOpen = false;
             AcBtn.Clicked += AcBtn_Clicked;
 
 
@@ -311,36 +297,100 @@ namespace TCMobile
             StackLayout frameContainer = new StackLayout();
             foreach (Activity act in obj.Activities.Activity)
             {
-                StackLayout activityContainer = new StackLayout
+                Models.Record courseRecord = await App.Database.GetCourseByID(act.CourseID);
+                Grid activityContainer = new Grid
                 {
-                    Padding = new Thickness(16, 0, 16, 0),
-                    ClassId = "course_" + act.id,
-                    VerticalOptions = LayoutOptions.FillAndExpand
+                    Padding = new Thickness(5, 0, 5, 0),
+                    ClassId = "course_" + act.id
                 };
+                activityContainer.RowDefinitions.Add(new RowDefinition { Height = 50 });
+                activityContainer.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+                activityContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                activityContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+
                 Label coursetitle = new Label
                 {
                     Text = act.Name
                 };
-                activityContainer.Children.Add(coursetitle);
+                Button downloadBtn = BuildDownload(act.CourseID, courseRecord);
+                
+
+                // add the image
+                CachedImage marquee = BuildMarquee(act.CourseID,false);
+
+
+                activityContainer.Children.Add(coursetitle,0,0);
+                Grid.SetColumnSpan(coursetitle, 2);
+                activityContainer.Children.Add(marquee,0,1);
+                activityContainer.Children.Add(downloadBtn,1,1);
                 frameContainer.Children.Add(activityContainer);
             }
-            cardBody.Content = frameContainer;
-            frame.Content = layout;
-            layout.Children.Add(cardHeader);
-            layout.Children.Add(cardBody);
-            container.Children.Add(frame);
+            
+           
+            cardBody.Children.Add(frameContainer);
+            layout.Children.Add(objectiveTitle,0,0);
+            layout.Children.Add(AcBtn, 1, 0);
+            layout.Children.Add(cardBody,0,1);
+            Grid.SetColumnSpan(cardBody, 2);
+            container.Children.Add(layout);
 
         }
 
-        private void AcBtn_Clicked(object sender, EventArgs e)
+        private async void AcBtn_Clicked(object sender, EventArgs e)
         {
             AccordionButton btn = (AccordionButton)sender;
-            Frame f = btn.ContentFrame;
-            if (f.IsVisible)
+            StackLayout f = btn.ContentFrame;
+            await btn.RotateTo((btn.FrameOpen ? 0 : 180), 200, Easing.CubicInOut);
+            if (btn.FrameOpen)
+            {
+                await Task.WhenAll(new List<Task> { f.FadeTo(0, 200, Easing.Linear) });
                 f.IsVisible = false;
-            else
+                f.ForceLayout();
+                btn.FrameOpen = false;
+            }
+            else {
                 f.IsVisible = true;
-            string s = "test";
+                //await Task.WhenAll(new List<Task> { f.LayoutTo(new Rectangle(f.Bounds.X, f.Bounds.Y, f.Bounds.Width, 300), 500, Easing.CubicOut)});
+                await Task.WhenAll(new List<Task> { f.FadeTo(1, 400, Easing.Linear) });
+                //f.Opacity = 1;
+                 btn.FrameOpen = true;
+            }
+        }
+
+        public CachedImage BuildMarquee(string id,bool fullscreen)
+        {
+            CachedImage marquee = new CachedImage()
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.Center,
+                MinimumWidthRequest = (fullscreen) ? Constants.deviceWidth : Constants.deviceWidth / 2,
+                WidthRequest = (fullscreen) ? Constants.deviceWidth : Constants.deviceWidth/2,
+                Margin = new Thickness(0, 0, 0, 0),
+                CacheDuration = TimeSpan.FromDays(30),
+                DownsampleToViewSize = true,
+                RetryCount = 0,
+                RetryDelay = 250,
+                LoadingPlaceholder = "placeholder.png",
+                ErrorPlaceholder = "placeholder.png",
+                Source = Constants.BlobLocation + "/coursecontent/" + id + "/courselogo.gif"
+
+            };
+
+            return marquee;
+        }
+
+        public Button BuildDownload(string id, Models.Record courseRecord)
+        {
+            Button downloadBtn = new Button
+            {
+                Text = "download",
+                Image = "download.png",
+                Style = (Style)Application.Current.Resources["buttonStyle"],
+                ClassId = id,
+                IsVisible = (courseRecord == null) ? true : (courseRecord.Deleted == "false") ? false : true
+            };
+
+            return downloadBtn;
         }
     }
 }

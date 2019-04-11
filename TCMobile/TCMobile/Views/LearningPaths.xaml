@@ -8,11 +8,12 @@
         <vm:LearningPathsViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-            <StackLayout>
-                <StackLayout x:Name="LP"></StackLayout>
+        <ScrollView HorizontalOptions="FillAndExpand"  VerticalOptions="FillAndExpand">
+            <FlexLayout VerticalOptions="FillAndExpand" x:Name="LP" 
+                            HorizontalOptions="FillAndExpand" Direction="Column">
+                
                 <ActivityIndicator x:Name="LPProgress" IsVisible="False" HeightRequest="20"/>
-            </StackLayout>
+            </FlexLayout>
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>

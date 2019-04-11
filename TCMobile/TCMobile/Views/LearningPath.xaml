@@ -9,8 +9,8 @@
     </ContentPage.BindingContext>
   <ContentPage.Content>
         <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-            <StackLayout>
-                <StackLayout x:Name="LP"></StackLayout>
+            <StackLayout VerticalOptions="FillAndExpand">
+                <StackLayout x:Name="LP" VerticalOptions="FillAndExpand"></StackLayout>
                 <ActivityIndicator x:Name="Progress" IsVisible="False" HeightRequest="20"/>
             </StackLayout>
         </ScrollView>
