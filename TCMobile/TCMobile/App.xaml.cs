@@ -8,7 +8,7 @@ using Microsoft.AppCenter.Crashes;
 using TCMobile.Data;
 using System.IO;
 using Xamarin.Essentials;
-
+using TCMobile.CustomControls;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace TCMobile
@@ -19,8 +19,13 @@ namespace TCMobile
        
         public static bool IsUserLoggedIn { get; set; }
         static LMSDataBase database;
+        public static Catalogue CourseCatalogue { get; set; }
+
+        public static String LocalFolder { get; set; }
 
         public static string AppName { get { return "TCLMS"; } }
+
+        public static DownloadButton Currentdownload { get; set; }
 
         public static ICredentialsService CredentialsService { get; private set; }
         public App()
