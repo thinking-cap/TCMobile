@@ -15,6 +15,7 @@ using Refractored.XamForms.PullToRefresh.Droid;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using FFImageLoading.Forms.Platform;
 
 namespace TCMobile.Droid
 {
@@ -30,13 +31,26 @@ namespace TCMobile.Droid
             ToolbarResource = Resource.Layout.Toolbar;
             CrossCurrentActivity.Current.Init(this,savedInstanceState);
             base.OnCreate(savedInstanceState);
+
+            CachedImageRenderer.Init(enableFastRenderer:true);
+
+            var config = new FFImageLoading.Config.Configuration()
+            {
+                VerboseLogging = false,
+                VerbosePerformanceLogging = false,
+                VerboseMemoryCacheLogging = false,
+                VerboseLoadingCancelledLogging = false
+            };
+
+
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             global::Android.Webkit.WebView.SetWebContentsDebuggingEnabled(true);
-
+            
             AppCenter.Start("6f839c85-8c8a-4e6a-89ac-d4b82b3d49b1",
                    typeof(Analytics), typeof(Crashes));
             AppCenter.Start("6f839c85-8c8a-4e6a-89ac-d4b82b3d49b1", typeof(Analytics), typeof(Crashes));
 
+       
             LoadApplication(new App());
         }
 
