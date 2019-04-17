@@ -16,7 +16,9 @@ namespace TCMobile
     public partial class App : Application
     {
 
-       
+        public static int ScreenHeight { get; set; }
+        public static int ScreenWidth { get; set; }
+
         public static bool IsUserLoggedIn { get; set; }
         static LMSDataBase database;
         public static Catalogue CourseCatalogue { get; set; }

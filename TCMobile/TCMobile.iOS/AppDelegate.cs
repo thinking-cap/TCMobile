@@ -30,6 +30,10 @@ namespace TCMobile.iOS
             CachedImageRenderer.Init();
             LoadApplication(new App());
             UIApplication.SharedApplication.StatusBarHidden = true;
+
+            App.ScreenHeight = (int)UIScreen.MainScreen.Bounds.Height;
+            App.ScreenWidth = (int)UIScreen.MainScreen.Bounds.Width;
+
             return base.FinishedLaunching(app, options);
         }
     }

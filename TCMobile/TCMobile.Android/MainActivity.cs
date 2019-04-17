@@ -34,6 +34,9 @@ namespace TCMobile.Droid
 
             CachedImageRenderer.Init(enableFastRenderer:true);
 
+            App.ScreenHeight = (int)(Resources.DisplayMetrics.HeightPixels / Resources.DisplayMetrics.Density);
+            App.ScreenWidth = (int)(Resources.DisplayMetrics.WidthPixels / Resources.DisplayMetrics.Density);
+
             var config = new FFImageLoading.Config.Configuration()
             {
                 VerboseLogging = false,

@@ -20,19 +20,16 @@ namespace TCMobile
         {
             MaterialFrame frame;
             StackLayout layout;
-            DownloadButton downloadBtn;
+            DownloadImageButton downloadBtn;
             DownloadButton launchBtn;
             ActivityIndicator spinner;
            // Image marquee;
             StackLayout marqueeContainer;
-            
-          
-
-
-                Models.Record courseRecord = await App.Database.GetCourseByID(courseid);
+            // See if there is a course record so we can display the proper navigation (download, launch etc...)
+            Models.Record courseRecord = await App.Database.GetCourseByID(courseid);
             CachedImage marquee = BuildMarquee(courseid,true);
 
-
+            // wrap the course Marquee in a stack layout so we have more control with the layout
             marqueeContainer = new StackLayout
             {
             };
@@ -115,7 +112,7 @@ namespace TCMobile
                 HeightRequest = 20
             };
 
-            downloadBtn = BuildDownload(courseid, courseRecord,spinner);
+            downloadBtn = BuildImageDownload(courseid, courseRecord,spinner);
             downloadBtn.CourseID = courseid;
             
 
@@ -336,7 +333,7 @@ namespace TCMobile
                 };
 
 
-                DownloadButton downloadBtn = BuildDownload(act.CourseID, courseRecord,spinner);
+                DownloadImageButton downloadBtn = BuildImageDownload(act.CourseID, courseRecord,spinner);
                 Courses c = new Courses();
                 downloadBtn.Clicked += c.DownloadClicked;
                 launchBtn.Clicked += c.launchCourse;
@@ -386,14 +383,20 @@ namespace TCMobile
             }
         }
 
+        /************************************************************************** 
+         * BuildMarquee returns a cached image object 
+         * It takes 2 params
+         * id - CourseID
+         * fullscreen - do you want to make a full screen widht or 1/2 width marquee         
+         **************************************************************************/
         public CachedImage BuildMarquee(string id,bool fullscreen)
         {
             CachedImage marquee = new CachedImage()
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.Center,
-                MinimumWidthRequest = (fullscreen) ? Constants.deviceWidth : Constants.deviceWidth / 2,
-                WidthRequest = (fullscreen) ? Constants.deviceWidth : Constants.deviceWidth/2,
+                MinimumWidthRequest = (fullscreen) ? App.ScreenWidth : App.ScreenWidth / 2,
+                WidthRequest = (fullscreen) ? App.ScreenWidth : App.ScreenWidth / 2,
                 Margin = new Thickness(0, 0, 0, 0),
                 CacheDuration = TimeSpan.FromDays(30),
                 DownsampleToViewSize = true,
@@ -406,6 +409,21 @@ namespace TCMobile
             };
 
             return marquee;
+        }
+
+        public DownloadImageButton BuildImageDownload(string id, Models.Record courseRecord, ActivityIndicator spinner)
+        {
+            DownloadImageButton downloadBtn = new DownloadImageButton
+            {
+                ///Text = "download",
+                Source = "download.png",
+                Style = (Style)Application.Current.Resources["buttonStyle"],
+                ClassId = id,
+                Spinner = spinner,
+                IsVisible = (courseRecord == null) ? true : (courseRecord.Deleted == "false") ? false : true
+            };
+
+            return downloadBtn;
         }
 
         public DownloadButton BuildDownload(string id, Models.Record courseRecord, ActivityIndicator spinner)
