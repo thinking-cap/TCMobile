@@ -104,7 +104,7 @@ namespace TCMobile
             courses.CreateCourseRecord(CourseID);
             var action = await Application.Current.MainPage.DisplayAlert("Finished", "Would you like to launch the course?", "Yes", "No");
             //DisplayAlert("Finished", "Course had successfully been download.", "OK");
-            Debug.WriteLine("action " + action);
+           // Debug.WriteLine("action " + action);
             if (action)
             {
                 string test = await Courses.openCourse(CourseID, Application.Current.MainPage.Navigation);
@@ -123,20 +123,28 @@ namespace TCMobile
         bool busy = false;
         public async void DownloadClicked(object sender, EventArgs e)
         {
-
+            dynamic button;
             if (busy)
                 return;
             busy = true;
-            App.Currentdownload = (DownloadButton)sender;
-            DownloadButton button = (DownloadButton)sender;
+            if (sender is DownloadButton)
+            {
+                App.Currentdownload = (DownloadButton)sender;
+                button = (DownloadButton)sender;
+            }
+            else
+            {
+                App.Currentdownload = (DownloadImageButton)sender;
+                button = (DownloadImageButton)sender;
+            }
+           
             string id = button.CourseID;
             var courseObj = App.CourseCatalogue.courses.Where(course => course.courseid == id).FirstOrDefault();
 
             string version = button.Parent.ClassId;
             // disable the button to prevent double clicking
-            ((DownloadButton)sender).IsEnabled = false;
-
-            ((DownloadButton)sender).IsVisible = false;
+            button.IsEnabled = false;
+            button.IsVisible = false;
 
             button.Spinner.IsRunning = true;
             button.Spinner.IsVisible = true;
@@ -211,7 +219,7 @@ namespace TCMobile
 
         public void launchCourse(Object Sender, EventArgs args)
         {
-            DownloadButton button = (DownloadButton)Sender;
+            DownloadImageButton button = (DownloadImageButton)Sender;
             
 
             //String text = label.Text;

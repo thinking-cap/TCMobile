@@ -27,7 +27,7 @@ namespace TCMobile
 
         public static string AppName { get { return "TCLMS"; } }
 
-        public static DownloadButton Currentdownload { get; set; }
+        public static dynamic Currentdownload { get; set; }
 
         public static ICredentialsService CredentialsService { get; private set; }
         public App()

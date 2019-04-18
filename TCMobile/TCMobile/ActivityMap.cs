@@ -92,6 +92,7 @@ namespace TCMobile
 
     public class StudentActivityMap
     {
+        [JsonConverter(typeof(SingleValueArrayConverter<Objective>))]
         public List<Objective> Objective { get; set; }
         public Types Types { get; set; }
     }

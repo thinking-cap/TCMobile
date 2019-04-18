@@ -20,8 +20,8 @@ namespace TCMobile
         {
             MaterialFrame frame;
             StackLayout layout;
-            DownloadButton downloadBtn;
-            DownloadButton launchBtn;
+           
+           // DownloadButton launchBtn;
             ActivityIndicator spinner;
            // Image marquee;
             StackLayout marqueeContainer;
@@ -112,7 +112,7 @@ namespace TCMobile
                 HeightRequest = 20
             };
 
-            downloadBtn = BuildDownload(courseid, courseRecord,spinner);
+            DownloadImageButton downloadBtn = BuildImageDownload(courseid, courseRecord,spinner);
             downloadBtn.CourseID = courseid;
             
 
@@ -124,18 +124,19 @@ namespace TCMobile
                 ClassId = "course_" + courseid
             };
 
-            launchBtn = new DownloadButton
-            {
-                Text = (courseRecord == null) ? "open" :
-                        (courseRecord.CompletionStatus.ToLower() == "completed") ? "review" :
-                        (courseRecord.CMI == "") ? "open" : "resume",
-                IsVisible = (courseRecord == null) ? false : (courseRecord.Deleted == "false") ? true : false,
-                Image = "launch_w.png",
-                Style = (Style)Application.Current.Resources["buttonStyle"],
-                ClassId = courseid,
-                CourseID = courseid
+            //launchBtn = new DownloadButton
+            //{
+            //    Text = (courseRecord == null) ? "open" :
+            //            (courseRecord.CompletionStatus.ToLower() == "completed") ? "review" :
+            //            (courseRecord.CMI == "") ? "open" : "resume",
+            //    IsVisible = (courseRecord == null) ? false : (courseRecord.Deleted == "false") ? true : false,
+            //    Image = "launch_w.png",
+            //    Style = (Style)Application.Current.Resources["buttonStyle"],
+            //    ClassId = courseid,
+            //    CourseID = courseid
 
-            };
+            //};
+            DownloadImageButton launchBtn = BuildImageLaunch(courseid, courseRecord, spinner);
             downloadBtn.LaunchButton = launchBtn;
             launchBtn.Clicked += launchCourse;
             downloadBtn.Clicked += downloadClicked;
@@ -165,14 +166,14 @@ namespace TCMobile
                 Margin = new Thickness(0, 8, 0, 24),
                 CornerRadius = 0
             };
-            Button moreBtn;
-            moreBtn = new Button
+            
+            DownloadImageButton moreBtn = new DownloadImageButton
             {
-                Text = "more",
-                Image = "launch_w.png",
-                Style = (Style)Application.Current.Resources["buttonStyle"],
-                ClassId = id
-
+                //Text = "more",
+                Source = "baseline_launch_black_48pt.png",
+                //Style = (Style)Application.Current.Resources["buttonStyle"],
+                ClassId = id,
+                CourseID = id
             };
             moreBtn.Clicked += detailsClicked;
 
@@ -319,21 +320,23 @@ namespace TCMobile
                     HeightRequest = 20
                 };
 
-                DownloadButton launchBtn = new DownloadButton
-                {
-                    Text = (courseRecord == null) ? "open" :
-                        (courseRecord.CompletionStatus.ToLower() == "completed") ? "review" :
-                        (courseRecord.CMI == "") ? "open" : "resume",
-                    IsVisible = (courseRecord == null) ? false : (courseRecord.Deleted == "false") ? true : false,
-                    Image = "launch_w.png",
-                    Style = (Style)Application.Current.Resources["buttonStyle"],
-                    ClassId = act.CourseID,
-                    CourseID = act.CourseID
+                //DownloadButton launchBtn = new DownloadButton
+                //{
+                //    Text = (courseRecord == null) ? "open" :
+                //        (courseRecord.CompletionStatus.ToLower() == "completed") ? "review" :
+                //        (courseRecord.CMI == "") ? "open" : "resume",
+                //    IsVisible = (courseRecord == null) ? false : (courseRecord.Deleted == "false") ? true : false,
+                //    Image = "launch_w.png",
+                //    Style = (Style)Application.Current.Resources["buttonStyle"],
+                //    ClassId = act.CourseID,
+                //    CourseID = act.CourseID
 
-                };
+                //};
+
+                DownloadImageButton launchBtn = BuildImageLaunch(act.CourseID, courseRecord, null);
 
 
-                DownloadButton downloadBtn = BuildDownload(act.CourseID, courseRecord,spinner);
+                DownloadImageButton downloadBtn = BuildImageDownload(act.CourseID, courseRecord,spinner);
                 Courses c = new Courses();
                 downloadBtn.Clicked += c.DownloadClicked;
                 launchBtn.Clicked += c.launchCourse;
@@ -416,8 +419,8 @@ namespace TCMobile
             DownloadImageButton downloadBtn = new DownloadImageButton
             {
                 ///Text = "download",
-                Source = "download.png",
-                Style = (Style)Application.Current.Resources["buttonStyle"],
+                Source = "download_cloud_dark.png",
+                //Style = (Style)Application.Current.Resources["buttonStyle"],
                 ClassId = id,
                 Spinner = spinner,
                 IsVisible = (courseRecord == null) ? true : (courseRecord.Deleted == "false") ? false : true
@@ -436,6 +439,38 @@ namespace TCMobile
                 ClassId = id,
                 Spinner = spinner,
                 IsVisible = (courseRecord == null) ? true : (courseRecord.Deleted == "false") ? false : true
+            };
+
+            return downloadBtn;
+        }
+
+        public DownloadButton BuildLaunch(string id, Models.Record courseRecord, ActivityIndicator spinner)
+        {
+            DownloadButton downloadBtn = new DownloadButton
+            {
+                Text = (courseRecord == null) ? "open" :
+                        (courseRecord.CompletionStatus.ToLower() == "completed") ? "review" :
+                        (courseRecord.CMI == "") ? "open" : "resume",
+                Image = "baseline_launch_black_48pt.png",
+                Style = (Style)Application.Current.Resources["buttonStyle"],
+                ClassId = id,
+                Spinner = spinner,
+                CourseID = id,
+                IsVisible = (courseRecord == null) ? false : (courseRecord.Deleted == "false") ? true : false,
+            };
+
+            return downloadBtn;
+        }
+
+        public DownloadImageButton BuildImageLaunch(string id, Models.Record courseRecord, ActivityIndicator spinner)
+        {
+            DownloadImageButton downloadBtn = new DownloadImageButton
+            {
+                Source = "baseline_launch_black_48pt.png",
+                ClassId = id,
+                Spinner = spinner,
+                CourseID = id,
+                IsVisible = (courseRecord == null) ? false : (courseRecord.Deleted == "false") ? true : false
             };
 
             return downloadBtn;

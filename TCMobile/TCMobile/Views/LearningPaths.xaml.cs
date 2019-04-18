@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using TCMobile.CustomControls;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -83,8 +84,8 @@ namespace TCMobile.Views
 
         public void DetailsClicked(object sender, EventArgs e)
         {
-            Button button = (Button)sender;
-            string id = button.ClassId;
+            DownloadImageButton button = (DownloadImageButton)sender;
+            string id = button.CourseID;
            
             Navigation.PushAsync(new LearningPath(id));
         }

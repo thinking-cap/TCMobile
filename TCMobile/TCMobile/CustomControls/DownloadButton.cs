@@ -45,13 +45,13 @@ namespace TCMobile.CustomControls
     public class DownloadImageButton : ImageButton
     {
         public static readonly BindableProperty courseid =
-               BindableProperty.Create("CourseID", typeof(string), typeof(DownloadButton));
+               BindableProperty.Create("CourseID", typeof(string), typeof(DownloadImageButton));
 
         public static readonly BindableProperty spinner =
-            BindableProperty.Create("Spinner", typeof(ActivityIndicator), typeof(DownloadButton));
+            BindableProperty.Create("Spinner", typeof(ActivityIndicator), typeof(DownloadImageButton));
 
         public static readonly BindableProperty launchButton =
-            BindableProperty.Create("LaunchButton", typeof(Button), typeof(DownloadButton));
+            BindableProperty.Create("LaunchButton", typeof(ImageButton), typeof(DownloadImageButton));
 
         public String CourseID
         {
@@ -65,9 +65,9 @@ namespace TCMobile.CustomControls
             set { SetValue(spinner, value); }
         }
 
-        public Button LaunchButton
+        public ImageButton LaunchButton
         {
-            get { return (Button)GetValue(launchButton); }
+            get { return (ImageButton)GetValue(launchButton); }
             set { SetValue(launchButton, value); }
         }
     }
