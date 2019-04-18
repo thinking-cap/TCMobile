@@ -20,7 +20,7 @@ namespace TCMobile
         {
             MaterialFrame frame;
             StackLayout layout;
-            DownloadImageButton downloadBtn;
+            DownloadButton downloadBtn;
             DownloadButton launchBtn;
             ActivityIndicator spinner;
            // Image marquee;
@@ -112,7 +112,7 @@ namespace TCMobile
                 HeightRequest = 20
             };
 
-            downloadBtn = BuildImageDownload(courseid, courseRecord,spinner);
+            downloadBtn = BuildDownload(courseid, courseRecord,spinner);
             downloadBtn.CourseID = courseid;
             
 
@@ -333,7 +333,7 @@ namespace TCMobile
                 };
 
 
-                DownloadImageButton downloadBtn = BuildImageDownload(act.CourseID, courseRecord,spinner);
+                DownloadButton downloadBtn = BuildDownload(act.CourseID, courseRecord,spinner);
                 Courses c = new Courses();
                 downloadBtn.Clicked += c.DownloadClicked;
                 launchBtn.Clicked += c.launchCourse;
