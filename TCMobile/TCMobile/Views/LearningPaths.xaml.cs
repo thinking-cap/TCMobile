@@ -18,6 +18,7 @@ namespace TCMobile.Views
         public LearningPaths()
         {
             InitializeComponent();
+            
 
         }
 

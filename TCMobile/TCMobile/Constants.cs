@@ -25,8 +25,9 @@ namespace TCMobile
         public static string BlobLocation;
         public static bool isOnline;
         public static double deviceWidth;
+        public static string HeaderColour { get; set; }
 
-       
+
 
 
 

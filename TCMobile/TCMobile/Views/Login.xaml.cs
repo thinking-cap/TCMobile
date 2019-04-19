@@ -53,6 +53,7 @@ namespace TCMobile.Views
                 }
 
                 App.IsUserLoggedIn = true;
+                Constants.HeaderColour = login.headerColour;
                 Application.Current.MainPage = new MainPage();
                 Constants.StudentID = login.userId;
                 Constants.firstName = login.firstName;
@@ -60,7 +61,6 @@ namespace TCMobile.Views
                 Constants.BlobLocation = login.blobLoc;
                 Progress.IsVisible = true;
                 Progress.IsRunning = true;
-
                 await Navigation.PushAsync(new MainPage());
             }
             else

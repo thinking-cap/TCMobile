@@ -14,9 +14,7 @@ namespace TCMobile.Views
         public MainPage()
         {
             InitializeComponent();
-
             MasterBehavior = MasterBehavior.Popover;
-
             MenuPages.Add((int)MenuItemType.Catalogue, (NavigationPage)Detail);
         }
 
@@ -27,19 +25,19 @@ namespace TCMobile.Views
                 switch (id)
                 {
                     case (int)MenuItemType.Catalogue:
-                        MenuPages.Add(id, new NavigationPage(new Catalogue()));
+                        MenuPages.Add(id, new NavigationPage(new Catalogue()) { BarBackgroundColor = Color.FromHex(Constants.HeaderColour) });
                         break;
                     case (int)MenuItemType.MyCourses:
-                        MenuPages.Add(id, new NavigationPage(new MyCourses()));
+                        MenuPages.Add(id, new NavigationPage(new MyCourses()) { BarBackgroundColor = Color.FromHex(Constants.HeaderColour) });
                         break;
                     case (int)MenuItemType.LearningPaths:
-                        MenuPages.Add(id, new NavigationPage(new LearningPaths()));
+                        MenuPages.Add(id, new NavigationPage(new LearningPaths()) { BarBackgroundColor = Color.FromHex(Constants.HeaderColour) });
                         break;
                     case (int)MenuItemType.MyTranscripts:
-                        MenuPages.Add(id, new NavigationPage(new MyTranscripts()));
+                        MenuPages.Add(id, new NavigationPage(new MyTranscripts()) { BarBackgroundColor = Color.FromHex(Constants.HeaderColour) });
                         break;
                     case (int)MenuItemType.Settings:
-                        MenuPages.Add(id, new NavigationPage(new Settings()));
+                        MenuPages.Add(id, new NavigationPage(new Settings()) { BarBackgroundColor = Color.FromHex(Constants.HeaderColour) });
                         break;
                     case (int)MenuItemType.Logout:
                         MenuPages.Add(id, new NavigationPage(new Login()));
@@ -60,7 +58,7 @@ namespace TCMobile.Views
                 if (newPage != null && Detail != newPage)
                 {
                     Detail = newPage;
-
+                    
                     if (Device.RuntimePlatform == Device.Android)
                         await Task.Delay(100);
 

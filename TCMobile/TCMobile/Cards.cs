@@ -170,10 +170,12 @@ namespace TCMobile
             DownloadImageButton moreBtn = new DownloadImageButton
             {
                 //Text = "more",
-                Source = "baseline_launch_black_48pt.png",
+                Source = "baseline_launch_black_48.png",
                 //Style = (Style)Application.Current.Resources["buttonStyle"],
                 ClassId = id,
-                CourseID = id
+                CourseID = id,
+                BackgroundColor = Color.Transparent,
+                BorderColor = Color.Transparent
             };
             moreBtn.Clicked += detailsClicked;
 
@@ -286,7 +288,9 @@ namespace TCMobile
                 Padding = new Thickness(0, 0, 0, 0),
                 Margin = new Thickness(0, 0, 0, 0),
                 WidthRequest = 20,
-                HeightRequest = 20
+                HeightRequest = 20,
+                BackgroundColor = Color.Transparent,
+                BorderColor = Color.Transparent
             };
 
             AcBtn.ContentFrame = cardBody;
@@ -419,10 +423,12 @@ namespace TCMobile
             DownloadImageButton downloadBtn = new DownloadImageButton
             {
                 ///Text = "download",
-                Source = "download_cloud_dark.png",
+                Source = "baseline_cloud_download_black_48.png",
                 //Style = (Style)Application.Current.Resources["buttonStyle"],
                 ClassId = id,
                 Spinner = spinner,
+                BackgroundColor = Color.Transparent,
+                BorderColor = Color.Transparent,
                 IsVisible = (courseRecord == null) ? true : (courseRecord.Deleted == "false") ? false : true
             };
 
@@ -434,7 +440,7 @@ namespace TCMobile
             DownloadButton downloadBtn = new DownloadButton
             {
                 Text = "download",
-                Image = "download.png",
+                Image = "baseline_cloud_download_black_48.png",
                 Style = (Style)Application.Current.Resources["buttonStyle"],
                 ClassId = id,
                 Spinner = spinner,
@@ -451,7 +457,7 @@ namespace TCMobile
                 Text = (courseRecord == null) ? "open" :
                         (courseRecord.CompletionStatus.ToLower() == "completed") ? "review" :
                         (courseRecord.CMI == "") ? "open" : "resume",
-                Image = "baseline_launch_black_48pt.png",
+                Image = "baseline_launch_black_48.png",
                 Style = (Style)Application.Current.Resources["buttonStyle"],
                 ClassId = id,
                 Spinner = spinner,
@@ -466,10 +472,12 @@ namespace TCMobile
         {
             DownloadImageButton downloadBtn = new DownloadImageButton
             {
-                Source = "baseline_launch_black_48pt.png",
+                Source = "baseline_launch_black_48.png",
                 ClassId = id,
                 Spinner = spinner,
                 CourseID = id,
+                BackgroundColor = Color.Transparent,
+                BorderColor = Color.Transparent,
                 IsVisible = (courseRecord == null) ? false : (courseRecord.Deleted == "false") ? true : false
             };
 

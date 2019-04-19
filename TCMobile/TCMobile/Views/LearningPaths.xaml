@@ -6,8 +6,8 @@
             Title="{Binding Title}">
     <ContentPage.BindingContext>
         <vm:LearningPathsViewModel />
-    </ContentPage.BindingContext>
-    <ContentPage.Content>
+    </ContentPage.BindingContext>    
+    <ContentPage.Content>        
         <ScrollView HorizontalOptions="FillAndExpand"  VerticalOptions="FillAndExpand">
             <FlexLayout VerticalOptions="FillAndExpand" x:Name="LP" 
                             HorizontalOptions="FillAndExpand" Direction="Column">

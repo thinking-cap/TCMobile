@@ -31,6 +31,8 @@ namespace TCMobile
         public string status { get; set; }
         public bool  login { get; set; }
 
+        public string headerColour { get; set; }
+
         public string homedomain { get; set; }
 
         public string firstName { get; set; }

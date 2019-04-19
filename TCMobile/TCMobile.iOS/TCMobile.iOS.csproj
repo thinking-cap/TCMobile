@@ -248,21 +248,21 @@
     <BundleResource Include="Resources\chevron_down.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\download_cloud_dark%403x.png" />
+    <BundleResource Include="Resources\baseline_cloud_download_black_48%403x.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\download_cloud_dark%401x.png" />
+    <BundleResource Include="Resources\baseline_cloud_download_black_48%401x.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\download_cloud_dark%402x.png" />
+    <BundleResource Include="Resources\baseline_cloud_download_black_48%402x.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\baseline_launch_black_48pt%401x.png" />
+    <BundleResource Include="Resources\baseline_launch_black_48%401x.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\baseline_launch_black_48pt%402x.png" />
+    <BundleResource Include="Resources\baseline_launch_black_48%402x.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\baseline_launch_black_48pt%403x.png" />
+    <BundleResource Include="Resources\baseline_launch_black_48%403x.png" />
   </ItemGroup>
 </Project>

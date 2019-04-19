@@ -2,6 +2,7 @@
 <MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:views="clr-namespace:TCMobile.Views"
+            xmlns:constants="clr-namespace:TCMobile;assembly=TCMobile"
             x:Class="TCMobile.Views.MainPage">
 
     <MasterDetailPage.Master>
@@ -9,7 +10,7 @@
     </MasterDetailPage.Master>
 
     <MasterDetailPage.Detail>
-        <NavigationPage>
+        <NavigationPage BarBackgroundColor="{Binding Source={x:Static constants:Constants.HeaderColour}}">
             <NavigationPage.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <On Platform="iOS" Value="tab_feed.png"/>
