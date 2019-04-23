@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Dynamic;
+using TCMobile.Models;
 
 namespace TCMobile.Views
 {
@@ -54,7 +55,14 @@ namespace TCMobile.Views
 
                 App.IsUserLoggedIn = true;
                 Constants.HeaderColour = login.headerColour;
+                LMSSettings s = new LMSSettings();
+                s.PrimaryBG = login.headerColour;
+                s.ID = 0;
+                int x = await App.Database.SaveSettings(s);
                 Application.Current.MainPage = new MainPage();
+                Application.Current.Properties["HeaderColour"] = login.headerColour;
+               // await Application.Current.SavePropertiesAsync();
+
                 Constants.StudentID = login.userId;
                 Constants.firstName = login.firstName;
                 Constants.lastName = login.lastName;

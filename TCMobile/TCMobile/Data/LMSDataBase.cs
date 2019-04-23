@@ -19,6 +19,7 @@ namespace TCMobile.Data
             // build the lp record table
             // initially just to store the lp's for offline display.
             database.CreateTableAsync<LPDBRecord>().Wait();
+            database.CreateTableAsync<LMSSettings>().Wait();
         }
 
         public Task<List<Record>> GetItemsAsync()
@@ -29,12 +30,7 @@ namespace TCMobile.Data
         public Task<List<LPDBRecord>> GetLPSAsync()
         {
             return database.Table<LPDBRecord>().ToListAsync();
-        }
-
-        public Task<List<Models.Record>> GetItemsNotDoneAsync()
-        {
-            return database.QueryAsync<Models.Record>("SELECT * FROM [TodoItem] WHERE [Done] = 0");
-        }
+        }        
 
         public Task<Models.Record> GetCourseByID(string courseid)
         {
@@ -49,6 +45,23 @@ namespace TCMobile.Data
         public Task<Models.Record> GetItemAsync(int id)
         {
             return database.Table<Models.Record>().Where(i => i.ID == id).FirstOrDefaultAsync();
+        }
+
+        public Task<List<LMSSettings>> GetSettings()
+        {
+            return database.Table<LMSSettings>().ToListAsync();
+        }
+
+        public Task<int> SaveSettings(LMSSettings item)
+        {
+            if(item.ID != 0)
+            {
+                return database.UpdateAsync(item);
+            }
+            else
+            {
+                return database.InsertAsync(item);
+            }
         }
 
         public Task<int> SaveItemAsync(Models.Record item)

@@ -9,6 +9,9 @@ using TCMobile.Data;
 using System.IO;
 using Xamarin.Essentials;
 using TCMobile.CustomControls;
+using TCMobile.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace TCMobile
@@ -42,18 +45,25 @@ namespace TCMobile
             {
                 Constants.isOnline = false;
             }
+
             
             CredentialsService = new CredentialsService();
             InitializeComponent();
             Constants.LocalFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+
+            // load the lms settings
+           /// GetLMSSettings();
+
             if (CredentialsService.DoCredentialsExist() && !String.IsNullOrEmpty(CredentialsService.HomeDomain) && !String.IsNullOrEmpty(CredentialsService.UserID))
             {
                 // added a try catch just incase the param hasn't been created. 
                 // then we need to force a log in to retrieve the blob location
                 try
                 {
+                    if (Application.Current.Properties.ContainsKey("HeaderColour"))
+                        Constants.HeaderColour = Application.Current.Properties["HeaderColour"].ToString();
                     Constants.BlobLocation = CredentialsService.BlobLoc;
-                    MainPage = new MainPage();
+                     MainPage = new MainPage();
                     Constants.deviceWidth = Application.Current.MainPage.Width;
                 }
                 catch(Exception e)
@@ -70,6 +80,22 @@ namespace TCMobile
                 
         }
 
+
+        protected async void GetLMSSettings()
+        {
+            List<Models.LMSSettings> s = await App.Database.GetSettings();
+            
+            if (s.Count > 0 )
+            {
+                Constants.HeaderColour = s[0].PrimaryBG;
+            }
+            else
+            {
+                Constants.HeaderColour = "#000000";
+            }
+
+            //return courses;
+        }
         public static LMSDataBase Database
         {
             get

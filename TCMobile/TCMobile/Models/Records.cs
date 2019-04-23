@@ -32,4 +32,13 @@ namespace TCMobile.Models
         public string LPCourses { get; set; }
 
     }
+
+    public class LMSSettings
+    {
+        [PrimaryKey]
+        public int ID { get; set; }
+        public string PrimaryBG { get; set; }
+        public string SecondaryBG { get; set; }
+        public bool WiFiOnly { get; set; }
+    }
 }
