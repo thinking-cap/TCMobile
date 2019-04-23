@@ -27,6 +27,8 @@ namespace TCMobile
         public static double deviceWidth;
         public static string HeaderColour { get; set; }
 
+        public static string MenuBackgroundColour { get; set; }
+
 
 
 

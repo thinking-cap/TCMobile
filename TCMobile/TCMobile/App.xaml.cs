@@ -62,6 +62,9 @@ namespace TCMobile
                 {
                     if (Application.Current.Properties.ContainsKey("HeaderColour"))
                         Constants.HeaderColour = Application.Current.Properties["HeaderColour"].ToString();
+
+                    if (Application.Current.Properties.ContainsKey("MenuBGColour"))
+                        Constants.MenuBackgroundColour = Application.Current.Properties["MenuBGColour"].ToString();
                     Constants.BlobLocation = CredentialsService.BlobLoc;
                      MainPage = new MainPage();
                     Constants.deviceWidth = Application.Current.MainPage.Width;
@@ -81,21 +84,7 @@ namespace TCMobile
         }
 
 
-        protected async void GetLMSSettings()
-        {
-            List<Models.LMSSettings> s = await App.Database.GetSettings();
-            
-            if (s.Count > 0 )
-            {
-                Constants.HeaderColour = s[0].PrimaryBG;
-            }
-            else
-            {
-                Constants.HeaderColour = "#000000";
-            }
-
-            //return courses;
-        }
+       
         public static LMSDataBase Database
         {
             get

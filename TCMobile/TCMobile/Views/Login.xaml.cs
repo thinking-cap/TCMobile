@@ -55,12 +55,11 @@ namespace TCMobile.Views
 
                 App.IsUserLoggedIn = true;
                 Constants.HeaderColour = login.headerColour;
-                LMSSettings s = new LMSSettings();
-                s.PrimaryBG = login.headerColour;
-                s.ID = 0;
-                int x = await App.Database.SaveSettings(s);
+                Constants.MenuBackgroundColour = login.menuBackgroundColour;
+               
                 Application.Current.MainPage = new MainPage();
                 Application.Current.Properties["HeaderColour"] = login.headerColour;
+                Application.Current.Properties["MenuBGColour"] = login.menuBackgroundColour;
                // await Application.Current.SavePropertiesAsync();
 
                 Constants.StudentID = login.userId;
