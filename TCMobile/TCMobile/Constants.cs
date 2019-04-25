@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Xamarin.Auth;
-
+using Xamarin.Forms;
 
 namespace TCMobile
 {
@@ -16,6 +16,7 @@ namespace TCMobile
         public static string LearningPath = Url + "/Mobile/LPDetails.ashx";
         public static string SetCMI = Url + "/WebService/LearnerManagement.asmx/SetSCORMValues";
         public static string GetCMI = Url + "/WebService/LearnerManagement.asmx/GetSCORMDetails";
+        public static ImageSource Logo { get; set; }
         public static string StudentID = "740ad541-661a-43ea-b825-cec3788f2c3a";
         //public static string ProgramID = "612e7450-2370-45b7-b2f9-8686b1d7c7f9";
         public static string ProgramID = "00000000-0000-0000-0000-000000000000";

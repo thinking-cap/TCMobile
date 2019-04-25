@@ -1,10 +1,16 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:TCMobile.ViewModels"
+             xmlns:vm="clr-namespace:TCMobile.ViewModels"         
+            xmlns:constants="clr-namespace:TCMobile;assembly=TCMobile"
              xmlns:local="clr-namespace:TCMobile;assembly=TCMobile"
              x:Class="TCMobile.Views.ViewCourse"
              Title="{Binding Title}">
+    <NavigationPage.TitleView>
+        <StackLayout>
+            <Image Source="{Binding Source={x:Static constants:Constants.Logo}}"></Image>
+        </StackLayout>
+    </NavigationPage.TitleView>
     <ContentPage.BindingContext>
         <vm:ViewCourseModel />
     </ContentPage.BindingContext>

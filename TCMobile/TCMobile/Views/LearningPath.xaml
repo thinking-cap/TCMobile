@@ -1,9 +1,15 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:TCMobile.ViewModels"
+             xmlns:vm="clr-namespace:TCMobile.ViewModels"            
+            xmlns:constants="clr-namespace:TCMobile;assembly=TCMobile"
              xmlns:expandable="clr-namespace:Expandable;assembly=ExpandableView"
              x:Class="TCMobile.Views.LearningPath">
+    <NavigationPage.TitleView>
+        <StackLayout>
+            <Image Source="{Binding Source={x:Static constants:Constants.Logo}}"></Image>
+        </StackLayout>
+    </NavigationPage.TitleView>
     <ContentPage.BindingContext>
         <vm:LearningPathViewModel />
     </ContentPage.BindingContext>

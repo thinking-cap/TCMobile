@@ -12,6 +12,7 @@ namespace TCMobile.ViewModels
         public CatalogueViewModel()
         {
             Title = "My Activities";
+           
         }
     }
 }

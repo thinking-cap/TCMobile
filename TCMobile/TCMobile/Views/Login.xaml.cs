@@ -53,6 +53,8 @@ namespace TCMobile.Views
                     App.CredentialsService.SaveCredentials(username, password,login.userId, login.firstName,login.lastName,login.homedomain, login.blobLoc);
                 }
 
+                Constants.Logo = new Uri(Constants.Url + "/FormatResource.ashx/programLearnerView_" + login.homedomain + "/logo.gif");
+
                 App.IsUserLoggedIn = true;
                 Constants.HeaderColour = login.headerColour;
                 Constants.MenuBackgroundColour = login.menuBackgroundColour;

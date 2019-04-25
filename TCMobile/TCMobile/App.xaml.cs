@@ -62,12 +62,13 @@ namespace TCMobile
                 {
                     if (Application.Current.Properties.ContainsKey("HeaderColour"))
                         Constants.HeaderColour = Application.Current.Properties["HeaderColour"].ToString();
-
+                    Constants.Logo = new Uri(Constants.Url + "/FormatResource.ashx/programLearnerView_" + CredentialsService.HomeDomain + "/logo.gif");
                     if (Application.Current.Properties.ContainsKey("MenuBGColour"))
                         Constants.MenuBackgroundColour = Application.Current.Properties["MenuBGColour"].ToString();
                     Constants.BlobLocation = CredentialsService.BlobLoc;
                      MainPage = new MainPage();
                     Constants.deviceWidth = Application.Current.MainPage.Width;
+                   
                 }
                 catch(Exception e)
                 {
