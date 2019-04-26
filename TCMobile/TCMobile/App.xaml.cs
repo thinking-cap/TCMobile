@@ -52,14 +52,31 @@ namespace TCMobile
             Constants.LocalFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
             // load the lms settings
-           /// GetLMSSettings();
-
+            /// GetLMSSettings();
+            Styles s = new Styles();
             if (CredentialsService.DoCredentialsExist() && !String.IsNullOrEmpty(CredentialsService.HomeDomain) && !String.IsNullOrEmpty(CredentialsService.UserID))
             {
                 // added a try catch just incase the param hasn't been created. 
                 // then we need to force a log in to retrieve the blob location
                 try
                 {
+                    //var textColour = new Style(typeof(Label))
+                    //{
+                    //    Class = "fontColor",
+                    //    Setters =
+                    //    {
+                    //        new Setter
+                    //        {
+                    //            Property = Label.TextColorProperty,
+                    //            Value = Color.FromHex("#FF0000")
+                    //        }
+                    //    }
+                    //};
+
+                    //Resources.Add(textColour);
+                   
+                    s.LabelColour("fontColor", Application.Current.Properties["HeadingTextColour"].ToString());
+
                     // need to set a variable for the width of the current device 
                     if (Application.Current.Properties.ContainsKey("HeaderColour"))
                         Constants.HeaderColour = Application.Current.Properties["HeaderColour"].ToString();

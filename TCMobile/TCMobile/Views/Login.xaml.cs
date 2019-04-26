@@ -44,7 +44,7 @@ namespace TCMobile.Views
             Progress.IsRunning = true;
             Error.Text = "";
             TCMobile.LogInObj login = await userLogin.check(username, password);
-
+            Styles s = new Styles();
             if (login.login == true)
             {
                 bool doCredentialsExist = App.CredentialsService.DoCredentialsExist();
@@ -62,7 +62,9 @@ namespace TCMobile.Views
                 Application.Current.MainPage = new MainPage();
                 Application.Current.Properties["HeaderColour"] = login.headerColour;
                 Application.Current.Properties["MenuBGColour"] = login.menuBackgroundColour;
-               // await Application.Current.SavePropertiesAsync();
+                Application.Current.Properties["HeadingTextColour"] = login.headingTextColour;
+
+                s.LabelColour("fontColor", Application.Current.Properties["HeadingTextColour"].ToString());
 
                 Constants.StudentID = login.userId;
                 Constants.firstName = login.firstName;

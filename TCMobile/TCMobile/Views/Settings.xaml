@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"         
             xmlns:constants="clr-namespace:TCMobile;assembly=TCMobile"
+            xmlns:vm="clr-namespace:TCMobile.ViewModels"            
             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="TCMobile.Views.Settings">
     <NavigationPage.TitleView>
@@ -9,9 +10,16 @@
             <ffimageloading:CachedImage Style="{StaticResource headerImage}" Source="{Binding Source={x:Static constants:Constants.Logo}}"></ffimageloading:CachedImage>
         </StackLayout>
     </NavigationPage.TitleView>
+    <ContentPage.BindingContext>
+        <vm:SettingsViewModel />
+    </ContentPage.BindingContext>
     <ContentPage.Content>
+        <StackLayout>
+            <Label Text="{Binding Title}" StyleClass="pageTitle,fontColor"></Label>
         <StackLayout x:Name="Container">
             
+
+        </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

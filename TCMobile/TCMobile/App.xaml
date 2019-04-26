@@ -20,6 +20,11 @@
                         <OnPlatform Android="0,2,0,2" iOS="0,8,0,8"/>
                     </Setter.Value>
                 </Setter>
+                <Setter Property="Margin">
+                    <Setter.Value>
+                        <OnPlatform Android="0,0,0,0"/>
+                    </Setter.Value>
+                </Setter>
             </Style>
             <Style x:Key="headerImage" TargetType="Image">
                 <Setter Property="VerticalOptions" Value="FillAndExpand"/>
@@ -27,6 +32,13 @@
             <Style TargetType="NavigationPage">
                 <Setter Property="BarBackgroundColor" Value="{StaticResource colorPrimaryDark}" />
                 <Setter Property="BarTextColor" Value="White" />
+            </Style>
+            <Style Class="pageTitle" TargetType="Label">
+                <Setter Property="FontSize" Value="Large"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="Margin" Value="0,8,0,4"/>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+                <Setter Property="HorizontalTextAlignment" Value="Center"/>
             </Style>
             <Style x:Key="headerStyle" TargetType="Label">
                 <Setter Property="FontSize" Value="Large"/>

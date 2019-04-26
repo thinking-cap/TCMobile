@@ -43,5 +43,7 @@ namespace TCMobile
         public string blobLoc { get; set; }
 
         public string role { get; set; }
+
+        public string headingTextColour { get; set; }
     }
 }

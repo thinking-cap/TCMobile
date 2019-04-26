@@ -17,6 +17,7 @@
     <ContentPage.Content>
         <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout>
+                <Label Text="{Binding Title}" StyleClass="pageTitle,fontColor"></Label>
                 <StackLayout x:Name="Courses"></StackLayout>
                 <ActivityIndicator x:Name="CatalogueProgress" IsVisible="False" HeightRequest="20"/>
             </StackLayout>
