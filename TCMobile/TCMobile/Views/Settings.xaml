@@ -2,10 +2,11 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"         
             xmlns:constants="clr-namespace:TCMobile;assembly=TCMobile"
+            xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="TCMobile.Views.Settings">
     <NavigationPage.TitleView>
-        <StackLayout>
-            <Image Source="{Binding Source={x:Static constants:Constants.Logo}}"></Image>
+        <StackLayout Style="{StaticResource headerContainer}">
+            <ffimageloading:CachedImage Style="{StaticResource headerImage}" Source="{Binding Source={x:Static constants:Constants.Logo}}"></ffimageloading:CachedImage>
         </StackLayout>
     </NavigationPage.TitleView>
     <ContentPage.Content>

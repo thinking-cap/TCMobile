@@ -1,13 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:TCMobile.ViewModels"            
+             xmlns:vm="clr-namespace:TCMobile.ViewModels"
+            xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"            
             xmlns:constants="clr-namespace:TCMobile;assembly=TCMobile"
              x:Class="TCMobile.Views.LearningPaths"
             Title="{Binding Title}">
     <NavigationPage.TitleView>
-        <StackLayout>
-            <Image Source="{Binding Source={x:Static constants:Constants.Logo}}"></Image>
+        <StackLayout Style="{StaticResource headerContainer}">
+            <ffimageloading:CachedImage Style="{StaticResource headerImage}" Source="{Binding Source={x:Static constants:Constants.Logo}}"></ffimageloading:CachedImage>
         </StackLayout>
     </NavigationPage.TitleView>
     <ContentPage.BindingContext>

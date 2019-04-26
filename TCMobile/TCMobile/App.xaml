@@ -13,6 +13,17 @@
             <Color x:Key="colorSecondaryDark">#930000</Color>
             <Color x:Key="colorSecondaryLight">#FF4f30</Color>
             <Color x:Key="colorAccent">#FF4081</Color>
+            <Style x:Key="headerContainer" TargetType="StackLayout">
+                <Setter Property="VerticalOptions" Value="FillAndExpand"/>
+                <Setter Property="Padding">
+                    <Setter.Value>
+                        <OnPlatform Android="0,2,0,2" iOS="0,8,0,8"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="headerImage" TargetType="Image">
+                <Setter Property="VerticalOptions" Value="FillAndExpand"/>
+            </Style>
             <Style TargetType="NavigationPage">
                 <Setter Property="BarBackgroundColor" Value="{StaticResource colorPrimaryDark}" />
                 <Setter Property="BarTextColor" Value="White" />

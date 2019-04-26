@@ -60,6 +60,7 @@ namespace TCMobile
                 // then we need to force a log in to retrieve the blob location
                 try
                 {
+                    // need to set a variable for the width of the current device 
                     if (Application.Current.Properties.ContainsKey("HeaderColour"))
                         Constants.HeaderColour = Application.Current.Properties["HeaderColour"].ToString();
                     Constants.Logo = new Uri(Constants.Url + "/FormatResource.ashx/programLearnerView_" + CredentialsService.HomeDomain + "/logo.gif");
@@ -68,9 +69,11 @@ namespace TCMobile
                     Constants.BlobLocation = CredentialsService.BlobLoc;
                      MainPage = new MainPage();
                     Constants.deviceWidth = Application.Current.MainPage.Width;
-                   
+
+
+
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     MainPage = new NavigationPage(new Login());
                     Constants.deviceWidth = Application.Current.MainPage.Width;
