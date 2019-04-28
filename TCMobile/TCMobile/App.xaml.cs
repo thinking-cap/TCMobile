@@ -46,10 +46,13 @@ namespace TCMobile
                 Constants.isOnline = false;
             }
 
+           
             
             CredentialsService = new CredentialsService();
             InitializeComponent();
             Constants.LocalFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+
+            Constants.WifiOnly = App.Current.Properties.ContainsKey("WiFi") ? App.Current.Properties["WiFi"].ToString() : "False";
 
             // load the lms settings
             /// GetLMSSettings();

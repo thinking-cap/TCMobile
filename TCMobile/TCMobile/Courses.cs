@@ -123,79 +123,88 @@ namespace TCMobile
         bool busy = false;
         public async void DownloadClicked(object sender, EventArgs e)
         {
-            dynamic button;
-            if (busy)
-                return;
-            busy = true;
-            if (sender is DownloadButton)
-            {
-                App.Currentdownload = (DownloadButton)sender;
-                button = (DownloadButton)sender;
+                var profiles = Connectivity.ConnectionProfiles;
+                bool allowDownload = (Constants.WifiOnly == "True" && profiles.Contains(ConnectionProfile.WiFi) == false) ? false : true;
+                if (allowDownload) { 
+                dynamic button;
+                if (busy)
+                    return;
+                busy = true;
+                if (sender is DownloadButton)
+                {
+                    App.Currentdownload = (DownloadButton)sender;
+                    button = (DownloadButton)sender;
+                }
+                else
+                {
+                    App.Currentdownload = (DownloadImageButton)sender;
+                    button = (DownloadImageButton)sender;
+                }
+           
+                string id = button.CourseID;
+                var courseObj = App.CourseCatalogue.courses.Where(course => course.courseid == id).FirstOrDefault();
+
+                string version = button.Parent.ClassId;
+                // disable the button to prevent double clicking
+                button.IsEnabled = false;
+                button.IsVisible = false;
+
+                button.Spinner.IsRunning = true;
+                button.Spinner.IsVisible = true;
+
+
+                // let's check the permission
+                var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
+                // if we don't have perissions let's ask
+                if (status != PermissionStatus.Granted)
+                {
+                    if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Storage))
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Need To Save Stuff", "Gunna need that permission", "OK");
+                    }
+
+                    var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Storage);
+                    status = results[Permission.Storage];
+                }
+
+                if (status == PermissionStatus.Granted)
+                {
+                    string url = Constants.Url + "/mobile/GetCourse.ashx?CourseID=" + id + "&Version=1";
+                    //string url = "https://tcstable.blob.core.windows.net/coursepackages/" + id + "/" + version + "/CoursePackage.zip";
+                    Download(url, "TCLMS/Temp", id);
+                    //downloader.DownloadFile(url, "TCLMS/Temp",id);
+                }
+                else if (status != PermissionStatus.Unknown)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Access Denied", "Can not continue, try again.", "OK");
+                }
+                // ((Button)sender).Text = "Downloaded";
+                busy = false;
             }
             else
             {
-                App.Currentdownload = (DownloadImageButton)sender;
-                button = (DownloadImageButton)sender;
+                await Application.Current.MainPage.DisplayAlert("Warning", "You have selected to only download over WiFi. Connect to WiFi or go To Settings and change your preference.", "OK");
             }
-           
-            string id = button.CourseID;
-            var courseObj = App.CourseCatalogue.courses.Where(course => course.courseid == id).FirstOrDefault();
-
-            string version = button.Parent.ClassId;
-            // disable the button to prevent double clicking
-            button.IsEnabled = false;
-            button.IsVisible = false;
-
-            button.Spinner.IsRunning = true;
-            button.Spinner.IsVisible = true;
-
-
-            // let's check the permission
-            var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
-            // if we don't have perissions let's ask
-            if (status != PermissionStatus.Granted)
-            {
-                if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Storage))
-                {
-                    await Application.Current.MainPage.DisplayAlert("Need To Save Stuff", "Gunna need that permission", "OK");
-                }
-
-                var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Storage);
-                status = results[Permission.Storage];
-            }
-
-            if (status == PermissionStatus.Granted)
-            {
-                string url = Constants.Url + "/mobile/GetCourse.ashx?CourseID=" + id + "&Version=1";
-                //string url = "https://tcstable.blob.core.windows.net/coursepackages/" + id + "/" + version + "/CoursePackage.zip";
-                Download(url, "TCLMS/Temp", id);
-                //downloader.DownloadFile(url, "TCLMS/Temp",id);
-            }
-            else if (status != PermissionStatus.Unknown)
-            {
-                await Application.Current.MainPage.DisplayAlert("Access Denied", "Can not continue, try again.", "OK");
-            }
-            // ((Button)sender).Text = "Downloaded";
-            busy = false;
         }
 
         void Download(string url, string folder, string id)
-        {
+            {
 
-            try
-            {
-                WebClient webClient = new WebClient();
-                webClient.QueryString.Add("CourseID", id);
-                webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback);
-                webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
-                string pathToNewFile = Path.Combine(Constants.LocalFolder, Path.GetFileName("CoursePackage.zip"));
-                webClient.DownloadFileAsync(new Uri(url), pathToNewFile);
-            }
-            catch (Exception ex)
-            {
-                Crashes.TrackError(ex);
-                string x = "failed";
-            }
+                try
+                {
+                    WebClient webClient = new WebClient();
+                    webClient.QueryString.Add("CourseID", id);
+                    webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback);
+                    webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
+                    string pathToNewFile = Path.Combine(Constants.LocalFolder, Path.GetFileName("CoursePackage.zip"));
+                    webClient.DownloadFileAsync(new Uri(url), pathToNewFile);
+                }
+                catch (Exception ex)
+                {
+                    Crashes.TrackError(ex);
+                    string x = "failed";
+                }
+            
         }
 
         private void DownloadProgressCallback(object sender, DownloadProgressChangedEventArgs e)

@@ -19,7 +19,9 @@ namespace TCMobile
 
         string LastName { get; }
 
-        String HomeDomain { get; }
+        string HomeDomain { get; }
+
+
 
         void SaveCredentials(string userName, string password, string userid,string firstname, string lastname ,string homedomain,string blobloc);
 

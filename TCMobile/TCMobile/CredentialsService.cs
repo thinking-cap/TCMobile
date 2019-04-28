@@ -18,6 +18,8 @@ namespace TCMobile
             }
         }
 
+      
+
        public string UserID
         {
             get
@@ -86,6 +88,7 @@ namespace TCMobile
                 account.Properties.Add("UserID",userid);
                 account.Properties.Add("HomeDomain", homedomain);
                 account.Properties.Add("BlobLoc", blobloc);
+                account.Properties.Add("WiFi","True");
                 AccountStore.Create().Save(account, App.AppName);
             }
 

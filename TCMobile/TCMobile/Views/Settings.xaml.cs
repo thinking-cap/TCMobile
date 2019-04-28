@@ -89,5 +89,13 @@ namespace TCMobile.Views
             }
 
         }
+     
+        private void Wifi_Toggled(object sender, ToggledEventArgs e)
+        {
+
+            App.Current.Properties["WiFi"] = e.Value.ToString();
+            Constants.WifiOnly = e.Value.ToString();
+            App.Current.SavePropertiesAsync();
+        }
     }
 }

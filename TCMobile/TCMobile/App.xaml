@@ -28,6 +28,8 @@
             </Style>
             <Style x:Key="headerImage" TargetType="Image">
                 <Setter Property="VerticalOptions" Value="FillAndExpand"/>
+                <Setter Property="Margin" Value="0,0,0,0"/>
+                <Setter Property="HeightRequest" Value="25"/>
             </Style>
             <Style TargetType="NavigationPage">
                 <Setter Property="BarBackgroundColor" Value="{StaticResource colorPrimaryDark}" />

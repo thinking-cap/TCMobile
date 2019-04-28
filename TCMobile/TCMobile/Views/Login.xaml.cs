@@ -63,7 +63,7 @@ namespace TCMobile.Views
                 Application.Current.Properties["HeaderColour"] = login.headerColour;
                 Application.Current.Properties["MenuBGColour"] = login.menuBackgroundColour;
                 Application.Current.Properties["HeadingTextColour"] = login.headingTextColour;
-
+                await Application.Current.SavePropertiesAsync();
                 s.LabelColour("fontColor", Application.Current.Properties["HeadingTextColour"].ToString());
 
                 Constants.StudentID = login.userId;
