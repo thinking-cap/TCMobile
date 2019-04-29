@@ -115,6 +115,8 @@ namespace TCMobile
 
             App.Currentdownload.Spinner.IsVisible = false;
             App.Currentdownload.LaunchButton.IsVisible = true;
+            App.Currentdownload.BtnLabel.Text = "Open";
+            App.Currentdownload.BtnLabel.IsVisible = true;
 
 
         }
@@ -151,6 +153,7 @@ namespace TCMobile
 
                 button.Spinner.IsRunning = true;
                 button.Spinner.IsVisible = true;
+                button.BtnLabel.IsVisible = false;
 
 
                 // let's check the permission

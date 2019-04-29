@@ -111,11 +111,20 @@ namespace TCMobile
                 Style = (Style)Application.Current.Resources["spinnerStyle"],
                 HeightRequest = 20
             };
+            Grid btnGrid = new Grid()
+            {
+                HorizontalOptions = LayoutOptions.Center
+            };
+            btnGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(50)});
+            btnGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(20)});
+            btnGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(80)});
+
             Label lbl = new Label()
             {
                 Text = (courseRecord == null || courseRecord.Deleted == "true") ? "download" :
                         (courseRecord.CompletionStatus.ToLower() == "completed") ? "review" :
                         (courseRecord.CMI == "") ? "open" : "resume",
+                HorizontalOptions = LayoutOptions.Center
             };
             DownloadImageButton downloadBtn = BuildImageDownload(courseid, courseRecord,spinner,lbl);
             downloadBtn.CourseID = courseid;
@@ -145,15 +154,20 @@ namespace TCMobile
             downloadBtn.LaunchButton = launchBtn;
             launchBtn.Clicked += launchCourse;
             downloadBtn.Clicked += downloadClicked;
+            btnGrid.Children.Add(downloadBtn, 0, 0);
+            btnGrid.Children.Add(launchBtn, 0, 0);
+            btnGrid.Children.Add(spinner, 0, 0);
+            btnGrid.Children.Add(lbl, 0, 1);
             cardBody.Children.Add(title);
             cardBody.Children.Add(description);
             layout.Children.Add(marqueeContainer);
             layout.Children.Add(cardBody);
             layout.Children.Add(cardFooter);
-            cardFooter.Children.Add(launchBtn);
-            cardFooter.Children.Add(downloadBtn);
-            cardFooter.Children.Add(lbl);
-            cardFooter.Children.Add(spinner);
+            //cardFooter.Children.Add(launchBtn);
+            // cardFooter.Children.Add(downloadBtn);
+            //cardFooter.Children.Add(lbl);
+            cardFooter.Children.Add(btnGrid);
+            //cardFooter.Children.Add(spinner);
             frame.Content = layout;
             container.Children.Add(frame);
 
