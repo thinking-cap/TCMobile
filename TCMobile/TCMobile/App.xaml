@@ -14,7 +14,7 @@
             <Color x:Key="colorSecondaryLight">#FF4f30</Color>
             <Color x:Key="colorAccent">#FF4081</Color>
             <Style x:Key="headerContainer" TargetType="StackLayout">
-                <Setter Property="VerticalOptions" Value="FillAndExpand"/>
+                <Setter Property="VerticalOptions" Value="StartAndExpand"/>
                 <Setter Property="Padding">
                     <Setter.Value>
                         <OnPlatform Android="0,2,0,2" iOS="0,8,0,8"/>
@@ -25,10 +25,11 @@
                         <OnPlatform Android="0,0,0,0"/>
                     </Setter.Value>
                 </Setter>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
             </Style>
             <Style x:Key="headerImage" TargetType="Image">
                 <Setter Property="VerticalOptions" Value="FillAndExpand"/>
-                <Setter Property="Margin" Value="0,0,0,0"/>
+                <Setter Property="Margin" Value="-30,0,0,0"/>
                 <Setter Property="HeightRequest" Value="25"/>
             </Style>
             <Style TargetType="NavigationPage">

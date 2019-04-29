@@ -47,6 +47,9 @@ namespace TCMobile.CustomControls
         public static readonly BindableProperty courseid =
                BindableProperty.Create("CourseID", typeof(string), typeof(DownloadImageButton));
 
+        public static readonly BindableProperty btnlabel =
+            BindableProperty.Create("BtnLabel", typeof(Label), typeof(DownloadImageButton));
+
         public static readonly BindableProperty spinner =
             BindableProperty.Create("Spinner", typeof(ActivityIndicator), typeof(DownloadImageButton));
 
@@ -57,6 +60,12 @@ namespace TCMobile.CustomControls
         {
             get { return (string)GetValue(courseid); }
             set { SetValue(courseid, value); }
+        }
+
+        public Label BtnLabel
+        {
+            get { return (Label)GetValue(btnlabel); }
+            set { SetValue(btnlabel, value); }
         }
 
         public ActivityIndicator Spinner

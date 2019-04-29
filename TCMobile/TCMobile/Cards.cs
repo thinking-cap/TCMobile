@@ -111,8 +111,13 @@ namespace TCMobile
                 Style = (Style)Application.Current.Resources["spinnerStyle"],
                 HeightRequest = 20
             };
-
-            DownloadImageButton downloadBtn = BuildImageDownload(courseid, courseRecord,spinner);
+            Label lbl = new Label()
+            {
+                Text = (courseRecord == null || courseRecord.Deleted == "true") ? "download" :
+                        (courseRecord.CompletionStatus.ToLower() == "completed") ? "review" :
+                        (courseRecord.CMI == "") ? "open" : "resume",
+            };
+            DownloadImageButton downloadBtn = BuildImageDownload(courseid, courseRecord,spinner,lbl);
             downloadBtn.CourseID = courseid;
             
 
@@ -136,7 +141,7 @@ namespace TCMobile
             //    CourseID = courseid
 
             //};
-            DownloadImageButton launchBtn = BuildImageLaunch(courseid, courseRecord, spinner);
+            DownloadImageButton launchBtn = BuildImageLaunch(courseid, courseRecord, spinner,lbl);
             downloadBtn.LaunchButton = launchBtn;
             launchBtn.Clicked += launchCourse;
             downloadBtn.Clicked += downloadClicked;
@@ -147,6 +152,7 @@ namespace TCMobile
             layout.Children.Add(cardFooter);
             cardFooter.Children.Add(launchBtn);
             cardFooter.Children.Add(downloadBtn);
+            cardFooter.Children.Add(lbl);
             cardFooter.Children.Add(spinner);
             frame.Content = layout;
             container.Children.Add(frame);
@@ -336,11 +342,16 @@ namespace TCMobile
                 //    CourseID = act.CourseID
 
                 //};
+                Label lbl = new Label()
+                {
+                    Text = (courseRecord == null || courseRecord.Deleted == "true") ? "download" :
+                        (courseRecord.CompletionStatus.ToLower() == "completed") ? "review" :
+                       (courseRecord.CMI == "") ? "open" : "resume",
+                };
+                DownloadImageButton launchBtn = BuildImageLaunch(act.CourseID, courseRecord, null,lbl);
 
-                DownloadImageButton launchBtn = BuildImageLaunch(act.CourseID, courseRecord, null);
 
-
-                DownloadImageButton downloadBtn = BuildImageDownload(act.CourseID, courseRecord,spinner);
+                DownloadImageButton downloadBtn = BuildImageDownload(act.CourseID, courseRecord,spinner,lbl);
                 Courses c = new Courses();
                 downloadBtn.Clicked += c.DownloadClicked;
                 launchBtn.Clicked += c.launchCourse;
@@ -355,6 +366,7 @@ namespace TCMobile
                 activityContainer.Children.Add(marquee,0,1);
                 activityContainer.Children.Add(downloadBtn,1,1);
                 activityContainer.Children.Add(launchBtn, 1, 1);
+                activityContainer.Children.Add(lbl, 1, 1);
                 activityContainer.Children.Add(spinner, 1, 1);
                 frameContainer.Children.Add(activityContainer);
             }
@@ -418,7 +430,7 @@ namespace TCMobile
             return marquee;
         }
 
-        public DownloadImageButton BuildImageDownload(string id, Models.Record courseRecord, ActivityIndicator spinner)
+        public DownloadImageButton BuildImageDownload(string id, Models.Record courseRecord, ActivityIndicator spinner, Label txt)
         {
             DownloadImageButton downloadBtn = new DownloadImageButton
             {
@@ -429,6 +441,7 @@ namespace TCMobile
                 Spinner = spinner,
                 BackgroundColor = Color.Transparent,
                 BorderColor = Color.Transparent,
+                BtnLabel = txt,
                 IsVisible = (courseRecord == null) ? true : (courseRecord.Deleted == "false") ? false : true
             };
 
@@ -442,6 +455,7 @@ namespace TCMobile
                 Text = "download",
                 Image = "baseline_cloud_download_black_48.png",
                 Style = (Style)Application.Current.Resources["buttonStyle"],
+                
                 ClassId = id,
                 Spinner = spinner,
                 IsVisible = (courseRecord == null) ? true : (courseRecord.Deleted == "false") ? false : true
@@ -468,7 +482,7 @@ namespace TCMobile
             return downloadBtn;
         }
 
-        public DownloadImageButton BuildImageLaunch(string id, Models.Record courseRecord, ActivityIndicator spinner)
+        public DownloadImageButton BuildImageLaunch(string id, Models.Record courseRecord, ActivityIndicator spinner, Label txt)
         {
             DownloadImageButton downloadBtn = new DownloadImageButton
             {
@@ -478,7 +492,9 @@ namespace TCMobile
                 CourseID = id,
                 BackgroundColor = Color.Transparent,
                 BorderColor = Color.Transparent,
-                IsVisible = (courseRecord == null) ? false : (courseRecord.Deleted == "false") ? true : false
+                BtnLabel = txt,
+                IsVisible = (courseRecord == null) ? false : (courseRecord.Deleted == "false") ? true : false,
+
             };
 
             return downloadBtn;
