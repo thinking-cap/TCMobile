@@ -265,4 +265,13 @@
   <ItemGroup>
     <BundleResource Include="Resources\baseline_launch_black_48%403x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\outline_info_black_48%401x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\outline_info_black_48%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\outline_info_black_48%403x.png" />
+  </ItemGroup>
 </Project>

@@ -186,16 +186,21 @@ namespace TCMobile
                 Margin = new Thickness(0, 8, 0, 24),
                 CornerRadius = 0
             };
-            
+
+            Label lbl = new Label()
+            {
+                Text = "more info"
+            };
+
             DownloadImageButton moreBtn = new DownloadImageButton
             {
                 //Text = "more",
-                Source = "baseline_launch_black_48.png",
+                Source = "outline_info_black_48.png",
                 //Style = (Style)Application.Current.Resources["buttonStyle"],
                 ClassId = id,
                 CourseID = id,
                 BackgroundColor = Color.Transparent,
-                BorderColor = Color.Transparent
+                BorderColor = Color.Transparent,
             };
             moreBtn.Clicked += detailsClicked;
 
@@ -247,7 +252,17 @@ namespace TCMobile
                 Style = (Style)Application.Current.Resources["descriptionWebView"]
 
             };
-            cardFooter.Children.Add(moreBtn);
+            Grid btnGrid = new Grid()
+            {
+                HorizontalOptions = LayoutOptions.Center
+            };
+            btnGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(50) });
+            btnGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(20) });
+            btnGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(80) });
+
+            btnGrid.Children.Add(moreBtn, 0, 0);
+            btnGrid.Children.Add(lbl, 0, 1);
+            cardFooter.Children.Add(btnGrid);
             cardBody.Children.Add(title);
             cardBody.Children.Add(description);
             layout.Children.Add(cardBody);
@@ -300,8 +315,7 @@ namespace TCMobile
                
             };
 
-
-            // used to expand accordion
+             // used to expand accordion
             AccordionButton AcBtn = new AccordionButton
             {
                 Image = "chevron_down.png",
@@ -362,10 +376,25 @@ namespace TCMobile
                         (courseRecord.CompletionStatus.ToLower() == "completed") ? "review" :
                        (courseRecord.CMI == "") ? "open" : "resume",
                 };
+
+                // Create the two buttons that get swapped //
                 DownloadImageButton launchBtn = BuildImageLaunch(act.CourseID, courseRecord, null,lbl);
-
-
                 DownloadImageButton downloadBtn = BuildImageDownload(act.CourseID, courseRecord,spinner,lbl);
+
+                // Button Grid
+                Grid btnGrid = new Grid()
+                {
+                    HorizontalOptions = LayoutOptions.Center
+                };
+                btnGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(50) });
+                btnGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(20) });
+                btnGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(80) });
+
+                btnGrid.Children.Add(launchBtn, 0, 0);
+                btnGrid.Children.Add(downloadBtn, 0, 0);
+                btnGrid.Children.Add(spinner, 0, 0);
+                btnGrid.Children.Add(lbl, 0, 1);
+
                 Courses c = new Courses();
                 downloadBtn.Clicked += c.DownloadClicked;
                 launchBtn.Clicked += c.launchCourse;
@@ -373,15 +402,16 @@ namespace TCMobile
                 downloadBtn.CourseID = act.CourseID;
                 // add the image
                 CachedImage marquee = BuildMarquee(act.CourseID,false);
-
+                marquee.HorizontalOptions = LayoutOptions.StartAndExpand;
 
                 activityContainer.Children.Add(coursetitle,0,0);
                 Grid.SetColumnSpan(coursetitle, 2);
                 activityContainer.Children.Add(marquee,0,1);
-                activityContainer.Children.Add(downloadBtn,1,1);
-                activityContainer.Children.Add(launchBtn, 1, 1);
-                activityContainer.Children.Add(lbl, 1, 1);
-                activityContainer.Children.Add(spinner, 1, 1);
+                //activityContainer.Children.Add(downloadBtn,1,1);
+                //activityContainer.Children.Add(launchBtn, 1, 1);
+                //activityContainer.Children.Add(lbl, 1, 1);
+                //activityContainer.Children.Add(spinner, 1, 1);
+                activityContainer.Children.Add(btnGrid, 1, 1);
                 frameContainer.Children.Add(activityContainer);
             }
             
