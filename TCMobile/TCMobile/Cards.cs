@@ -189,7 +189,8 @@ namespace TCMobile
 
             Label lbl = new Label()
             {
-                Text = "more info"
+                Text = "more info",
+                HorizontalOptions = LayoutOptions.Center
             };
 
             DownloadImageButton moreBtn = new DownloadImageButton
@@ -375,12 +376,14 @@ namespace TCMobile
                     Text = (courseRecord == null || courseRecord.Deleted == "true") ? "download" :
                         (courseRecord.CompletionStatus.ToLower() == "completed") ? "review" :
                        (courseRecord.CMI == "") ? "open" : "resume",
+                    HorizontalOptions = LayoutOptions.Center
                 };
 
                 // Create the two buttons that get swapped //
                 DownloadImageButton launchBtn = BuildImageLaunch(act.CourseID, courseRecord, null,lbl);
                 DownloadImageButton downloadBtn = BuildImageDownload(act.CourseID, courseRecord,spinner,lbl);
-
+                launchBtn.HorizontalOptions = LayoutOptions.Center;
+                downloadBtn.HorizontalOptions = LayoutOptions.Center;
                 // Button Grid
                 Grid btnGrid = new Grid()
                 {
@@ -407,10 +410,6 @@ namespace TCMobile
                 activityContainer.Children.Add(coursetitle,0,0);
                 Grid.SetColumnSpan(coursetitle, 2);
                 activityContainer.Children.Add(marquee,0,1);
-                //activityContainer.Children.Add(downloadBtn,1,1);
-                //activityContainer.Children.Add(launchBtn, 1, 1);
-                //activityContainer.Children.Add(lbl, 1, 1);
-                //activityContainer.Children.Add(spinner, 1, 1);
                 activityContainer.Children.Add(btnGrid, 1, 1);
                 frameContainer.Children.Add(activityContainer);
             }

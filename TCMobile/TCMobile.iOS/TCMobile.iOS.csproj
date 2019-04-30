@@ -274,4 +274,22 @@
   <ItemGroup>
     <BundleResource Include="Resources\outline_info_black_48%403x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\outline_delete_black_48pt%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\outline_delete_black_48pt%401x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\outline_delete_black_48pt%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\outline_remove_circle_outline_black_48%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\outline_remove_circle_outline_black_48%401x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\outline_remove_circle_outline_black_48%402x.png" />
+  </ItemGroup>
 </Project>

@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using TCMobile.CustomControls;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -48,18 +48,30 @@ namespace TCMobile.Views
                         Style = (Style)Application.Current.Resources["headerStyle"]
                     };
 
-                    Button delete = new Button
+                    DownloadImageButton delete = new DownloadImageButton
                     {
-                        Text = "delete",
-                        Image = "delete.png",
-                        Style = (Style)Application.Current.Resources["buttonStyle"],
-                        ClassId = course.CourseID
+                       
+                        Source = "outline_remove_circle_outline_black_48.png",
+                        ClassId = course.CourseID,
+                        BackgroundColor = Color.Transparent,
+                        BorderColor = Color.Transparent
                     };
 
                     delete.Clicked += removeCoursePackgeAsync;
+                    /// layout in a grid 
 
-                    layout.Children.Add(title);
-                    layout.Children.Add(delete);
+                    Grid btnGrid = new Grid()
+                    {
+                        HorizontalOptions = LayoutOptions.Center
+                    };
+
+                    btnGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(50) });
+                    btnGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1,GridUnitType.Star) });
+                    btnGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(80) });
+                    btnGrid.Children.Add(title, 0, 0);
+                    btnGrid.Children.Add(delete, 1, 0);
+
+                    layout.Children.Add(btnGrid);
                     Container.Children.Add(layout);
                 }
             }
