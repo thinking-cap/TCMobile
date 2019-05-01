@@ -183,11 +183,11 @@ if (typeof (API_1484_11) == 'undefined') {
                 cmi: JSON.stringify(cmi)
 
             }
-            //try {
-            //    jsBridge.invokeAction(JSON.stringify(msg));
-            //} catch (e) {
-            //    window.webkit.messageHandlers.invokeAction.postMessage(JSON.stringify(msg));
-            //}
+            try {
+                jsBridge.invokeAction(JSON.stringify(msg));
+            } catch (e) {
+                window.webkit.messageHandlers.invokeAction.postMessage(JSON.stringify(msg));
+            }
             return "true";
         },
         Commit: function () {
