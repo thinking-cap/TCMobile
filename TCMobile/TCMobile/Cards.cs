@@ -11,12 +11,15 @@ using TCMobile.CustomControls;
 using System.Reflection;
 using System.IO;
 using Expandable;
+using Microcharts.Forms;
+using Microcharts;
+using SkiaSharp;
 
 namespace TCMobile
 {
     class Cards
     {
-        public async Task<bool> buildCourseCard(string courseid, string coursetitle, string coursedescription, StackLayout container,EventHandler downloadClicked, EventHandler launchCourse)
+        public async Task<bool> buildCourseCard(string courseid, string coursetitle, string coursedescription, StackLayout container,EventHandler downloadClicked, EventHandler launchCourse,string duedate)
         {
             MaterialFrame frame;
             StackLayout layout;
@@ -74,6 +77,46 @@ namespace TCMobile
                 Text = coursetitle,
                 Style = (Style)Application.Current.Resources["headerStyle"]
             };
+
+            string duedateText = "";
+            if (!String.IsNullOrEmpty(duedate))
+            {
+                DateTime dt = Convert.ToDateTime(duedate);
+                duedateText = "Due: " + String.Format("{0:ddd, MMM d, yyyy}", dt);
+            }
+
+
+            int perc_complete = (courseRecord != null && courseRecord.CompletionStatus.ToLower() == "completed") ?  100 : 0;
+            int perc_incomplete = (courseRecord != null && courseRecord.CompletionStatus.ToLower() == "completed") ? 0 : 100;
+
+
+            List<Microcharts.ChartEntry> entries = new List<ChartEntry>
+                {
+                    new ChartEntry(perc_complete)
+                    {
+
+                        Color = SKColor.Parse("#266489")
+                    },
+                    new ChartEntry(perc_incomplete)
+                    {
+                        Color = SKColor.Parse("#FF0000")
+                    }
+                    
+            };
+            var completionChart = new DonutChart() { Entries = entries };
+
+            Label dueDate = new Label
+            {
+                Text = duedateText
+            };
+
+            ChartView chartView = new ChartView
+            {
+                Chart = completionChart
+                
+            };
+
+           
 
             //HtmlLabel description = new HtmlLabel
             //{
@@ -159,6 +202,12 @@ namespace TCMobile
             btnGrid.Children.Add(spinner, 0, 0);
             btnGrid.Children.Add(lbl, 0, 1);
             cardBody.Children.Add(title);
+            cardBody.Children.Add(dueDate);
+            //string x = (courseRecord == null || courseRecord.Deleted == "true") ? "download" :
+            //             (courseRecord.CompletionStatus.ToLower() == "completed") ? "review" :
+            //             (courseRecord.CMI == "") ? "open" : "resume";
+            if(courseRecord != null)
+                cardBody.Children.Add(chartView);
             cardBody.Children.Add(description);
             layout.Children.Add(marqueeContainer);
             layout.Children.Add(cardBody);

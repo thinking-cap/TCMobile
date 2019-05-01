@@ -20,6 +20,8 @@ namespace TCMobile.Models
         public string Version { get; set; }
         public bool Done { get; set; }
         public string Deleted { get; set; }
+        public string DueDate { get; set; }
+        public string PercentComplete { get; set; }
     }
 
     public class LPDBRecord

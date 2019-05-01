@@ -27,6 +27,8 @@
 
   <ItemGroup>
     <PackageReference Include="ExpandableView" Version="1.0.5" />
+    <PackageReference Include="Microcharts" Version="0.8.5-pre" />
+    <PackageReference Include="Microcharts.Forms" Version="0.8.5-pre" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="1.12.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="1.12.0" />
     <PackageReference Include="Microsoft.AppCenter.Distribute" Version="1.12.0" />

@@ -41,6 +41,7 @@ namespace TCMobile
                 rec.SuccessStatus = "";
                 rec.Score = "";
                 rec.Deleted = "false";
+                rec.DueDate = App.CourseCatalogue.courses.Find(x => x.courseid == courseid).duedate;
 
                 rec.CMI = "";
                 App.LocalFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);

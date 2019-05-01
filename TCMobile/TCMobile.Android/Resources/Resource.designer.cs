@@ -26,6 +26,7 @@ namespace TCMobile.Droid
 		
 		public static void UpdateIdValues()
 		{
+			global::Microcharts.Droid.Resource.String.library_name = global::TCMobile.Droid.Resource.String.library_name;
 			global::Microsoft.AppCenter.Distribute.Resource.String.appcenter_distribute_dialog_actioned_on_disabled_toast = global::TCMobile.Droid.Resource.String.appcenter_distribute_dialog_actioned_on_disabled_toast;
 			global::Microsoft.AppCenter.Distribute.Resource.String.appcenter_distribute_download_progress_number_format = global::TCMobile.Droid.Resource.String.appcenter_distribute_download_progress_number_format;
 			global::Microsoft.AppCenter.Distribute.Resource.String.appcenter_distribute_downloading_mandatory_update = global::TCMobile.Droid.Resource.String.appcenter_distribute_downloading_mandatory_update;
@@ -146,6 +147,7 @@ namespace TCMobile.Droid
 			global::Xamarin.Auth.Resource.Layout.notification_template_media_custom = global::TCMobile.Droid.Resource.Layout.notification_template_media_custom;
 			global::Xamarin.Auth.Resource.Layout.notification_template_part_chronometer = global::TCMobile.Droid.Resource.Layout.notification_template_part_chronometer;
 			global::Xamarin.Auth.Resource.Layout.notification_template_part_time = global::TCMobile.Droid.Resource.Layout.notification_template_part_time;
+			global::Xamarin.Auth.Resource.String.library_name = global::TCMobile.Droid.Resource.String.library_name;
 			global::Xamarin.Auth.Resource.String.status_bar_notification_info_overflow = global::TCMobile.Droid.Resource.String.status_bar_notification_info_overflow;
 			global::Xamarin.Auth.Resource.String.title_activity_webview = global::TCMobile.Droid.Resource.String.title_activity_webview;
 			global::Xamarin.Auth.Resource.Style.TextAppearance_Compat_Notification = global::TCMobile.Droid.Resource.Style.TextAppearance_Compat_Notification;
@@ -6403,6 +6405,9 @@ namespace TCMobile.Droid
 			
 			// aapt resource value: 0x7f080036
 			public const int character_counter_pattern = 2131230774;
+			
+			// aapt resource value: 0x7f080050
+			public const int library_name = 2131230800;
 			
 			// aapt resource value: 0x7f080001
 			public const int mr_button_content_description = 2131230721;
