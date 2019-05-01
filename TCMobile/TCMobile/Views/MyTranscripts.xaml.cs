@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Web;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -36,11 +36,10 @@ namespace TCMobile.Views
             {
                 foreach (Models.Record course in courses)
                 {
-                    StackLayout layout;
+                    Frame card;
                     Models.Record courseRecord = await App.Database.GetCourseByID(course.CourseID);
-                    layout = new StackLayout
+                    card = new MaterialFrame
                     {
-                        Spacing = 1,
                         ClassId = "course_" + course.CourseID
                     };
                     Label title = new Label
@@ -48,14 +47,41 @@ namespace TCMobile.Views
                         Text = course.CourseName,
                         Style = (Style)Application.Current.Resources["headerStyle"]
                     };
-                    Label description = new Label
+
+
+                    string htmlText = @"<html>
+                                    <head>
+                                        <meta name='viewport' content='width=device-width; height=device-height; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;'/>                                    
+                                        <style type='text/css'>
+                                             body{font-family:Segoe UI, Helvetica Neue,'Lucida Sans Unicode', Skia, sans-serif;
+                                                    border:0px;padding:0px;margin:0px;
+                                                    background-color:transparent;
+                                                    overflow:hidden;
+                                                }
+                                        </style>    
+                                    </head>
+                                    <body>" + HttpUtility.HtmlDecode(course.CourseDescription) + "</body></html>";
+                    var description = new CustomWebview
                     {
-                        Text = course.CourseDescription,
-                        Style = (Style)Application.Current.Resources["textStyle"]
+                        HeightRequest = 300,
+                        Source = new HtmlWebViewSource
+                        {
+                            Html = htmlText
+                        },
+                        Style = (Style)Application.Current.Resources["descriptionWebView"]
+
                     };
+
+                    //Label description = new Label
+                    //{
+                    //    Text = course.CourseDescription,
+                    //    Style = (Style)Application.Current.Resources["textStyle"]
+                    //};
+
+                    
                     string completion = (course.CompletionStatus == "" || course.CompletionStatus == "unknown") ? "Not Attempted" : course.CompletionStatus;
                     string success = (course.SuccessStatus == "" || course.SuccessStatus == "unknown") ? "" : "/" + course.SuccessStatus;
-                    string score = (course.Score == "") ? "" : "  " + course.Score + "%";
+                    string score = (course.Score == "") ? "" : "  " + Math.Round(Double.Parse(course.Score)*100).ToString() + "%";
                     Label status = new Label
                     {
                         Text = completion + success + score,
@@ -66,13 +92,13 @@ namespace TCMobile.Views
 
 
 
-
-
+                    StackLayout layout = new StackLayout();
+                    card.Content = layout;
                     layout.Children.Add(title);
                     layout.Children.Add(status);
                     layout.Children.Add(description);
 
-                    Courses.Children.Add(layout);
+                    Courses.Children.Add(card);
                 }
             }
             else
