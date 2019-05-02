@@ -29,7 +29,7 @@
             </Style>
             <Style x:Key="headerImage" TargetType="Image">
                 <Setter Property="VerticalOptions" Value="FillAndExpand"/>
-                <Setter Property="HorizontalOptions" Value="End"/>
+                <Setter Property="HorizontalOptions" Value="EndAndExpand"/>
                 <Setter Property="Margin" Value="0,0,8,0"/>
                 <Setter Property="HeightRequest" Value="25"/>
             </Style>

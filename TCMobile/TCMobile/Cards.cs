@@ -79,15 +79,16 @@ namespace TCMobile
             };
 
             string duedateText = "";
+            ChartView chartView = null;
             if (!String.IsNullOrEmpty(duedate))
             {
                 DateTime dt = Convert.ToDateTime(duedate);
                 duedateText = "Due: " + String.Format("{0:ddd, MMM d, yyyy}", dt);
             }
 
-
-            int perc_complete = (courseRecord != null && courseRecord.CompletionStatus.ToLower() == "completed") ?  100 : 0;
-            int perc_incomplete = (courseRecord != null && courseRecord.CompletionStatus.ToLower() == "completed") ? 0 : 100;
+            if(courseRecord != null) { 
+            int perc_complete = (courseRecord != null && courseRecord.CompletionStatus.ToLower() == "completed") ?  100 :(courseRecord != null) ? 50 : 0;
+            int perc_incomplete = (courseRecord != null && courseRecord.CompletionStatus.ToLower() != "completed") ? (courseRecord != null) ? 50 : 0 : 100;
 
 
             List<Microcharts.ChartEntry> entries = new List<ChartEntry>
@@ -104,17 +105,18 @@ namespace TCMobile
                     
             };
             var completionChart = new DonutChart() { Entries = entries };
+                chartView = new ChartView
+                {
+                    Chart = completionChart
 
+                };
+            }
             Label dueDate = new Label
             {
                 Text = duedateText
             };
 
-            ChartView chartView = new ChartView
-            {
-                Chart = completionChart
-                
-            };
+            
 
            
 
