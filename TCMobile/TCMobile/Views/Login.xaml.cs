@@ -76,12 +76,21 @@ namespace TCMobile.Views
             }
             else
             {
-                Error.IsVisible = true;
-                Error.Text = login.status;
+                string errorTxt = "";
+                switch (login.status)
+                {
+                    case "invalid_password": errorTxt = "Password is incorrect, please check and try again.";break;
+                    case "invalid_username": errorTxt = "Incorrect user name. Please check and try again.";break;
+                    default: errorTxt = "There has been an issue with logging you in. Please try again.";break;
+                }
+                await Application.Current.MainPage.DisplayAlert("Warning", errorTxt, "OK");
+
+                //Error.IsVisible = true;
+                //Error.Text = login.status;
                 Progress.IsVisible = false;
                 Progress.IsRunning = false;
             }
            
         }
     }
-}
+};
