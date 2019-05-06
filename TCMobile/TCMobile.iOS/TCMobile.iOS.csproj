@@ -298,4 +298,22 @@
   <ItemGroup>
     <BundleResource Include="Resources\outline_remove_circle_outline_black_48%402x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\round_menu_white_48%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\round_menu_white_48%401x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\round_menu_white_48%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\outline_arrow_back_white_48%401x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\outline_arrow_back_white_48%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\outline_arrow_back_white_48%403x.png" />
+  </ItemGroup>
 </Project>

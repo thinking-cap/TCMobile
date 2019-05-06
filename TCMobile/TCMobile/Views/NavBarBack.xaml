@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"        
+             xmlns:constants="clr-namespace:TCMobile;assembly=TCMobile"          
+             xmlns:nav="clr-namespace:TCMobile.ViewModels"       
+             x:Class="TCMobile.Views.NavBarBack">
+    <ContentView.Content>
+        <StackLayout Style="{StaticResource headerContainer}" BackgroundColor="{Binding Source={x:Static constants:Constants.HeaderColour}}">
+            <Grid HorizontalOptions="FillAndExpand" RowSpacing="0" ColumnSpacing="0" BackgroundColor="{Binding Source={x:Static constants:Constants.HeaderColour}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="48"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="46"/>
+                </Grid.RowDefinitions>
+                <Image StyleClass="Hamburger" Grid.Row="0" Grid.Column="0" Source="outline_arrow_back_white_48.png" HorizontalOptions="FillAndExpand">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoBack}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+                <Image Grid.Row="0" Grid.Column="1" Style="{StaticResource headerImage}" Source="{Binding Source={x:Static constants:Constants.Logo}}">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoBack}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+            </Grid>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

@@ -15,11 +15,12 @@ namespace TCMobile.ViewModels
     public class NavBarViewModel : BaseViewModel
     {
         ICommand menuCommand;
+       
         public NavBarViewModel()
         {
 
             menuCommand = new Command(openMenu);
-
+           
         }
 
         public ICommand MenuCommand
@@ -28,7 +29,9 @@ namespace TCMobile.ViewModels
         }
 
         
+       
 
+        
         void openMenu()
         {
             App app = Application.Current as App;
