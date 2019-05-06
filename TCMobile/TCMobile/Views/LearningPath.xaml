@@ -2,24 +2,34 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:TCMobile.ViewModels"
+             xmlns:views="clr-namespace:TCMobile.Views"
             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"            
             xmlns:constants="clr-namespace:TCMobile;assembly=TCMobile"
              xmlns:expandable="clr-namespace:Expandable;assembly=ExpandableView"
-             x:Class="TCMobile.Views.LearningPath">
-    <NavigationPage.TitleView>
-        <StackLayout Style="{StaticResource headerContainer}">
-            <ffimageloading:CachedImage Style="{StaticResource headerImage}" Source="{Binding Source={x:Static constants:Constants.Logo}}"></ffimageloading:CachedImage>
-        </StackLayout>
-    </NavigationPage.TitleView>
+             x:Class="TCMobile.Views.LearningPath" NavigationPage.HasBackButton="True">
+   
     <ContentPage.BindingContext>
         <vm:LearningPathViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-            <StackLayout VerticalOptions="FillAndExpand">
-                <StackLayout x:Name="LP" VerticalOptions="FillAndExpand"></StackLayout>
-                <ActivityIndicator x:Name="Progress" IsVisible="False" HeightRequest="20"/>
+        <Grid HorizontalOptions="FillAndExpand" RowSpacing="0" ColumnSpacing="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="52"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <!--<views:NavBarView Grid.Row="0" Grid.Column="0"/>-->
+
+            <StackLayout Grid.Row="1" Grid.Column="0">
+                <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                    <StackLayout VerticalOptions="FillAndExpand">
+                        <StackLayout x:Name="LP" VerticalOptions="FillAndExpand"></StackLayout>
+                        <ActivityIndicator x:Name="Progress" IsVisible="False" HeightRequest="20"/>
+                    </StackLayout>
+                </ScrollView>
             </StackLayout>
-        </ScrollView>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

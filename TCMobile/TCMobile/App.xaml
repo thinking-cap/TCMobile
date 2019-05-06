@@ -13,25 +13,22 @@
             <Color x:Key="colorSecondaryDark">#930000</Color>
             <Color x:Key="colorSecondaryLight">#FF4f30</Color>
             <Color x:Key="colorAccent">#FF4081</Color>
+            <Style x:Key="headerContainerAbs" TargetType="AbsoluteLayout">
+                <Setter Property="Margin" Value="0,0,0,0"/>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            </Style>
+            <Style Class="Hamburger" TargetType="ImageButton">
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+            </Style>
             <Style x:Key="headerContainer" TargetType="StackLayout">
-                <Setter Property="VerticalOptions" Value="StartAndExpand"/>
-                <Setter Property="Padding">
-                    <Setter.Value>
-                        <OnPlatform Android="0,2,0,2" iOS="0,8,0,8"/>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="Margin">
-                    <Setter.Value>
-                        <OnPlatform Android="0,0,0,0"/>
-                    </Setter.Value>
-                </Setter>
+                <Setter Property="Padding" Value="4,4,4,4"/>
+                <Setter Property="Margin" Value="0,0,0,0"/>
+                <Setter Property="HeightRequest" Value="48"/>
                 <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
             </Style>
             <Style x:Key="headerImage" TargetType="Image">
-                <Setter Property="VerticalOptions" Value="FillAndExpand"/>
-                <Setter Property="HorizontalOptions" Value="EndAndExpand"/>
-                <Setter Property="Margin" Value="0,0,8,0"/>
-                <Setter Property="HeightRequest" Value="25"/>
+                <Setter Property="Margin" Value="-48,4,0,4"/>
+                <Setter Property="HeightRequest" Value="36"/>
             </Style>
             <Style TargetType="NavigationPage">
                 <Setter Property="BarBackgroundColor" Value="{StaticResource colorPrimaryDark}" />

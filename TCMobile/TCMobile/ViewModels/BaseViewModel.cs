@@ -7,6 +7,7 @@ using Xamarin.Forms;
 
 using TCMobile.Models;
 using TCMobile.Services;
+using System.Windows.Input;
 
 namespace TCMobile.ViewModels
 
@@ -45,6 +46,7 @@ namespace TCMobile.ViewModels
             return true;
         }
 
+        
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = "")

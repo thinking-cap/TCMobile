@@ -3,7 +3,8 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:views="clr-namespace:TCMobile.Views"
             xmlns:constants="clr-namespace:TCMobile;assembly=TCMobile"
-            x:Class="TCMobile.Views.MainPage">
+            x:Class="TCMobile.Views.MainPage"
+                  NavigationPage.HasNavigationBar="False">
 
     <MasterDetailPage.Master>
         <views:MenuPage />
@@ -11,16 +12,6 @@
 
     <MasterDetailPage.Detail>
         <NavigationPage BarBackgroundColor="{Binding Source={x:Static constants:Constants.HeaderColour}}">
-            <NavigationPage.TitleView>
-                <StackLayout Orientation="Horizontal" VerticalOptions="Center" Spacing="10">
-                    <Image Source="{Binding Source={x:Static constants:Constants.Logo}}"></Image>                    
-                </StackLayout>
-            </NavigationPage.TitleView>
-            <NavigationPage.Icon>
-                <OnPlatform x:TypeArguments="FileImageSource">
-                    <On Platform="iOS" Value="tab_feed.png"/>
-                </OnPlatform>
-            </NavigationPage.Icon>
             <x:Arguments>
                 <views:Catalogue/>
             </x:Arguments>

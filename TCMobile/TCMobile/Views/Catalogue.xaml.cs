@@ -36,6 +36,7 @@ namespace TCMobile.Views
         {
             base.OnAppearing();
             Constants.deviceWidth = this.Width;
+            NavigationPage.SetHasNavigationBar(this, false);
             LoadCourses();
         }
 

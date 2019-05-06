@@ -107,7 +107,9 @@ namespace TCMobile
             var completionChart = new DonutChart() { Entries = entries };
                 chartView = new ChartView
                 {
-                    Chart = completionChart
+                    Chart = completionChart,
+                    HorizontalOptions = LayoutOptions.EndAndExpand,
+                    HeightRequest = 25
 
                 };
             }

@@ -46,7 +46,6 @@ namespace TCMobile
                 Constants.isOnline = false;
             }
 
-           
             
             CredentialsService = new CredentialsService();
             InitializeComponent();
@@ -63,20 +62,7 @@ namespace TCMobile
                 // then we need to force a log in to retrieve the blob location
                 try
                 {
-                    //var textColour = new Style(typeof(Label))
-                    //{
-                    //    Class = "fontColor",
-                    //    Setters =
-                    //    {
-                    //        new Setter
-                    //        {
-                    //            Property = Label.TextColorProperty,
-                    //            Value = Color.FromHex("#FF0000")
-                    //        }
-                    //    }
-                    //};
-
-                    //Resources.Add(textColour);
+                   
                    
                     s.LabelColour("fontColor", Application.Current.Properties["HeadingTextColour"].ToString());
 
@@ -108,7 +94,10 @@ namespace TCMobile
         }
 
 
-       
+        public void OnMenu(Object Sender, EventArgs args)
+        {
+
+        }
         public static LMSDataBase Database
         {
             get

@@ -2,28 +2,38 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:TCMobile.ViewModels"
+             xmlns:views="clr-namespace:TCMobile.Views"
             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"            
             xmlns:constants="clr-namespace:TCMobile;assembly=TCMobile"
-             x:Class="TCMobile.Views.LearningPaths"
+             x:Class="TCMobile.Views.LearningPaths" NavigationPage.HasNavigationBar="False"
             Title="{Binding Title}">
-    <NavigationPage.TitleView>
-        <StackLayout Style="{StaticResource headerContainer}">
-            <ffimageloading:CachedImage Style="{StaticResource headerImage}" Source="{Binding Source={x:Static constants:Constants.Logo}}"></ffimageloading:CachedImage>
-        </StackLayout>
-    </NavigationPage.TitleView>
+ 
     <ContentPage.BindingContext>
         <vm:LearningPathsViewModel />
     </ContentPage.BindingContext>    
-    <ContentPage.Content>        
-        <ScrollView HorizontalOptions="FillAndExpand"  VerticalOptions="FillAndExpand">
-            <StackLayout>
-            <Label Text="{Binding Title}" StyleClass="pageTitle,fontColor"></Label>
-            <FlexLayout VerticalOptions="FillAndExpand" x:Name="LP" 
+    <ContentPage.Content>
+        <Grid HorizontalOptions="FillAndExpand" RowSpacing="0" ColumnSpacing="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="52"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <views:NavBarView Grid.Row="0" Grid.Column="0"/>
+
+            <StackLayout Grid.Row="1" Grid.Column="0">
+                <ScrollView HorizontalOptions="FillAndExpand"  VerticalOptions="FillAndExpand">
+                    <StackLayout>
+                        <Label Text="{Binding Title}" StyleClass="pageTitle,fontColor"></Label>
+                        <FlexLayout VerticalOptions="FillAndExpand" x:Name="LP" 
                             HorizontalOptions="FillAndExpand" Direction="Column">
-                
-                <ActivityIndicator x:Name="LPProgress" IsVisible="False" HeightRequest="20"/>
-            </FlexLayout>
+
+                            <ActivityIndicator x:Name="LPProgress" IsVisible="False" HeightRequest="20"/>
+                        </FlexLayout>
+                    </StackLayout>
+                </ScrollView>
             </StackLayout>
-        </ScrollView>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

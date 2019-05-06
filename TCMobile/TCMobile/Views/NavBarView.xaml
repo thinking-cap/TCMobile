@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"             
+             xmlns:nav="clr-namespace:TCMobile.ViewModels"       
+             xmlns:constants="clr-namespace:TCMobile;assembly=TCMobile"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="TCMobile.Views.NavBarView">
+    <ContentView.BindingContext>
+        <nav:NavBarViewModel/>
+    </ContentView.BindingContext>
+  <ContentView.Content>
+        <StackLayout Style="{StaticResource headerContainer}" BackgroundColor="{Binding Source={x:Static constants:Constants.HeaderColour}}">
+            <Grid HorizontalOptions="FillAndExpand" RowSpacing="0" ColumnSpacing="0" BackgroundColor="{Binding Source={x:Static constants:Constants.HeaderColour}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="48"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="46"/>
+                </Grid.RowDefinitions>
+                <Image StyleClass="Hamburger" Grid.Row="0" Grid.Column="0" Source="round_menu_white_48.png" HorizontalOptions="FillAndExpand">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding MenuCommand}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+                <Image Grid.Row="0" Grid.Column="1" Style="{StaticResource headerImage}" Source="{Binding Source={x:Static constants:Constants.Logo}}">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding MenuCommand}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+            </Grid>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

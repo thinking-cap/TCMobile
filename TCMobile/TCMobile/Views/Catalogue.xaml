@@ -1,31 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            xmlns:vm="clr-namespace:TCMobile.ViewModels"             
+            xmlns:vm="clr-namespace:TCMobile.ViewModels"       
+             xmlns:views="clr-namespace:TCMobile.Views"
             xmlns:constants="clr-namespace:TCMobile;assembly=TCMobile"
             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-            x:Class="TCMobile.Views.Catalogue"
+            x:Class="TCMobile.Views.Catalogue" NavigationPage.HasNavigationBar="False"
             Title="{Binding Title}">
-    <NavigationPage.TitleView>
-        <StackLayout Style="{StaticResource headerContainer}">
-            <ffimageloading:CachedImage Style="{StaticResource headerImage}" Source="{Binding Source={x:Static constants:Constants.Logo}}"></ffimageloading:CachedImage>
-        </StackLayout>
-    </NavigationPage.TitleView>
+
     <ContentPage.BindingContext>
         <vm:CatalogueViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
+        
+            <Grid HorizontalOptions="FillAndExpand" RowSpacing="0" ColumnSpacing="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="52"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <views:NavBarView Grid.Row="0" Grid.Column="0"/>
 
-       
-            <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                    <!--<Button Text="Download Course" Clicked="DownloadClicked"/>-->
-                    <!--<Button Text="Load Catalogue" Clicked="LoadCourses"/>-->
-                   <StackLayout>
-                <Label Text="{Binding Title}" StyleClass="pageTitle,fontColor"></Label>
-                <StackLayout x:Name="Cat"></StackLayout>
-                        <StackLayout x:Name="LP"></StackLayout>
-                        <ActivityIndicator x:Name="CatalogueProgress" IsVisible="False" HeightRequest="20"/>
-                    </StackLayout>            
-        </ScrollView>
+                <StackLayout Grid.Row="1" Grid.Column="0">
+                    <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                        <!--<Button Text="Download Course" Clicked="DownloadClicked"/>-->
+                        <!--<Button Text="Load Catalogue" Clicked="LoadCourses"/>-->
+                        <StackLayout>
+                            <Label Text="{Binding Title}" StyleClass="pageTitle,fontColor"></Label>
+                            <StackLayout x:Name="Cat"></StackLayout>
+                            <ActivityIndicator x:Name="CatalogueProgress" IsVisible="False" HeightRequest="20"/>
+                        </StackLayout>
+                    </ScrollView>
+                </StackLayout>
+            </Grid>
     </ContentPage.Content>
 </ContentPage>

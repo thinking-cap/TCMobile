@@ -7,11 +7,6 @@
             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="TCMobile.Views.ViewCourse"
              Title="{Binding Title}">
-    <NavigationPage.TitleView>
-        <StackLayout Style="{StaticResource headerContainer}">
-            <ffimageloading:CachedImage Style="{StaticResource headerImage}" Source="{Binding Source={x:Static constants:Constants.Logo}}"></ffimageloading:CachedImage>
-        </StackLayout>
-    </NavigationPage.TitleView>
     <ContentPage.BindingContext>
         <vm:ViewCourseModel />
     </ContentPage.BindingContext>
