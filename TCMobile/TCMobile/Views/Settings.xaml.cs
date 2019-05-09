@@ -79,9 +79,9 @@ namespace TCMobile.Views
 
         public async void removeCoursePackgeAsync(Object Sender, EventArgs args)
         {
-            Button button = (Button)Sender;
+            DownloadImageButton button = (DownloadImageButton)Sender;
             string id = button.ClassId;
-            StackLayout item = (StackLayout)button.Parent;
+            StackLayout item = (StackLayout)button.Parent.Parent;
             Models.Record course = await App.Database.GetCourseByID(id);
             course.Deleted = "true";
             int del = await App.Database.SaveItemAsync(course);

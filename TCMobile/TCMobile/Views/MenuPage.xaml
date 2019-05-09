@@ -35,29 +35,19 @@
 
         <!--<Image  Aspect="AspectFill" x:Name="UserImage" Source="https://xamarin.com/content/images/pages/forms/example-app.png" />-->
 
-        <ListView Grid.Row="1" Grid.ColumnSpan="2" x:Name="ListViewMenu" HasUnevenRows="True" BackgroundColor="White">
+        <ListView Grid.Row="1" Grid.ColumnSpan="2" x:Name="ListViewMenu" HasUnevenRows="True" BackgroundColor="{Binding Source={x:Static constants:Constants.MenuBackgroundColour}}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Grid Padding="10" BackgroundColor="{Binding Source={x:Static constants:Constants.MenuBackgroundColour}}">
+                        <StackLayout Padding="10">
                             <Label Text="{Binding Title}" FontSize="20"/>
-                        </Grid>
+                        </StackLayout>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
-
-            <!--<ListView.ItemTemplate>
-                <DataTemplate>
-                    --><!--<TextCell TextColor="Black" Detail="{Binding .LastUpdated}" DetailColor="Red" Text="{Binding .ItemName}" />--><!--
-                    <customControls:ExtendedViewCell SelectedBackgroundColor="{StaticResource colorPrimaryDark}">
-                        <ViewCell.View>
-                            <Grid Padding="10">
-                                <Label Text="{Binding Title}" FontSize="20"/>
-                            </Grid>
-                        </ViewCell.View>
-                    </customControls:ExtendedViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>-->
+            <ListView.Footer>
+                <Label />
+            </ListView.Footer>           
         </ListView>
 
     </Grid>
