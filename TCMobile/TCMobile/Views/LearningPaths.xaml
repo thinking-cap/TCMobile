@@ -23,9 +23,9 @@
             <views:NavBarView Grid.Row="0" Grid.Column="0"/>
 
             <StackLayout Grid.Row="1" Grid.Column="0">
+                <Label Text="{Binding Title}" StyleClass="pageTitle,fontColor"></Label>
                 <ScrollView HorizontalOptions="FillAndExpand"  VerticalOptions="FillAndExpand">
                     <StackLayout>
-                        <Label Text="{Binding Title}" StyleClass="pageTitle,fontColor"></Label>
                         <FlexLayout VerticalOptions="FillAndExpand" x:Name="LP" 
                             HorizontalOptions="FillAndExpand" Direction="Column">
 

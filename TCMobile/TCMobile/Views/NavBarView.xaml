@@ -9,7 +9,7 @@
         <nav:NavBarViewModel/>
     </ContentView.BindingContext>
   <ContentView.Content>
-        <StackLayout Style="{StaticResource headerContainer}" BackgroundColor="{Binding Source={x:Static constants:Constants.HeaderColour}}">
+        <constants:MaterialFrame HasShadow="True" CornerRadius="0" Style="{StaticResource headerContainer}" BackgroundColor="{Binding Source={x:Static constants:Constants.HeaderColour}}">
             <Grid HorizontalOptions="FillAndExpand" RowSpacing="0" ColumnSpacing="0" BackgroundColor="{Binding Source={x:Static constants:Constants.HeaderColour}}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="48"/>
@@ -29,6 +29,6 @@
                     </Image.GestureRecognizers>
                 </Image>
             </Grid>
-        </StackLayout>
+        </constants:MaterialFrame>
     </ContentView.Content>
 </ContentView>

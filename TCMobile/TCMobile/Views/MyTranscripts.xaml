@@ -21,11 +21,11 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <views:NavBarView Grid.Row="0" Grid.Column="0"/>
-
+            
             <StackLayout Grid.Row="1" Grid.Column="0">
+                <Label Text="{Binding Title}" StyleClass="pageTitle,fontColor"></Label>
                 <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                     <StackLayout>
-                        <Label Text="{Binding Title}" StyleClass="pageTitle,fontColor"></Label>
                         <StackLayout x:Name="Courses"></StackLayout>
                         <ActivityIndicator x:Name="CatalogueProgress" IsVisible="False" HeightRequest="20"/>
                     </StackLayout>

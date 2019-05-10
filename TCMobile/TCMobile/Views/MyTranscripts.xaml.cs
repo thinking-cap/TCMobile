@@ -79,7 +79,7 @@ namespace TCMobile.Views
                     //};
 
                     
-                    string completion = (course.CompletionStatus == "" || course.CompletionStatus == "unknown") ? "Not Attempted" : course.CompletionStatus;
+                    string completion = (course.CompletionStatus == "") ? (course.CompletionStatus == "unknown") ? "In Progress" : "Not Attempted" : course.CompletionStatus;
                     string success = (course.SuccessStatus == "" || course.SuccessStatus == "unknown") ? "" : "/" + course.SuccessStatus;
                     string score = (course.Score == "") ? "" : "  " + Math.Round(Double.Parse(course.Score)*100).ToString() + "%";
                     Label status = new Label

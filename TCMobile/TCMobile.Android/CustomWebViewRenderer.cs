@@ -31,7 +31,9 @@ namespace TCMobile.Droid
             base.OnElementChanged(e);
 
             // Setting the background as transparent
-            this.Control.SetBackgroundColor(Android.Graphics.Color.Transparent);
+            Control.SetBackgroundColor(Android.Graphics.Color.Transparent);
         }
+
+       
     }
 }

@@ -144,7 +144,7 @@ namespace TCMobile
             public string description { get; set; }
             public string completion_status { get; set; }
             public string success_status { get; set; }
-            public float progress_measure { get; set; }
+            public string progress_measure { get; set; }
         }
 
         public class Interactions_Data

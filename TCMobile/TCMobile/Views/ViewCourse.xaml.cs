@@ -35,6 +35,8 @@ namespace TCMobile.Views
 
         }
 
+       
+
         private async void launchCourse(string courseid)
         {
             // create an api object
@@ -65,7 +67,7 @@ namespace TCMobile.Views
                     try
                     {
                         Device.BeginInvokeOnMainThread(async () => await api.CommitToLMS(CMIString, courseid));
-                        Device.BeginInvokeOnMainThread(async () => await Navigation.PopAsync());
+                        Device.BeginInvokeOnMainThread(async () => await Navigation.PopModalAsync());
                     }catch(Exception ex)
                     {
                         Crashes.TrackError(ex);

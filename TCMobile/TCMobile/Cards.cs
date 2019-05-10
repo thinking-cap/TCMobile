@@ -141,7 +141,8 @@ namespace TCMobile
                                     <body>" + HttpUtility.HtmlDecode(coursedescription) + "</body></html>";
             var description = new CustomWebview
             {
-                HeightRequest = 300,
+               HeightRequest = 250,
+                VerticalOptions = LayoutOptions.FillAndExpand,
                 Source = new HtmlWebViewSource
                 {
                     Html = htmlText
@@ -150,7 +151,9 @@ namespace TCMobile
 
             };
 
-
+           // ViewCell webViewViewCell = new ViewCell();
+            Grid webViewGrid = new Grid();
+            webViewGrid.Children.Add(description);
 
             spinner = new ActivityIndicator
             {
@@ -212,7 +215,7 @@ namespace TCMobile
             //             (courseRecord.CMI == "") ? "open" : "resume";
             if(courseRecord != null)
                 cardBody.Children.Add(chartView);
-            cardBody.Children.Add(description);
+            cardBody.Children.Add(webViewGrid);
             layout.Children.Add(marqueeContainer);
             layout.Children.Add(cardBody);
             layout.Children.Add(cardFooter);

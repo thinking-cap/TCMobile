@@ -237,7 +237,7 @@ namespace TCMobile
 
             //String text = label.Text;
             Page p = ViewExtensions.GetParentPage(button);
-            p.Navigation.PushAsync(new ViewCourse(button.CourseID));
+            p.Navigation.PushModalAsync(new ViewCourse(button.CourseID));
         }
         public void getCMIObjectFromLMS(string courseid)
         {

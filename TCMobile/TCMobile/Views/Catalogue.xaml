@@ -24,11 +24,11 @@
                 <views:NavBarView Grid.Row="0" Grid.Column="0"/>
 
                 <StackLayout Grid.Row="1" Grid.Column="0">
-                    <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <Label Text="{Binding Title}" StyleClass="pageTitle,fontColor"></Label>
+                <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                         <!--<Button Text="Download Course" Clicked="DownloadClicked"/>-->
                         <!--<Button Text="Load Catalogue" Clicked="LoadCourses"/>-->
                         <StackLayout>
-                            <Label Text="{Binding Title}" StyleClass="pageTitle,fontColor"></Label>
                             <StackLayout x:Name="Cat"></StackLayout>
                             <ActivityIndicator x:Name="CatalogueProgress" IsVisible="False" HeightRequest="20"/>
                         </StackLayout>
