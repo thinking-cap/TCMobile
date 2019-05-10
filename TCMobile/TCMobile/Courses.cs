@@ -306,9 +306,9 @@ namespace TCMobile
         {
             //MainPage.Navigation.PushAsync(new ViewCourse(id));
             Page p = ViewExtensions.GetParentPage(App.Currentdownload);
-            await p.Navigation.PushAsync(new ViewCourse(id));
+            await p.Navigation.PushModalAsync(new ViewCourse(id));
 
-            return "test";
+            return "";
            
         }
 

@@ -394,6 +394,26 @@ namespace TCMobile
             foreach (Activity act in obj.Activities.Activity)
             {
                 Models.Record courseRecord = await App.Database.GetCourseByID(act.CourseID);
+               if(courseRecord == null)
+                {
+                   
+                        Models.Record rec = new Models.Record();
+                        rec.CourseID = act.CourseID;
+                        // find the course name
+                        rec.CourseName = act.Name;
+                        rec.Version = "1";
+                        rec.CourseDescription = "";
+                        rec.CompletionStatus = "Not Started";
+                        rec.SuccessStatus = "";
+                        rec.Score = "";
+                        rec.Deleted = "false";
+                        rec.DueDate = "";
+
+                        rec.CMI = "";
+                        App.LocalFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                        await App.Database.SaveItemAsync(rec);
+                   
+                }
                 Grid activityContainer = new Grid
                 {
                     Padding = new Thickness(5, 0, 5, 0),
