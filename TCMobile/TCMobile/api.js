@@ -18,7 +18,8 @@ if (typeof (API_1484_11) == 'undefined') {
         init: false,
         error: 0,
         api_return_bool: false,
-        storeinteractions : true
+        storeinteractions: true,
+        dirtyCommit : null
     };
 
     var API_1484_11 = {
@@ -109,6 +110,10 @@ if (typeof (API_1484_11) == 'undefined') {
         },
         SetValue: function (key, value) {
             if (config.init === true) {
+                if (config.dirtyCommit !== null) {
+                    clearTimeout(config.dirtyCommit);
+                    config.dirtyCommit = null;
+                }
                 var val = "";
                 if (key.indexOf("cmi.interactions") > -1) {
                     if (config.storeinteractions === true) {
@@ -164,6 +169,9 @@ if (typeof (API_1484_11) == 'undefined') {
                 }
                 //config.pingAPI();
                 // logCommit('SetValue',key,value);
+                config.dirtyCommit = settimeout(function () {
+                    API_1484_11.Commit('');
+                },1000);
                 if (config.api_return_bool)
                     return val;
                 else

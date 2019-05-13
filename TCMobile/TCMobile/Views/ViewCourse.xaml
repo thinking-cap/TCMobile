@@ -11,9 +11,23 @@
         <vm:ViewCourseModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout x:Name="WebViewContainer">
+        
+            <Grid HorizontalOptions="FillAndExpand" Margin="0" Padding="0" RowSpacing="0" ColumnSpacing="0" BackgroundColor="{Binding Source={x:Static constants:Constants.HeaderColour}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="80"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+                <Button Grid.Column="1" Grid.Row="0" Text="Close X" Margin="0" HorizontalOptions="EndAndExpand" BackgroundColor="{Binding Source={x:Static constants:Constants.HeaderColour}}" Clicked="Button_Clicked" TextColor="White"/>
+            
+        <StackLayout x:Name="WebViewContainer" Margin="0" Padding="0" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1">
+          
             <!--<WebView x:Name="courseWindow" HeightRequest="1000" WidthRequest="1000"></WebView>-->
-            <!--<local:HybridWebView x:Name="courseWindow" HeightRequest="1000" WidthRequest="1000"  />-->
+            <!--<local:HybridWebView x:Name="courseWindow" Heig  BackgroundColor="{Binding Source={x:Static constants:Constants.HeaderColour}}"htRequest="1000" WidthRequest="1000"  />-->
         </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

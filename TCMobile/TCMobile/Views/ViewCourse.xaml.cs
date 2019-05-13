@@ -109,10 +109,11 @@ namespace TCMobile.Views
             string htmlString = reader.ReadToEnd();
 
             courseWindow = new HybridWebView
-            {                
+            {
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                AutomationId = "TCMobile_CourseView"
+                AutomationId = "TCMobile_CourseView",
+                Margin = new Thickness(0)
             };
 
 
@@ -243,6 +244,12 @@ namespace TCMobile.Views
             string id = item.Attributes["identifier"].Value;           
 
             return id;
+        }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+           // Device.BeginInvokeOnMainThread(async () => await api.CommitToLMS(CMIString, courseid));
+            Device.BeginInvokeOnMainThread(async () => await Navigation.PopModalAsync());
         }
     }
 }
