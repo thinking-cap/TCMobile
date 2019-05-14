@@ -32,7 +32,10 @@ namespace TCMobile.Droid
            
             if(apiloaded == false)
              view.EvaluateJavascript(_javascript, null);
-            
+            if(url.IndexOf("file://fonts.googleapis.com") >= 0)
+            {
+                url = url.Replace("file:", "https:");
+            }
             base.OnLoadResource(view, url);
 
 

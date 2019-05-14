@@ -112,6 +112,7 @@ namespace TCMobile.Views
             {
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
+                HeightRequest = 20,
                 AutomationId = "TCMobile_CourseView",
                 Margin = new Thickness(0)
             };

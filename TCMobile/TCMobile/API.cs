@@ -20,6 +20,7 @@ namespace TCMobile
                 courseRecord.CompletionStatus = data.completion_status;
                 courseRecord.SuccessStatus = data.success_status;
                 courseRecord.Score = data.score.scaled;
+                courseRecord.ProgressMeasure = data.progress_measure;
 
 
                 await App.Database.SaveItemAsync(courseRecord);
@@ -102,7 +103,7 @@ namespace TCMobile
             public string learner_id { get; set; }
             public string learner_name { get; set; }
             public string location { get; set; }
-            public float progress_measure { get; set; }
+            public string progress_measure { get; set; }
             public Score score { get; set; }
             public string session_time { get; set; }
             public string success_status { get; set; }

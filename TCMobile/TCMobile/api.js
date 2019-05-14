@@ -169,9 +169,9 @@ if (typeof (API_1484_11) == 'undefined') {
                 }
                 //config.pingAPI();
                 // logCommit('SetValue',key,value);
-                config.dirtyCommit = settimeout(function () {
+                config.dirtyCommit = setTimeout(function () {
                     API_1484_11.Commit('');
-                },1000);
+                },60000);
                 if (config.api_return_bool)
                     return val;
                 else

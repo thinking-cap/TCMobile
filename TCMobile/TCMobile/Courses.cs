@@ -41,6 +41,7 @@ namespace TCMobile
                 rec.SuccessStatus = "";
                 rec.Score = "";
                 rec.Deleted = "false";
+                rec.ProgressMeasure = "0";
                 rec.DueDate = App.CourseCatalogue.courses.Find(x => x.courseid == courseid).duedate;
 
                 rec.CMI = "";

@@ -60,7 +60,7 @@
     </CodesignEntitlements>
     <CodesignExtraArgs />
     <CodesignResourceRules />
-    <CodesignProvision>VS: WildCard Development</CodesignProvision>
+    <CodesignProvision>TCMOBILE</CodesignProvision>
     <MtouchSdkVersion>12.1</MtouchSdkVersion>
     <IOSDebugOverWiFi>true</IOSDebugOverWiFi>
     <MtouchProfiling>false</MtouchProfiling>
