@@ -98,7 +98,7 @@ namespace TCMobile.Views
             var current = Connectivity.NetworkAccess;
             if (current == NetworkAccess.Internet) {
                 App.CourseCatalogue = await Courses.GetCatalogue(credentials.HomeDomain, credentials.UserID);                
-                buildCatalogue(App.CourseCatalogue.courses);
+                buildCatalogue(App.CourseCatalogue.courses.OrderBy(o=>o.title).ToList());
             }
             else
             {

@@ -24,18 +24,19 @@ namespace TCMobile.Views
             lp = await Courses.GetLearningPath(credentials.HomeDomain, credentials.UserID, lpid);
             if(lp != null)
             {
-                buidLPDetails(lp.StudentActivityMap);
+                bool x = await buidLPDetails(lp.StudentActivityMap);
             }
 
         }
 
-        public void buidLPDetails(StudentActivityMap lp)
+        async Task<bool>buidLPDetails(StudentActivityMap lp)
         {
             Cards card = new Cards();
             foreach (Objective obj in lp.Objective)
             {
-                card.buildObjectiveCard(obj,LP);
+               await card.buildObjectiveCard(obj,LP);
             }
+            return true;
         }
     }
 }

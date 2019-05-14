@@ -339,7 +339,7 @@ namespace TCMobile
             LP.Children.Add(frame);
         }
 
-        public async void buildObjectiveCard(Objective obj, StackLayout container)
+        public async  Task<bool>buildObjectiveCard(Objective obj, StackLayout container)
         {
            
             Grid layout;
@@ -506,6 +506,7 @@ namespace TCMobile
             layout.Children.Add(cardBody,0,1);
             Grid.SetColumnSpan(cardBody, 2);
             container.Children.Add(layout);
+            return true;
 
         }
 

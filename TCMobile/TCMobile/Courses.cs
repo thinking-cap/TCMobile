@@ -319,8 +319,8 @@ namespace TCMobile
         {
 
             List<Models.Record> courses = await App.Database.GetItemsAsync();
-            
-            return courses;
+            var sorted = courses.OrderBy(o => o.CourseName).ToList();
+            return sorted;
         }
 
         public async Task<List<Models.LPDBRecord>> CheckForLPS()

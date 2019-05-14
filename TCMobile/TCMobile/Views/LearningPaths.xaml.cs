@@ -39,7 +39,8 @@ namespace TCMobile.Views
             if (current == NetworkAccess.Internet)
             {
                 lp = await Courses.GetLearningPaths(credentials.HomeDomain, credentials.UserID);
-                buildLPS(lp.LearningPaths);
+                var temp = lp.LearningPaths.OrderBy(o => o.title).ToList();
+                buildLPS(temp);
             }
             else
             {
