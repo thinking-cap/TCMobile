@@ -12,6 +12,7 @@ using Xamarin.Forms.Xaml;
 using Newtonsoft.Json;
 using System.Dynamic;
 using Microsoft.AppCenter.Crashes;
+using Xamarin.Essentials;
 
 namespace TCMobile.Views
 {
@@ -42,7 +43,7 @@ namespace TCMobile.Views
             // create an api object
             API api = new API();
             // use MessagingCenter to talk to the webview //
-            MessagingCenter.Subscribe<string>(this, "API", (cmi) =>
+            MessagingCenter.Subscribe<string>(this, "API", async(cmi) =>
             {
                 message APIMessage = JsonConvert.DeserializeObject<message>(cmi);
                
@@ -64,14 +65,26 @@ namespace TCMobile.Views
                 {
                     // api.CommitToLMS(CMIString, courseid); // not working yet
                     //Navigation.PopAsync();
+                    Models.Record courseRecord = await App.Database.GetCourseByID(courseid);
+                    var connection = Connectivity.NetworkAccess;
                     try
                     {
-                        Device.BeginInvokeOnMainThread(async () => await api.CommitToLMS(CMIString, courseid));
+                       if (connection == NetworkAccess.Internet)
+                        {
+                            Device.BeginInvokeOnMainThread(async () => await api.CommitToLMS(CMIString, courseid));
+                            courseRecord.Synced = true;
+                        }
+                        else
+                        {
+                            courseRecord.Synced = false;
+                        }
                         Device.BeginInvokeOnMainThread(async () => await Navigation.PopModalAsync());
                     }catch(Exception ex)
                     {
+                        courseRecord.Synced = false;
                         Crashes.TrackError(ex);
                     }
+                    await App.Database.SaveItemAsync(courseRecord);
                 }
             });
 

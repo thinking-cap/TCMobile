@@ -52,6 +52,15 @@ namespace TCMobile.Views
         {
             Courses l = new Courses();
             List<Models.LPDBRecord> lps = await l.CheckForLPS();
+            var temp = lps.OrderBy(o => o.LPTitle).ToList();
+            if (lps != null)
+            {
+                foreach(Models.LPDBRecord lp in temp)
+                {
+                    Cards card = new Cards();
+                    card.buildLPCard(lp.LPID, lp.LPTitle, lp.LPDescription, LP, DetailsClicked);
+                }
+            }
         }
 
         public void buildLPS(List<LPRecord> lp)

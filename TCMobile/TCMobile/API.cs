@@ -41,6 +41,7 @@ namespace TCMobile
             try
             {
                // cmi = System.Net.WebUtility.UrlEncode(cmi);
+               
                 string uri = Constants.SetCMI + "?userPassword=" + App.CredentialsService.Password + "&userLogin=" + App.CredentialsService.UserName + "&courseID=" + courseid + "&scormObjectJson=" + cmi;
                 dynamic loginObj = await DataService.commitToLMS(uri).ConfigureAwait(false);
                 return true;

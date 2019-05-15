@@ -43,7 +43,7 @@ namespace TCMobile
                 rec.Deleted = "false";
                 rec.ProgressMeasure = "0";
                 rec.DueDate = App.CourseCatalogue.courses.Find(x => x.courseid == courseid).duedate;
-
+                rec.Synced = false;
                 rec.CMI = "";
                 App.LocalFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
                 await App.Database.SaveItemAsync(rec);
