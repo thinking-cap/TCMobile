@@ -20,6 +20,7 @@ namespace TCMobile.Data
             // initially just to store the lp's for offline display.
             database.CreateTableAsync<LPDBRecord>().Wait();
             database.CreateTableAsync<LMSSettings>().Wait();
+           // database.CreateTableAsync<StudentActivityMap>().Wait();
         }
 
         public Task<List<Record>> GetItemsAsync()
@@ -74,6 +75,11 @@ namespace TCMobile.Data
             {
                 return database.InsertAsync(item);
             }
+        }
+
+        public Task<int>SaveLpRecord(StudentActivityMap map)
+        {
+            return database.UpdateAsync(map);
         }
 
         public Task<int> SaveLPAsync(LPDBRecord lp)

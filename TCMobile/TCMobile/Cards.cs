@@ -339,7 +339,7 @@ namespace TCMobile
             LP.Children.Add(frame);
         }
 
-        public async  Task<bool>buildObjectiveCard(Objective obj, StackLayout container)
+        public async  Task<bool>buildObjectiveCard(Objective obj, StackLayout container, string lpid)
         {
            
             Grid layout;
@@ -417,11 +417,19 @@ namespace TCMobile
                         rec.Score = "";
                         rec.Deleted = "false";
                         rec.DueDate = "";
-
+                        rec.LP = lpid;
+                        rec.Objective = obj.id;
                         rec.CMI = "";
                         App.LocalFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
                         await App.Database.SaveItemAsync(rec);
+
+                }
+                else if(String.IsNullOrEmpty(courseRecord.Objective) || String.IsNullOrEmpty(courseRecord.LP))
+                {
                    
+                    courseRecord.Objective = obj.id;
+                    courseRecord.LP = lpid;
+                    await App.Database.SaveItemAsync(courseRecord);
                 }
                 Grid activityContainer = new Grid
                 {

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -92,8 +93,9 @@ namespace TCMobile
 
     public class StudentActivityMap
     {
-        [JsonConverter(typeof(SingleValueArrayConverter<Objective>))]
+        [JsonConverter(typeof(SingleValueArrayConverter<Objective>))]       
         public List<Objective> Objective { get; set; }
+        
         public Types Types { get; set; }
     }
 

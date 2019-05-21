@@ -8,6 +8,7 @@ using TCMobile.CustomControls;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Newtonsoft.Json;
 
 namespace TCMobile.Views
 {
@@ -52,10 +53,11 @@ namespace TCMobile.Views
         {
             Courses l = new Courses();
             List<Models.LPDBRecord> lps = await l.CheckForLPS();
-            var temp = lps.OrderBy(o => o.LPTitle).ToList();
+           
             if (lps != null)
             {
-                foreach(Models.LPDBRecord lp in temp)
+                var temp = lps.OrderBy(o => o.LPTitle).ToList();
+                foreach (Models.LPDBRecord lp in temp)
                 {
                     Cards card = new Cards();
                     card.buildLPCard(lp.LPID, lp.LPTitle, lp.LPDescription, LP, DetailsClicked);
@@ -81,11 +83,16 @@ namespace TCMobile.Views
             Models.LPDBRecord exists = await App.Database.GetLPByID(lp.id);
             if (exists == null)
             {
+                
+                CredentialsService credentials = new CredentialsService();
+                TCMobile.Map map = await Courses.GetLearningPath(credentials.HomeDomain, credentials.UserID, lp.id);
+                string mapJson = JsonConvert.SerializeObject(map, Newtonsoft.Json.Formatting.Indented,
+                    new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
                 Models.LPDBRecord lprecord = new Models.LPDBRecord();
                 lprecord.LPID = lp.id;
                 lprecord.LPTitle = lp.title;
                 lprecord.LPDescription = lp.description;
-                lprecord.LPCourses = "";
+                lprecord.LPMap = mapJson;
                 await App.Database.SaveLPAsync(lprecord);
             }
 

@@ -22,6 +22,8 @@ namespace TCMobile.Models
         public bool Done { get; set; }
         public string Deleted { get; set; }
         public string DueDate { get; set; }
+        public string LP { get; set; }
+        public string Objective { get; set; }
         public string PercentComplete { get; set; }
         public bool Synced { get; set; }
     }
@@ -33,7 +35,7 @@ namespace TCMobile.Models
         public string LPTitle { get; set; }
         public string LPDescription { get; set; }
         public string LPID { get; set; }
-        public string LPCourses { get; set; }
+        public string LPMap { get; set; }
 
     }
 

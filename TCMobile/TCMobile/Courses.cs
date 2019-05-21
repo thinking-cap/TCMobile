@@ -323,6 +323,12 @@ namespace TCMobile
             return sorted;
         }
 
+        public async Task<Models.LPDBRecord>GetActivityMap(string id)
+        {
+            Models.LPDBRecord lp = await App.Database.GetLPByID(id);
+            return lp;
+        }
+
         public async Task<List<Models.LPDBRecord>> CheckForLPS()
         {
             List<Models.LPDBRecord> lps = await App.Database.GetLPSAsync();
