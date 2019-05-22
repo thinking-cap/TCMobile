@@ -36,10 +36,13 @@ namespace TCMobile.Droid
             {
                 url = url.Replace("file:", "https:");
             }
+            
             base.OnLoadResource(view, url);
 
 
         }
+
+        
         public override void OnPageStarted(WebView view, string url, Bitmap favicon)
         {
             //view.Visibility = ViewStates.Invisible;

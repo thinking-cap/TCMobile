@@ -2,7 +2,11 @@
 
    // window.parent = window;
     window.opener = window;
-
+    $.fn.height = function () {
+        if (this[0].constructor.name.toLowerCase() == 'window') {
+            return $(document).innerHeight();
+        } else { return $(this).outerHeight(); }
+    };
     var meta = document.createElement('meta');
     meta.setAttribute('name', 'viewport');
     meta.setAttribute('content', 'width=device-width');

@@ -219,12 +219,16 @@ namespace TCMobile.Views
         public string itemPath(string courseid)
         {
             XNamespace ns = "http://www.imsglobal.org/xsd/imscp_v1p1";
+            
             string localFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            string manifestXML = Path.Combine(localFolder, "Courses/" + courseid + "/imsmanifest.xml");
+            string[] manifestDirectory = Directory.GetFiles(Path.Combine(localFolder, "Courses/" + courseid), "imsmanifest.xml", SearchOption.AllDirectories);
+
+            // string manifestXML = Path.Combine(localFolder, "Courses/" + courseid + "/imsmanifest.xml");
+            string manifestXML = Path.Combine(manifestDirectory[0].ToString(), "/imsmanifest.xml");
             // XDocument manifest = XDocument.Load(manifestXML);
 
             XmlDocument manifest = new XmlDocument();
-            manifest.Load(manifestXML);
+            manifest.Load(manifestDirectory[0].ToString());
 
             XmlNamespaceManager nsmgr = new XmlNamespaceManager(manifest.NameTable);
             nsmgr.AddNamespace("imsss", "http://www.imsglobal.org/xsd/imsss");

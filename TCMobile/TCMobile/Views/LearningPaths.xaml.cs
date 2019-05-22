@@ -85,15 +85,27 @@ namespace TCMobile.Views
             {
                 
                 CredentialsService credentials = new CredentialsService();
-                TCMobile.Map map = await Courses.GetLearningPath(credentials.HomeDomain, credentials.UserID, lp.id);
-                string mapJson = JsonConvert.SerializeObject(map, Newtonsoft.Json.Formatting.Indented,
-                    new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
-                Models.LPDBRecord lprecord = new Models.LPDBRecord();
+               Models.LPDBRecord lprecord = new Models.LPDBRecord();
                 lprecord.LPID = lp.id;
                 lprecord.LPTitle = lp.title;
                 lprecord.LPDescription = lp.description;
-                lprecord.LPMap = mapJson;
+                lprecord.LPMap = "";
                 await App.Database.SaveLPAsync(lprecord);
+            }
+            else
+            {
+                if (String.IsNullOrEmpty(exists.LPMap))
+                {
+                    CredentialsService credentials = new CredentialsService();
+                    TCMobile.Map map = await Courses.GetLearningPath(credentials.HomeDomain, credentials.UserID, lp.id);
+                    if (map != null)
+                    {
+                       exists.LPMap = JsonConvert.SerializeObject(map);
+                        
+                      //  await App.Database.SaveLPAsync(exists);
+                    }
+                }
+
             }
 
             Cards card = new Cards();
