@@ -6,7 +6,12 @@
         if (this[0].constructor.name.toLowerCase() == 'window') {
             return $(document).innerHeight();
         } else { return $(this).outerHeight(); }
-    };
+};
+
+    $.ajaxSetup({
+        dataType: "xml"
+    });
+
     var meta = document.createElement('meta');
     meta.setAttribute('name', 'viewport');
     meta.setAttribute('content', 'width=device-width');

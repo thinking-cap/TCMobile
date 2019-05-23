@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Web;
 
 namespace TCMobile.Views
 {
@@ -44,6 +46,7 @@ namespace TCMobile.Views
         {
            // var x = await App.Database.SaveLpRecord(lp);
             Cards card = new Cards();
+            bool x = await Courses.SaveMap(lpid, lp);
             foreach (Objective obj in lp.Objective)
             {
                await card.buildObjectiveCard(obj,LP,lpid);

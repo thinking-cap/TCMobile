@@ -19,6 +19,7 @@ using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using TCMobile.CustomControls;
 using System.Linq;
+using Newtonsoft.Json;
 
 
 namespace TCMobile
@@ -285,6 +286,18 @@ namespace TCMobile
             {
                 return null;
             }
+        }
+
+        public static async Task<bool> SaveMap(string lpid, StudentActivityMap activitymap)
+        {
+            CredentialsService credentials = new CredentialsService();
+            Models.LPDBRecord learningPath = await App.Database.GetLPByID(lpid);
+            if (learningPath != null && learningPath.LPMap != "")
+            {
+                string map = JsonConvert.SerializeObject(activitymap);
+                learningPath.LPMap = map;
+            }
+            return true;
         }
 
         public static async Task<Map> GetLearningPath(string domainid, string studentid, string lpid)

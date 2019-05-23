@@ -1,8 +1,12 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 using SQLite;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Reflection;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace TCMobile
@@ -46,7 +50,8 @@ namespace TCMobile
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            throw new NotImplementedException();
+            //  throw new NotImplementedException();
+            serializer.Serialize(writer, value);
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
@@ -97,6 +102,12 @@ namespace TCMobile
         public List<Objective> Objective { get; set; }
         
         public Types Types { get; set; }
+
+        [OnError]
+        internal void OnError(StreamingContext context, ErrorContext errorContext)
+        {
+            errorContext.Handled = true;
+        }
     }
 
     public class Map

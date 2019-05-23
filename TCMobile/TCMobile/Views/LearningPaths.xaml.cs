@@ -92,21 +92,22 @@ namespace TCMobile.Views
                 lprecord.LPMap = "";
                 await App.Database.SaveLPAsync(lprecord);
             }
-            else
-            {
-                if (String.IsNullOrEmpty(exists.LPMap))
-                {
-                    CredentialsService credentials = new CredentialsService();
-                    TCMobile.Map map = await Courses.GetLearningPath(credentials.HomeDomain, credentials.UserID, lp.id);
-                    if (map != null)
-                    {
-                       exists.LPMap = JsonConvert.SerializeObject(map);
-                        
-                      //  await App.Database.SaveLPAsync(exists);
-                    }
-                }
+            //else
+            //{
+            //    if (String.IsNullOrEmpty(exists.LPMap))
+            //    {
+            //        CredentialsService credentials = new CredentialsService();
+            //        TCMobile.Map map = await Courses.GetLearningPath(credentials.HomeDomain, credentials.UserID, lp.id);
+            //        if (map != null)
+            //        {
+            //            string tempMap = JsonConvert.SerializeObject(map);
 
-            }
+            //            exists.LPMap = tempMap;
+            //            //  await App.Database.SaveLPAsync(exists);
+            //        }
+            //    }
+
+            //}
 
             Cards card = new Cards();
             card.buildLPCard(lp.id, lp.title, lp.description, LP,DetailsClicked);
