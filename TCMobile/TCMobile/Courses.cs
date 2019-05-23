@@ -292,10 +292,12 @@ namespace TCMobile
         {
             CredentialsService credentials = new CredentialsService();
             Models.LPDBRecord learningPath = await App.Database.GetLPByID(lpid);
-            if (learningPath != null && learningPath.LPMap != "")
+            if (learningPath != null && learningPath.LPMap == "")
             {
                 string map = JsonConvert.SerializeObject(activitymap);
                 learningPath.LPMap = map;
+
+                await App.Database.SaveLPAsync(learningPath);
             }
             return true;
         }
