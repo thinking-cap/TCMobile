@@ -36,7 +36,8 @@
             <Button Text="login" Style="{StaticResource buttonStyle}" Clicked="OnLoginButtonClicked"/>
             <ActivityIndicator x:Name="Progress" IsVisible="False" HeightRequest="20"/>
             <Label x:Name="Error" HeightRequest="45" IsVisible="False"/>
-        </StackLayout>
+                <Button Text="Forgot Password" BackgroundColor="Transparent" x:Name="ForgotPassword" Clicked="OnForgotPasswordClicked"/>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

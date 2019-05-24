@@ -40,6 +40,9 @@ if (typeof (API_1484_11) == 'undefined') {
                 cmi: JSON.stringify(cmi)
 
             }
+            console.log("****************");
+            console.log(cmi);
+            console.log("****************");
             if (typeof (jsBridge) !== 'undefined') {
                 jsBridge.invokeAction(JSON.stringify(msg));
             } else {

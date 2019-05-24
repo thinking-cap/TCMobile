@@ -92,5 +92,9 @@ namespace TCMobile.Views
             }
            
         }
+
+        async void OnForgotPasswordClicked(object sender, EventArgs e) => await Navigation.PushModalAsync(new ForgotPassword());
     }
+
+   
 };

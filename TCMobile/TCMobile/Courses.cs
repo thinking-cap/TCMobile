@@ -129,7 +129,18 @@ namespace TCMobile
         public async void DownloadClicked(object sender, EventArgs e)
         {
                 var profiles = Connectivity.ConnectionProfiles;
-                bool allowDownload = (Constants.WifiOnly == "True" && profiles.Contains(ConnectionProfile.WiFi) == false) ? false : true;
+            var current = Connectivity.NetworkAccess;
+            bool allowDownload = true;
+            if (current == NetworkAccess.Internet)
+            {
+                // allow download only if the internet only == false
+                allowDownload = (Constants.WifiOnly == "True" && profiles.Contains(ConnectionProfile.WiFi) == false) ? false : true;
+            }
+            else
+            {
+                // don't ever try to download with no connection
+                allowDownload = false;
+            }
                 if (allowDownload) { 
                 dynamic button;
                 if (busy)
@@ -189,7 +200,10 @@ namespace TCMobile
             }
             else
             {
-                await Application.Current.MainPage.DisplayAlert("Warning", "You have selected to only download over WiFi. Connect to WiFi or go To Settings and change your preference.", "OK");
+                if (current == NetworkAccess.Internet)
+                    await Application.Current.MainPage.DisplayAlert("Warning", "You have selected to only download over WiFi. Connect to WiFi or go To Settings and change your preference.", "OK");
+                else
+                    await Application.Current.MainPage.DisplayAlert("Warning", "You must connect to a network to download content", "OK");
             }
         }
 
@@ -290,13 +304,12 @@ namespace TCMobile
 
         public static async Task<bool> SaveMap(string lpid, StudentActivityMap activitymap)
         {
-            CredentialsService credentials = new CredentialsService();
+            
             Models.LPDBRecord learningPath = await App.Database.GetLPByID(lpid);
             if (learningPath != null && learningPath.LPMap == "")
             {
                 string map = JsonConvert.SerializeObject(activitymap);
                 learningPath.LPMap = map;
-
                 await App.Database.SaveLPAsync(learningPath);
             }
             return true;

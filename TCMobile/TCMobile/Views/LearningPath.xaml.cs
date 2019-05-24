@@ -28,21 +28,24 @@ namespace TCMobile.Views
                 lp = await Courses.GetLearningPath(credentials.HomeDomain, credentials.UserID, lpid);
                 if(lp != null)
                 {
-                    bool x = await buidLPDetails(lp.StudentActivityMap,lpid);
+                    bool x = await buildLPDetails(lp.StudentActivityMap,lpid);
                 }
             }
             else
             {
                 Courses l = new Courses();
                 Models.LPDBRecord lp = await l.GetActivityMap(lpid);
-                if(lp != null)
+                if(lp != null && lp.LPMap != null && lp.LPMap != "")
                 {
-
+                    JsonSerializerSettings ser = new JsonSerializerSettings();
+                    ser.DefaultValueHandling = DefaultValueHandling.Populate;
+                    StudentActivityMap lpMap = JsonConvert.DeserializeObject<StudentActivityMap>(lp.LPMap, ser);
+                    bool x = await buildLPDetails(lpMap, lpid);
                 }
             }
         }
 
-        async Task<bool>buidLPDetails(StudentActivityMap lp,string lpid)
+        async Task<bool>buildLPDetails(StudentActivityMap lp,string lpid)
         {
            // var x = await App.Database.SaveLpRecord(lp);
             Cards card = new Cards();
