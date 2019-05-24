@@ -16,5 +16,11 @@ namespace TCMobile.Views
 		{
 			InitializeComponent ();
 		}
-	}
+
+        private void Close_Clicked(object sender, EventArgs e)
+        {
+            // Device.BeginInvokeOnMainThread(async () => await api.CommitToLMS(CMIString, courseid));
+            Device.BeginInvokeOnMainThread(async () => await Navigation.PopModalAsync());
+        }
+    }
 }
