@@ -46,12 +46,14 @@ namespace TCMobile
                 rec.DueDate = App.CourseCatalogue.courses.Find(x => x.courseid == courseid).duedate;
                 rec.Synced = false;
                 rec.CMI = "";
+                rec.Downloaded = true;
                 App.LocalFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
                 await App.Database.SaveItemAsync(rec);
             }
             else
             {
                 courseExists.Deleted = "false";
+                courseExists.Downloaded = true;
                 await App.Database.SaveItemAsync(courseExists);
             }
         }

@@ -8,7 +8,7 @@ namespace TCMobile.Droid
     public class JSBridge : Java.Lang.Object
     {
         readonly WeakReference<HybridWebViewRenderer> hybridWebViewRenderer;
-
+        
         public JSBridge(HybridWebViewRenderer hybridRenderer)
         {
             hybridWebViewRenderer = new WeakReference<HybridWebViewRenderer>(hybridRenderer);
@@ -22,8 +22,15 @@ namespace TCMobile.Droid
 
             if (hybridWebViewRenderer != null && hybridWebViewRenderer.TryGetTarget(out hybridRenderer))
             {
-                hybridRenderer.Element.InvokeAction(data);
-                MessagingCenter.Send(data, "API");
+                try
+                {
+                    hybridRenderer.Element.InvokeAction(data);
+                    MessagingCenter.Send(data, "API");
+                }catch(Exception e)
+                {
+                    
+                }
+              
             }
         }
     }

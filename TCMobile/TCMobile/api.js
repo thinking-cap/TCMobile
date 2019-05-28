@@ -1,16 +1,20 @@
 
+console.log('loaded api');
+// window.parent = window;
+window.opener = window;
+if (typeof ($) !== "undefined") {
+        $.fn.height = function () {
+            if (this[0].constructor.name.toLowerCase() == 'window') {
+                return $(document).innerHeight();
+            } else { return $(this).outerHeight(); }
+    };
 
-   // window.parent = window;
-    window.opener = window;
-    $.fn.height = function () {
-        if (this[0].constructor.name.toLowerCase() == 'window') {
-            return $(document).innerHeight();
-        } else { return $(this).outerHeight(); }
-};
+        $.ajaxSetup({
+            dataType: "xml"
+        });
+    }
 
-    $.ajaxSetup({
-        dataType: "xml"
-    });
+    
 
     var meta = document.createElement('meta');
     meta.setAttribute('name', 'viewport');
@@ -33,6 +37,7 @@ if (typeof (API_1484_11) == 'undefined') {
 
     var API_1484_11 = {
         Initialize: function () {
+            console.log('initialized')
             config.init = true;
             var msg = {
 
@@ -204,9 +209,16 @@ if (typeof (API_1484_11) == 'undefined') {
 
             }
             try {
-                jsBridge.invokeAction(JSON.stringify(msg));
+                if (typeof (jsBridge) !== 'undefined') {
+                    jsBridge.invokeAction(JSON.stringify(msg));
+                }
             } catch (e) {
                 window.webkit.messageHandlers.invokeAction.postMessage(JSON.stringify(msg));
+            }
+
+            if (config.dirtyCommit !== null) {
+                clearTimeout(config.dirtyCommit);
+                config.dirtyCommit = null;
             }
             return "true";
         },

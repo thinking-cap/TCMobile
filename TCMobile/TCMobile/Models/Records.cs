@@ -21,6 +21,7 @@ namespace TCMobile.Models
         public string Version { get; set; }
         public bool Done { get; set; }
         public string Deleted { get; set; }
+        public bool Downloaded { get; set; }
         public string DueDate { get; set; }
         public string LP { get; set; }
         public string Objective { get; set; }

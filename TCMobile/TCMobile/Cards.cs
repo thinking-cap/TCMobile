@@ -87,7 +87,7 @@ namespace TCMobile
             }
             float perc_complete = 0;
             float perc_incomplete = 0;
-            if(courseRecord != null) {
+            if(courseRecord != null && courseRecord.Downloaded == true) {
                 if (courseRecord.ProgressMeasure != null && courseRecord.ProgressMeasure != "")
                 {
                    perc_complete = float.Parse(courseRecord.ProgressMeasure) * 10;
@@ -179,7 +179,7 @@ namespace TCMobile
 
             Label lbl = new Label()
             {
-                Text = (courseRecord == null || courseRecord.Deleted == "true") ? "download" :
+                Text = (courseRecord == null || courseRecord.Downloaded == false) ? "download" :
                         (courseRecord.CompletionStatus.ToLower() == "completed") ? "review" :
                         (courseRecord.CMI == "") ? "open" : "resume",
                 HorizontalOptions = LayoutOptions.Center
@@ -223,7 +223,7 @@ namespace TCMobile
             //             (courseRecord.CMI == "") ? "open" : "resume";
             
             cardBody.Children.Add(webViewGrid);
-            if (courseRecord != null)
+            if (courseRecord != null && courseRecord.Downloaded != false)
                 cardBody.Children.Add(chartView);
             layout.Children.Add(marqueeContainer);
             layout.Children.Add(cardBody);
@@ -416,6 +416,7 @@ namespace TCMobile
                         rec.SuccessStatus = "";
                         rec.Score = "";
                         rec.Deleted = "false";
+                        rec.Downloaded = false;
                         rec.DueDate = "";
                         rec.LP = lpid;
                         rec.Objective = obj.id;
@@ -429,6 +430,7 @@ namespace TCMobile
                    
                     courseRecord.Objective = obj.id;
                     courseRecord.LP = lpid;
+                    
                     await App.Database.SaveItemAsync(courseRecord);
                 }
                 Grid activityContainer = new Grid
@@ -452,21 +454,9 @@ namespace TCMobile
                     HeightRequest = 20
                 };
 
-                //DownloadButton launchBtn = new DownloadButton
-                //{
-                //    Text = (courseRecord == null) ? "open" :
-                //        (courseRecord.CompletionStatus.ToLower() == "completed") ? "review" :
-                //        (courseRecord.CMI == "") ? "open" : "resume",
-                //    IsVisible = (courseRecord == null) ? false : (courseRecord.Deleted == "false") ? true : false,
-                //    Image = "launch_w.png",
-                //    Style = (Style)Application.Current.Resources["buttonStyle"],
-                //    ClassId = act.CourseID,
-                //    CourseID = act.CourseID
-
-                //};
                 Label lbl = new Label()
                 {
-                    Text = (courseRecord == null || courseRecord.Deleted == "true") ? "download" :
+                    Text = (courseRecord == null || courseRecord.Downloaded == false) ? "download" :
                         (courseRecord.CompletionStatus.ToLower() == "completed") ? "review" :
                        (courseRecord.CMI == "") ? "open" : "resume",
                     HorizontalOptions = LayoutOptions.Center
@@ -579,7 +569,7 @@ namespace TCMobile
                 BackgroundColor = Color.Transparent,
                 BorderColor = Color.Transparent,
                 BtnLabel = txt,
-                IsVisible = (courseRecord == null) ? true : (courseRecord.Deleted == "false") ? false : true
+                IsVisible = (courseRecord == null) ? true : (courseRecord.Deleted == "false" && courseRecord.Downloaded == false) ? true : false
             };
 
             return downloadBtn;
@@ -613,7 +603,7 @@ namespace TCMobile
                 ClassId = id,
                 Spinner = spinner,
                 CourseID = id,
-                IsVisible = (courseRecord == null) ? false : (courseRecord.Deleted == "false") ? true : false,
+                IsVisible = (courseRecord == null) ? false : (courseRecord.Deleted == "false" && courseRecord.Downloaded == true) ? true : false,
             };
 
             return downloadBtn;
@@ -630,7 +620,7 @@ namespace TCMobile
                 BackgroundColor = Color.Transparent,
                 BorderColor = Color.Transparent,
                 BtnLabel = txt,
-                IsVisible = (courseRecord == null) ? false : (courseRecord.Deleted == "false") ? true : false,
+                IsVisible = (courseRecord == null) ? false : (courseRecord.Deleted == "false" && courseRecord.Downloaded == true) ? true : false,
 
             };
 

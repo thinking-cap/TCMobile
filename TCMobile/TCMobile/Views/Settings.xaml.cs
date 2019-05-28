@@ -84,6 +84,7 @@ namespace TCMobile.Views
             StackLayout item = (StackLayout)button.Parent.Parent;
             Models.Record course = await App.Database.GetCourseByID(id);
             course.Deleted = "true";
+            course.Downloaded = false;
             int del = await App.Database.SaveItemAsync(course);
             Container.Children.Remove(item);
             // let's delete the downloaded files  to clear up space //
