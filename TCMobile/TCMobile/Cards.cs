@@ -14,6 +14,7 @@ using Expandable;
 using Microcharts.Forms;
 using Microcharts;
 using SkiaSharp;
+using Newtonsoft.Json;
 
 namespace TCMobile
 {
@@ -239,11 +240,34 @@ namespace TCMobile
             return true;
         }
 
-
-        public void buildLPCard(string id, string lptitle, string lpdescription,FlexLayout LP, EventHandler detailsClicked)
+        public async Task<Models.LPDBRecord> getMap(string id)
         {
+            Courses m = new Courses();
+            return await m.GetActivityMap(id);
+        }
+
+        public async void  buildLPCard(string id, string lptitle, string lpdescription,FlexLayout LP, EventHandler detailsClicked)
+        {
+            StudentActivityMap map = null;
             MaterialFrame frame;
             StackLayout layout;
+            Label status = new Label();
+            Models.LPDBRecord lp = await getMap(id);
+            if(lp.LPMap != "")
+            {
+                map = JsonConvert.DeserializeObject<StudentActivityMap>(lp.LPMap);
+                if(map != null)
+                {
+                    LP learningPath = new LP();
+                    Models.statusObject completionStatus = learningPath.lpStatus(map.Objective);
+
+                    status.Text = completionStatus.completion;
+                }
+                else
+                {
+                    status.Text = "not started";
+                }
+            }
             frame = new MaterialFrame
             {
                 HasShadow = true,
@@ -330,6 +354,8 @@ namespace TCMobile
             btnGrid.Children.Add(lbl, 0, 1);
             cardFooter.Children.Add(btnGrid);
             cardBody.Children.Add(title);
+           
+            cardBody.Children.Add(status);
             cardBody.Children.Add(description);
             layout.Children.Add(cardBody);
             layout.Children.Add(cardFooter);

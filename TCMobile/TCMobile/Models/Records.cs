@@ -29,6 +29,12 @@ namespace TCMobile.Models
         public bool Synced { get; set; }
     }
 
+    public class statusObject
+    {
+        public string completion { get; set; }
+        public int percentage { get; set; }
+    }
+
     public class LPDBRecord
     {
         [PrimaryKey, AutoIncrement]
