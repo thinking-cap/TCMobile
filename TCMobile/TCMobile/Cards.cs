@@ -127,15 +127,6 @@ namespace TCMobile
                 Text = duedateText
             };
 
-            
-
-           
-
-            //HtmlLabel description = new HtmlLabel
-            //{
-            //    Text = coursedescription
-            //};
-
             string htmlText = @"<html>
                                     <head>
                                         <meta name='viewport' content='width=device-width; height=device-height; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;'/>                                    
@@ -268,6 +259,10 @@ namespace TCMobile
                     status.Text = "not started";
                 }
             }
+            else
+            {
+                status.Text = "not started";
+            }
             frame = new MaterialFrame
             {
                 HasShadow = true,
@@ -364,7 +359,10 @@ namespace TCMobile
 
             LP.Children.Add(frame);
         }
-
+        /************* Learning Path Cards *************
+         * 
+         * 
+         *****************************************************/
         public async  Task<bool>buildObjectiveCard(Objective obj, StackLayout container, string lpid)
         {
            
@@ -379,7 +377,8 @@ namespace TCMobile
                 Text = obj.Name,
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 VerticalTextAlignment = TextAlignment.Center,
-                HeightRequest = 40
+                HeightRequest = 40,
+                Style = (Style)Application.Current.Resources["headerStyle"]
             };
 
             // container for the content in the card
@@ -428,7 +427,39 @@ namespace TCMobile
             StackLayout frameContainer = new StackLayout();
             foreach (Activity act in obj.Activities.Activity)
             {
-                Models.Record courseRecord = await App.Database.GetCourseByID(act.CourseID);
+                // chart for each activity in the objective
+                ChartView chartView = null;
+                float perc_complete = 0;
+                float perc_incomplete = 0;
+               
+                perc_complete = (act.Status == "completed") ? 100  : (act.Status !="unknown") ? 50 :  0;
+                perc_incomplete = (act.Status.ToLower() == "completed") ? 0 : (act.Status != "unknown") ? 50 : 100;
+                   
+
+                    List<Microcharts.ChartEntry> entries = new List<ChartEntry>
+                    {
+                        new ChartEntry(perc_complete)
+                        {
+
+                            Color = SKColor.Parse("#266489")
+                        },
+                        new ChartEntry(perc_incomplete)
+                        {
+                            Color = SKColor.Parse("#FF0000")
+                        }
+
+                    };
+                    var completionChart = new DonutChart() { Entries = entries,BackgroundColor= SKColors.Transparent };
+                chartView = new ChartView
+                {
+                    Chart = completionChart,
+                    HorizontalOptions = LayoutOptions.EndAndExpand,
+                    HeightRequest = 100,
+                    BackgroundColor = Color.Transparent
+
+                };
+            
+            Models.Record courseRecord = await App.Database.GetCourseByID(act.CourseID);
                if(courseRecord == null)
                 {
                    
@@ -471,7 +502,10 @@ namespace TCMobile
 
                 Label coursetitle = new Label
                 {
-                    Text = act.Name
+                    Text = act.Name,
+                    Style = (Style)Application.Current.Resources["subHeaderStyle"],
+                    VerticalTextAlignment = TextAlignment.Center,
+                    VerticalOptions = LayoutOptions.FillAndExpand
                 };
                 ActivityIndicator spinner = new ActivityIndicator
                 {
@@ -517,6 +551,7 @@ namespace TCMobile
                 marquee.HorizontalOptions = LayoutOptions.StartAndExpand;
 
                 activityContainer.Children.Add(coursetitle,0,0);
+                activityContainer.Children.Add(chartView, 1, 0);
                 Grid.SetColumnSpan(coursetitle, 2);
                 activityContainer.Children.Add(marquee,0,1);
                 activityContainer.Children.Add(btnGrid, 1, 1);
@@ -526,6 +561,7 @@ namespace TCMobile
            
             cardBody.Children.Add(frameContainer);
             layout.Children.Add(objectiveTitle,0,0);
+           
             layout.Children.Add(AcBtn, 1, 0);
             layout.Children.Add(cardBody,0,1);
             Grid.SetColumnSpan(cardBody, 2);

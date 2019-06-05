@@ -46,6 +46,11 @@
                 <Setter Property="FontAttributes" Value="Bold"/>
                 <Setter Property="Margin" Value="0,8,0,4"/>
             </Style>
+            <Style x:Key="subHeaderStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="Margin" Value="0,8,0,4"/>
+            </Style>
             <Style x:Key="textStyle" TargetType="Label">
                 <Setter Property="FontSize" Value="Default"/>
                 <Setter Property="Margin" Value="0,4,0,8"/>
