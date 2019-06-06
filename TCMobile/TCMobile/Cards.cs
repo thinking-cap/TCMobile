@@ -432,32 +432,7 @@ namespace TCMobile
                 float perc_complete = 0;
                 float perc_incomplete = 0;
                
-                perc_complete = (act.Status == "completed") ? 100  : (act.Status !="unknown") ? 50 :  0;
-                perc_incomplete = (act.Status.ToLower() == "completed") ? 0 : (act.Status != "unknown") ? 50 : 100;
-                   
-
-                    List<Microcharts.ChartEntry> entries = new List<ChartEntry>
-                    {
-                        new ChartEntry(perc_complete)
-                        {
-
-                            Color = SKColor.Parse("#266489")
-                        },
-                        new ChartEntry(perc_incomplete)
-                        {
-                            Color = SKColor.Parse("#FF0000")
-                        }
-
-                    };
-                    var completionChart = new DonutChart() { Entries = entries,BackgroundColor= SKColors.Transparent };
-                chartView = new ChartView
-                {
-                    Chart = completionChart,
-                    HorizontalOptions = LayoutOptions.EndAndExpand,
-                    HeightRequest = 100,
-                    BackgroundColor = Color.Transparent
-
-                };
+                
             
             Models.Record courseRecord = await App.Database.GetCourseByID(act.CourseID);
                if(courseRecord == null)
@@ -481,15 +456,54 @@ namespace TCMobile
                         App.LocalFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
                         await App.Database.SaveItemAsync(rec);
 
+                        perc_complete = (rec.CompletionStatus.ToLower() == "completed") ? 100 : (rec.CompletionStatus.ToLower() != "not started") ? 50 : 0;
+                        perc_incomplete = (rec.CompletionStatus.ToLower() == "completed") ? 0 : (rec.CompletionStatus.ToLower() != "not started") ? 50 : 100;
+
+
                 }
                 else if(String.IsNullOrEmpty(courseRecord.Objective) || String.IsNullOrEmpty(courseRecord.LP))
                 {
                    
                     courseRecord.Objective = obj.id;
                     courseRecord.LP = lpid;
+
                     
                     await App.Database.SaveItemAsync(courseRecord);
                 }
+
+                if (courseRecord != null)
+                {
+                    perc_complete = (courseRecord.CompletionStatus.ToLower() == "completed") ? 100 : (courseRecord.CompletionStatus.ToLower() == "unknown" || courseRecord.CompletionStatus.ToLower() == "attempted") ? 50 : 0;
+                    perc_incomplete = (courseRecord.CompletionStatus.ToLower() == "not started") ? 0 : (courseRecord.CompletionStatus.ToLower() == "completed") ? 100 : 50;
+                }
+
+
+                //******************* chart ***************************
+
+
+                List<Microcharts.ChartEntry> entries = new List<ChartEntry>
+                    {
+                        new ChartEntry(perc_complete)
+                        {
+                            Color = SKColor.Parse("#266489")
+                        },
+                        new ChartEntry(perc_incomplete)
+                        {
+                            Color = SKColor.Parse("#FF0000")
+                        }
+
+                    };
+                var completionChart = new DonutChart() { Entries = entries, BackgroundColor = SKColors.Transparent };
+                chartView = new ChartView
+                {
+                    Chart = completionChart,
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                    HeightRequest = 100,
+                    BackgroundColor = Color.Transparent
+
+                };
+
+                //*****************************************************
                 Grid activityContainer = new Grid
                 {
                     Padding = new Thickness(5, 0, 5, 0),
@@ -527,10 +541,12 @@ namespace TCMobile
                 DownloadImageButton downloadBtn = BuildImageDownload(act.CourseID, courseRecord,spinner,lbl);
                 launchBtn.HorizontalOptions = LayoutOptions.Center;
                 downloadBtn.HorizontalOptions = LayoutOptions.Center;
+                launchBtn.VerticalOptions = LayoutOptions.EndAndExpand;
+                downloadBtn.VerticalOptions = LayoutOptions.EndAndExpand;
                 // Button Grid
                 Grid btnGrid = new Grid()
                 {
-                    HorizontalOptions = LayoutOptions.Center
+                    HorizontalOptions = LayoutOptions.CenterAndExpand
                 };
                 btnGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(50) });
                 btnGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(20) });

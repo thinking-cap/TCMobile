@@ -24,8 +24,8 @@
 
             <StackLayout Grid.Row="1" Grid.Column="0">
                 <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                    <StackLayout VerticalOptions="FillAndExpand">
-                        <StackLayout x:Name="LP" VerticalOptions="FillAndExpand"></StackLayout>
+                    <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                        <StackLayout x:Name="LP" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"></StackLayout>
                         <ActivityIndicator x:Name="Progress" IsVisible="False" HeightRequest="20"/>
                     </StackLayout>
                 </ScrollView>
