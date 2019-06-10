@@ -24,6 +24,7 @@ namespace TCMobile
     {
         public string Result { get; set; }
         public string Success { get; set; }
+        public string Message { get; set; }
     }
     public class LogInObj
     {

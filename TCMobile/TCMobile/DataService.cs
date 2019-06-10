@@ -2,7 +2,10 @@
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Collections.Generic;
-
+using Microsoft.AppCenter.Crashes;
+using System.Xml;
+using System.Xml.Linq;
+using System.Linq;
 namespace TCMobile
 {
     public class DataService
@@ -77,8 +80,19 @@ namespace TCMobile
             dynamic data = null;
             if (response != null)
             {
-                string json = response.Content.ReadAsStringAsync().Result;
-                data = JsonConvert.DeserializeObject<ServiceResultOfString>(json);
+                try
+                {
+                    string xmlString = response.Content.ReadAsStringAsync().Result;
+                    XmlDocument result = new XmlDocument();
+                    var xdoc = XDocument.Parse(xmlString);
+                    data = xdoc.Descendants("{http://www.thinkingcap.com/}Success").First().Value;
+                    //data = JsonConvert.DeserializeObject<ServiceResultOfString>(result.SelectSingleNode(");
+                    // data = result.SelectSingleNode("root/ServiceResultOfString/Success");
+                }catch(System.Exception ex)
+                {
+                    Crashes.TrackError(ex);
+                    data = "Error";
+                }
             }
 
             return data;
@@ -90,13 +104,26 @@ namespace TCMobile
             var response = await client.GetAsync(queryString);
 
             dynamic data = null;
+            dynamic cmi = null;
             if (response != null)
             {
                 string json = response.Content.ReadAsStringAsync().Result;
-                data = JsonConvert.DeserializeObject<ServiceResultOfString>(json);
+                try
+                {
+                    //data = JsonConvert.DeserializeObject<ServiceResultOfString>(json);
+                    
+                    var xdoc = XDocument.Parse(json);
+                    data = xdoc.Descendants("{http://www.thinkingcap.com/}Result").First().Value;
+                    cmi = JsonConvert.DeserializeObject<API.Cmi>(data);
+                }
+                catch(System.Exception ex)
+                {
+                    Crashes.TrackError(ex);
+                }
+                
             }
 
-            return data;
+            return cmi;
         }
 
         public async Task LoginAsync(string username,  string password)

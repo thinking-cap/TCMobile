@@ -15,6 +15,7 @@ using Microcharts.Forms;
 using Microcharts;
 using SkiaSharp;
 using Newtonsoft.Json;
+using Xamarin.Essentials;
 
 namespace TCMobile
 {
@@ -24,8 +25,14 @@ namespace TCMobile
         {
             MaterialFrame frame;
             StackLayout layout;
-           
-           // DownloadButton launchBtn;
+            // let's try to sync all the courses
+            var current = Connectivity.NetworkAccess;
+            if (current == NetworkAccess.Internet)
+            {
+                API api = new API();
+                Device.BeginInvokeOnMainThread(async () => await api.SyncCourse(courseid));
+            }
+            // DownloadButton launchBtn;
             ActivityIndicator spinner;
            // Image marquee;
             StackLayout marqueeContainer;
@@ -473,8 +480,18 @@ namespace TCMobile
 
                 if (courseRecord != null)
                 {
-                    perc_complete = (courseRecord.CompletionStatus.ToLower() == "completed") ? 100 : (courseRecord.CompletionStatus.ToLower() == "unknown" || courseRecord.CompletionStatus.ToLower() == "attempted") ? 50 : 0;
-                    perc_incomplete = (courseRecord.CompletionStatus.ToLower() == "not started") ? 0 : (courseRecord.CompletionStatus.ToLower() == "completed") ? 100 : 50;
+                    if (courseRecord.ProgressMeasure != null && courseRecord.ProgressMeasure != "")
+                    {
+                        perc_complete = float.Parse(courseRecord.ProgressMeasure) * 10;
+                        perc_incomplete = 10 - perc_complete;
+
+                    }
+                    else
+                    {
+                        perc_complete = (courseRecord.CompletionStatus.ToLower() == "completed") ? 100 : (courseRecord.CompletionStatus.ToLower() == "unknown" || courseRecord.CompletionStatus.ToLower() == "attempted") ? 50 : 0;
+                        perc_incomplete = (courseRecord.CompletionStatus.ToLower() == "not started") ? 0 : (courseRecord.CompletionStatus.ToLower() == "completed") ? 100 : 50;
+                    }
+                
                 }
 
 

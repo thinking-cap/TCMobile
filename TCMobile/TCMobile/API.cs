@@ -36,6 +36,20 @@ namespace TCMobile
 
         }
 
+        public async Task<bool> SyncCourse(string courseid)
+        {
+            Models.Record courseRecord = await App.Database.GetCourseByID(courseid);
+            if (courseRecord != null)
+            {
+                string cmi = courseRecord.CMI;
+                if (String.IsNullOrEmpty(cmi))
+                    return false;// get out of dodge if there is nothing to sync
+                bool send = await CommitToLMS(cmi, courseid);
+                return send;
+            }
+            else { return false; }
+        }
+
         public  async Task<bool> CommitToLMS(string cmi,string courseid)
         {
             try
@@ -47,7 +61,6 @@ namespace TCMobile
                 return true;
             }catch(Exception ex)
             {
-
                 Crashes.TrackError(ex);
                 return false;
             }
