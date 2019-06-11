@@ -53,8 +53,15 @@ if (typeof (API_1484_11) == 'undefined') {
             } else {
                 window.webkit.messageHandlers.invokeAction.postMessage(JSON.stringify(msg));
             }
-            cmi.interactions._count = cmi.interactions.length;
-            cmi.objectives._count = cmi.objectives.length;
+            if (typeof (cmi.interactions) !== 'undefined')
+                cmi.interactions._count = (typeof (cmi.interactions) !== 'undefined') ? cmi.interactions.length : 0;
+            else
+                cmi.interactions = [];
+              
+            if (typeof (cmi.objectives) !== 'undefined')
+                cmi.objectives._count = (typeof (cmi.objectives) !== 'undefined') ? cmi.objectives.length : 0;
+            else
+                cmi.objectives = [];
             return "true";
         },
         GetValue: function (key) {
@@ -275,8 +282,10 @@ if (typeof (API_1484_11) == 'undefined') {
 
 
 var GetCMIInteractions = function (key) {
+    if (typeof (cmi.interactions) === 'undefined')
+        cmi.interactions = [];
     if (key === "cmi.interactions._count") {
-        return cmi.interactions.length;
+        return (typeof(cmi.interactions !== 'undefined')) ? cmi.interactions.length : 0;
     } else if (key === "cmi.interactions._children") {
         return '"id", "objectives", "time", "type", "correct_responses", "weighting", "learner_response", "result", "latency"';
     } else if (key.indexOf("objectives") > 0) {
@@ -316,7 +325,10 @@ var GetCMIInteractions = function (key) {
 };
 
 var GetCMIObjectives = function (key) {
-    cmi.objectives._count = cmi.objectives.length;
+    //cmi.objectives._count = (typeof(cmi.objectives) !== 'undefined') ? cmi.objectives.length : 0;
+    if (typeof (cmi.objectives === 'undefined')) {
+        cmi.objectives = [];
+    }
     if (key === "cmi.objectives._count") {
         return cmi.objectives.length;
     } else if (key === "cmi.objectives._children") {
@@ -449,6 +461,8 @@ SetInteractionType = function (interaction, value) {
 };
 
 var SetCMIObjectives = function (key, value) {
+    if (typeof (cmi.objectives) === 'undefined')
+        cmi.objectives = [];
     if (key === "cmi.objectives._count") {
         return false;
     } else if (key === "cmi.objectives._children") {

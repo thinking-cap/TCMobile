@@ -68,10 +68,10 @@ namespace TCMobile
             
         }
 
-        public async Task<dynamic>GetCMIFromLMS(string courseid)
+        public async Task<string>GetCMIFromLMS(string courseid)
         {
             string uri = Constants.GetCMI + "?userPassword=" + App.CredentialsService.Password + "&userLogin=" + App.CredentialsService.UserName + "&courseid=" + courseid;
-            dynamic loginObj = await DataService.GetCMI(uri).ConfigureAwait(false);
+            string loginObj = await DataService.GetCMI(uri).ConfigureAwait(false);
             return loginObj;
 
         }
@@ -100,11 +100,14 @@ namespace TCMobile
 
         public class LearnerPreference
         {
-            public List<string> _children { get; set; }
+            //public List<string> _children { get; set; }
             public object audio { get; set; }
+            public string audio_level { get; set; }
+            public string audio_captioning { get; set; }
             public string language { get; set; }
-            public object delivery_speed { get; set; }
+            public string delivery_speed { get; set; }
             public string text { get; set; }
+            public string _children { get; set; }
         }
 
         public class Cmi

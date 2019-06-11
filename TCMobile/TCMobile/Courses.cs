@@ -27,7 +27,7 @@ namespace TCMobile
     class Courses
     {
 
-        public async void CreateCourseRecord(string courseid)
+        public async void CreateCourseRecord(string courseid, string cmi)
         {
             Models.Record courseExists = await App.Database.GetCourseByID(courseid);
             if (courseExists == null)
@@ -45,7 +45,7 @@ namespace TCMobile
                 rec.ProgressMeasure = "0";
                 rec.DueDate = App.CourseCatalogue.courses.Find(x => x.courseid == courseid).duedate;
                 rec.Synced = false;
-                rec.CMI = "";
+                rec.CMI = cmi;
                 rec.Downloaded = true;
                 App.LocalFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
                 await App.Database.SaveItemAsync(rec);
@@ -54,11 +54,13 @@ namespace TCMobile
             {
                 courseExists.Deleted = "false";
                 courseExists.Downloaded = true;
+                if (String.IsNullOrEmpty(courseExists.CMI))
+                    courseExists.CMI = cmi;
                 await App.Database.SaveItemAsync(courseExists);
             }
         }
 
-        public async void Unzip(string CourseID)
+        public async void Unzip(string CourseID, string cmi)
         {
             string localFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             string pathToNewFolder = Path.Combine(localFolder, "CoursePackage.zip");
@@ -106,7 +108,7 @@ namespace TCMobile
 
             File.Delete(pathToNewFolder);
             Courses courses = new Courses();
-            courses.CreateCourseRecord(CourseID);
+            courses.CreateCourseRecord(CourseID,cmi);
             var action = await Application.Current.MainPage.DisplayAlert("Finished", "Would you like to launch the course?", "Yes", "No");
             //DisplayAlert("Finished", "Course had successfully been download.", "OK");
            // Debug.WriteLine("action " + action);
@@ -237,12 +239,13 @@ namespace TCMobile
 
         }
 
-        private void Completed(object sender, AsyncCompletedEventArgs e)
+        private async void Completed(object sender, AsyncCompletedEventArgs e)
         {
             string courseID = ((System.Net.WebClient)(sender)).QueryString["CourseID"];
             Courses courses = new Courses();
-            courses.Unzip(courseID);
-            getCMIObjectFromLMS(courseID);
+            string cmi = await getCMIObjectFromLMS(courseID);
+            courses.Unzip(courseID, cmi);
+            
         }
 
 
@@ -257,10 +260,12 @@ namespace TCMobile
             Page p = ViewExtensions.GetParentPage(button);
             p.Navigation.PushModalAsync(new ViewCourse(button.CourseID));
         }
-        public void getCMIObjectFromLMS(string courseid)
+        public async Task<string> getCMIObjectFromLMS(string courseid)
         {
             API api = new API();
-            dynamic cmi = api.GetCMIFromLMS(courseid);
+            string cmi = await api.GetCMIFromLMS(courseid);
+            return cmi;
+            //TODO need to write the cmi object to the db if possible//
         }
 
         public static async Task<Catalogue> GetCatalogue(string domainid,string studentid)

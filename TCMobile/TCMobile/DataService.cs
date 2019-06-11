@@ -98,13 +98,12 @@ namespace TCMobile
             return data;
         }
 
-        public static async Task<dynamic> GetCMI(string queryString)
+        public static async Task<string> GetCMI(string queryString)
         {
             HttpClient client = new HttpClient();
             var response = await client.GetAsync(queryString);
 
-            dynamic data = null;
-            dynamic cmi = null;
+            string data = null;
             if (response != null)
             {
                 string json = response.Content.ReadAsStringAsync().Result;
@@ -114,7 +113,7 @@ namespace TCMobile
                     
                     var xdoc = XDocument.Parse(json);
                     data = xdoc.Descendants("{http://www.thinkingcap.com/}Result").First().Value;
-                    cmi = JsonConvert.DeserializeObject<API.Cmi>(data);
+                    //cmi = JsonConvert.DeserializeObject<API.Cmi>(data);
                 }
                 catch(System.Exception ex)
                 {
@@ -123,7 +122,7 @@ namespace TCMobile
                 
             }
 
-            return cmi;
+            return data;
         }
 
         public async Task LoginAsync(string username,  string password)
