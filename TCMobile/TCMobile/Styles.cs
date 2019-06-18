@@ -22,7 +22,26 @@ namespace TCMobile
                         }
             };
 
+            
+
             App.Current.Resources.Add(textColour);
-        }        
+        }    
+        
+        public void SpinnerColour(string name, string color)
+        {
+            var bgColour = new Style(typeof(ActivityIndicator))
+            {
+                Class = name,
+                Setters =
+                {
+                        new Setter
+                            {
+                                Property = ActivityIndicator.ColorProperty,
+                                Value = Color.FromHex(color)
+                            }
+                }
+            };
+            App.Current.Resources.Add(bgColour);
+        }
     }
 }

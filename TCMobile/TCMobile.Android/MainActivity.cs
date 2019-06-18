@@ -31,7 +31,7 @@ namespace TCMobile.Droid
             ToolbarResource = Resource.Layout.Toolbar;
             CrossCurrentActivity.Current.Init(this,savedInstanceState);
             base.OnCreate(savedInstanceState);
-
+            Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
             CachedImageRenderer.Init(enableFastRenderer:true);
 
             App.ScreenHeight = (int)(Resources.DisplayMetrics.HeightPixels / Resources.DisplayMetrics.Density);

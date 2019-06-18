@@ -190,6 +190,9 @@
     <PackageReference Include="Plugin.Permissions">
       <Version>4.0.2-beta</Version>
     </PackageReference>
+    <PackageReference Include="Rg.Plugins.Popup">
+      <Version>1.1.5.188</Version>
+    </PackageReference>
     <PackageReference Include="SharpZipLib.Portable">
       <Version>0.86.0.3</Version>
     </PackageReference>

@@ -65,7 +65,7 @@ namespace TCMobile
                    
                    
                     s.LabelColour("fontColor", Application.Current.Properties["HeadingTextColour"].ToString());
-
+                    s.SpinnerColour("bgColor", Application.Current.Properties["HeadingTextColour"].ToString());
                     // need to set a variable for the width of the current device 
                     if (Application.Current.Properties.ContainsKey("HeaderColour"))
                         Constants.HeaderColour = Application.Current.Properties["HeaderColour"].ToString();

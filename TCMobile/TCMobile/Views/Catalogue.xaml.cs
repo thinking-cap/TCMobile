@@ -25,22 +25,39 @@ using System.Web;
 using TCMobile.CustomControls;
 
 
+using Rg.Plugins.Popup.Extensions;
+using Rg.Plugins.Popup.Services;
+
+
+
 namespace TCMobile.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class Catalogue : ContentPage
 	{
         bool CatalogueLoaded = false;
-        
+        private Pages.LoadingPage _loadingPage;
+
         protected override void OnAppearing()
         {
+            _loadingPage = new Pages.LoadingPage("Loading");
             base.OnAppearing();
             Constants.deviceWidth = this.Width;
             NavigationPage.SetHasNavigationBar(this, false);
             LoadCourses();
         }
 
-        
+        private async void openPopup()
+        {
+            await PopupNavigation.Instance.PushAsync(_loadingPage);
+        }
+
+        private async void closePopup()
+        {
+            await PopupNavigation.Instance.RemovePageAsync(_loadingPage);
+        }
+
+
         IDownloader downloader = DependencyService.Get<IDownloader>();
         public Catalogue ()
 		{
@@ -89,10 +106,11 @@ namespace TCMobile.Views
 
         async void LoadCourses()
         {
+            openPopup();
             Cat.Children.Clear();
             // show the spinner and turn it on 
-            CatalogueProgress.IsVisible = true;
-            CatalogueProgress.IsRunning = true;
+           // CatalogueProgress.IsVisible = true;
+           // CatalogueProgress.IsRunning = true;
             // Load the catalogue
             CredentialsService credentials = new CredentialsService();
             var current = Connectivity.NetworkAccess;
@@ -105,8 +123,9 @@ namespace TCMobile.Views
                 buildCatalogueOffline();
             }
             //Hide the spinner
-            CatalogueProgress.IsVisible = false;
-            CatalogueProgress.IsRunning = false;
+            closePopup();
+            //CatalogueProgress.IsVisible = false;
+           // CatalogueProgress.IsRunning = false;
 
             // Bind the courses to the ListView
             

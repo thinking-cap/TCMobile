@@ -10,17 +10,32 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Newtonsoft.Json;
 
+using Rg.Plugins.Popup.Extensions;
+using Rg.Plugins.Popup.Services;
+
 namespace TCMobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LearningPaths : ContentPage
     {
         public TCMobile.LPS lp;
+        private Pages.LoadingPage _loadingPage;
         public LearningPaths()
         {
+            _loadingPage = new Pages.LoadingPage("Loading");
             InitializeComponent();
             
 
+        }
+
+        private async void openPopup()
+        {
+            await PopupNavigation.Instance.PushAsync(_loadingPage);
+        }
+
+        private async void closePopup()
+        {
+            await PopupNavigation.Instance.RemovePageAsync(_loadingPage);
         }
 
         protected override void OnAppearing()
@@ -31,6 +46,7 @@ namespace TCMobile.Views
 
         async void loadLearningPaths()
         {
+            openPopup();
             LP.Children.Clear();
             // show the spinner and turn it on 
             LPProgress.IsVisible = true;
@@ -77,6 +93,7 @@ namespace TCMobile.Views
                     CreateLPRecord(l);
                 }
             }
+            closePopup();
         }
         async void CreateLPRecord(LPRecord lp)
         {
