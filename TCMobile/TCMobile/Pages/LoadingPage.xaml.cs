@@ -13,8 +13,7 @@ namespace TCMobile.Pages
        
 
         public LoadingPage(string msg)
-        {
-           
+        {           
             InitializeComponent();
             Msg.Text = msg;
         }

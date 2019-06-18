@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 
 using Rg.Plugins.Popup.Extensions;
 using Rg.Plugins.Popup.Services;
+using System.Runtime.CompilerServices;
 
 namespace TCMobile.Views
 {
@@ -23,6 +24,7 @@ namespace TCMobile.Views
         public LearningPaths()
         {
             _loadingPage = new Pages.LoadingPage("Loading");
+            base.OnAppearing();
             InitializeComponent();
             
 
@@ -133,8 +135,7 @@ namespace TCMobile.Views
         public void DetailsClicked(object sender, EventArgs e)
         {
             DownloadImageButton button = (DownloadImageButton)sender;
-            string id = button.CourseID;
-           
+            string id = button.CourseID;             
             Navigation.PushAsync(new LearningPath(id));
         }
     }

@@ -23,6 +23,7 @@ namespace TCMobile.Views
         {
             if (!MenuPages.ContainsKey(id))
             {
+              
                 switch (id)
                 {
                     case (int)MenuItemType.Catalogue:

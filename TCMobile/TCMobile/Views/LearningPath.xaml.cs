@@ -8,20 +8,43 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Web;
+using Rg.Plugins.Popup.Extensions;
+using Rg.Plugins.Popup.Services;
 
 namespace TCMobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LearningPath : ContentPage
     {
+        private Pages.LoadingPage _loadingPage;
         public LearningPath(string lpid)
         {
+            App.CurrentLP = lpid;
             InitializeComponent();
-            loadCourses(lpid);
+           
         }
+
+        protected override void OnAppearing()
+        {
+            _loadingPage = new Pages.LoadingPage("Loading");
+            base.OnAppearing();
+            loadCourses(App.CurrentLP);
+        }
+        private async void openPopup()
+        {
+            await PopupNavigation.Instance.PushAsync(_loadingPage);
+        }
+
+        private async void closePopup()
+        {
+            await PopupNavigation.Instance.RemovePageAsync(_loadingPage);
+        }
+
         public TCMobile.Map lp;
         async void loadCourses(string lpid)
         {
+            openPopup();
+            LP.Children.Clear();
             CredentialsService credentials = new CredentialsService();
             var current = Connectivity.NetworkAccess;
             if (current == NetworkAccess.Internet) { 
@@ -43,6 +66,8 @@ namespace TCMobile.Views
                     bool x = await buildLPDetails(lpMap, lpid);
                 }
             }
+
+            closePopup();
         }
 
         async Task<bool>buildLPDetails(StudentActivityMap lp,string lpid)

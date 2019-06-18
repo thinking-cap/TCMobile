@@ -42,6 +42,8 @@ namespace TCMobile.Views
         {
             // create an api object
             API api = new API();
+            
+
             // use MessagingCenter to talk to the webview //
             MessagingCenter.Subscribe<string>(this, "API", async(cmi) =>
             {
@@ -77,9 +79,11 @@ namespace TCMobile.Views
                         else
                         {
                             courseRecord.Synced = false;
-                        }
+                        }                        
                         Device.BeginInvokeOnMainThread(async () => await Navigation.PopModalAsync());
-                    }catch(Exception ex)
+                        MessagingCenter.Send("", "RefreshLP");
+                    }
+                    catch(Exception ex)
                     {
                         courseRecord.Synced = false;
                         Crashes.TrackError(ex);
