@@ -664,7 +664,7 @@ namespace TCMobile
                 BackgroundColor = Color.Transparent,
                 BorderColor = Color.Transparent,
                 BtnLabel = txt,
-                IsVisible = (courseRecord == null) ? true : (courseRecord.Deleted == "false" && courseRecord.Downloaded == false) ? true : false
+                IsVisible = (courseRecord == null) ? true : (courseRecord.Deleted == "true" && courseRecord.Downloaded == false) ? true : false
             };
 
             return downloadBtn;

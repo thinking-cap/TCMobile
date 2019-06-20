@@ -4,7 +4,7 @@
              xmlns:tc="clr-namespace:TCMobile"
              xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
              xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
-             x:Class="TCMobile.Pages.LoadingPage">
+             x:Class="TCMobile.Pages.LoadingPage" CloseWhenBackgroundIsClicked="False">
 
     <pages:PopupPage.Animation>
         <animations:ScaleAnimation

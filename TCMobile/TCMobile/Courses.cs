@@ -20,7 +20,8 @@ using Plugin.Permissions.Abstractions;
 using TCMobile.CustomControls;
 using System.Linq;
 using Newtonsoft.Json;
-
+using Rg.Plugins.Popup.Extensions;
+using Rg.Plugins.Popup.Services;
 
 namespace TCMobile
 {
@@ -109,6 +110,8 @@ namespace TCMobile
             File.Delete(pathToNewFolder);
             Courses courses = new Courses();
             courses.CreateCourseRecord(CourseID,cmi);
+
+            closePopup();
             var action = await Application.Current.MainPage.DisplayAlert("Finished", "Would you like to launch the course?", "Yes", "No");
             //DisplayAlert("Finished", "Course had successfully been download.", "OK");
            // Debug.WriteLine("action " + action);
@@ -132,7 +135,7 @@ namespace TCMobile
         bool busy = false;
         public async void DownloadClicked(object sender, EventArgs e)
         {
-                var profiles = Connectivity.ConnectionProfiles;
+            var profiles = Connectivity.ConnectionProfiles;
             var current = Connectivity.NetworkAccess;
             bool allowDownload = true;
             if (current == NetworkAccess.Internet)
@@ -169,8 +172,8 @@ namespace TCMobile
                 button.IsEnabled = false;
                 button.IsVisible = false;
 
-                button.Spinner.IsRunning = true;
-                button.Spinner.IsVisible = true;
+               // button.Spinner.IsRunning = true;
+               // button.Spinner.IsVisible = true;
                 button.BtnLabel.IsVisible = false;
 
 
@@ -210,12 +213,26 @@ namespace TCMobile
                     await Application.Current.MainPage.DisplayAlert("Warning", "You must connect to a network to download content", "OK");
             }
         }
+        public Pages.LoadingPage _downloadPage = new Pages.LoadingPage("Downloading");
+        private async void openPopup(string msg)
+        {
+           // _downloadPage = new Pages.LoadingPage(msg);
+            await PopupNavigation.Instance.PushAsync(_downloadPage);
+        }
+
+        private async void closePopup()
+        {
+
+            if (_downloadPage != null)
+                await PopupNavigation.Instance.PopAllAsync(true);
+        }
 
         void Download(string url, string folder, string id)
             {
-
-                try
+            
+            try
                 {
+                    openPopup("Downloading");
                     WebClient webClient = new WebClient();
                     webClient.QueryString.Add("CourseID", id);
                     webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback);
