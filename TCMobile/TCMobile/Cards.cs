@@ -86,6 +86,22 @@ namespace TCMobile
                 Style = (Style)Application.Current.Resources["headerStyle"]
             };
 
+            Grid titleGrid = new Grid()
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand
+            };
+            if (courseRecord != null && courseRecord.Downloaded != false)
+            {
+                titleGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(80) });
+                titleGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                titleGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(50) });
+            }
+            else
+            {
+                titleGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(40) });
+                titleGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+
+            }
             string duedateText = "";
             ChartView chartView = null;
             if (!String.IsNullOrEmpty(duedate))
@@ -98,8 +114,8 @@ namespace TCMobile
             if(courseRecord != null && courseRecord.Downloaded == true) {
                 if (courseRecord.ProgressMeasure != null && courseRecord.ProgressMeasure != "")
                 {
-                   perc_complete = float.Parse(courseRecord.ProgressMeasure) * 10;
-                   perc_incomplete = 10 - perc_complete;
+                   perc_complete = float.Parse(courseRecord.ProgressMeasure) * 100;
+                   perc_incomplete = 100 - perc_complete;
                     
                 }
                 else { 
@@ -112,21 +128,22 @@ namespace TCMobile
                     new ChartEntry(perc_complete)
                     {
 
-                        Color = SKColor.Parse("#266489")
+                        Color = SKColor.Parse(Constants.MenuBackgroundColour)
                     },
                     new ChartEntry(perc_incomplete)
                     {
-                        Color = SKColor.Parse("#FF0000")
+                        Color = SKColor.Parse(Constants.HeaderColour)
                     }
                     
             };
-            var completionChart = new DonutChart() { Entries = entries };
+            
+            var completionChart = new DonutChart() { Entries = entries, IsAnimated = false  };
                 chartView = new ChartView
                 {
                     Chart = completionChart,
-                    HorizontalOptions = LayoutOptions.EndAndExpand,
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                    VerticalOptions = LayoutOptions.CenterAndExpand,                    
                     HeightRequest = 100
-
                 };
             }
             Label dueDate = new Label
@@ -172,9 +189,11 @@ namespace TCMobile
             {
                 HorizontalOptions = LayoutOptions.Center
             };
+          
             btnGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(50)});
             btnGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(20)});
             btnGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(80)});
+              
 
             Label lbl = new Label()
             {
@@ -215,15 +234,33 @@ namespace TCMobile
             btnGrid.Children.Add(launchBtn, 0, 0);
             btnGrid.Children.Add(spinner, 0, 0);
             btnGrid.Children.Add(lbl, 0, 1);
-            cardBody.Children.Add(title);
+            titleGrid.Children.Add(title, 0, 0);
+
+
+            if (courseRecord != null && courseRecord.Downloaded != false)
+            {
+                var percLabel = new Label
+                {
+
+                    Text = perc_complete.ToString() + "%",
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                    VerticalOptions = LayoutOptions.FillAndExpand,
+                    HorizontalTextAlignment = TextAlignment.Start,
+                    VerticalTextAlignment = TextAlignment.Center,
+                    TextColor = Color.Black,
+                    FontSize = 22
+                };
+                titleGrid.Children.Add(chartView, 1, 0);
+                titleGrid.Children.Add(percLabel,1,0);
+            }
+            cardBody.Children.Add(titleGrid);
             cardBody.Children.Add(dueDate);
             //string x = (courseRecord == null || courseRecord.Deleted == "true") ? "download" :
             //             (courseRecord.CompletionStatus.ToLower() == "completed") ? "review" :
             //             (courseRecord.CMI == "") ? "open" : "resume";
             
             cardBody.Children.Add(webViewGrid);
-            if (courseRecord != null && courseRecord.Downloaded != false)
-                cardBody.Children.Add(chartView);
+           
             layout.Children.Add(marqueeContainer);
             layout.Children.Add(cardBody);
             layout.Children.Add(cardFooter);

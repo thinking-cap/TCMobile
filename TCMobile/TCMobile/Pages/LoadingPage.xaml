@@ -18,7 +18,7 @@
     <ScrollView
     HorizontalOptions="Center"
     VerticalOptions="Center">
-        <AbsoluteLayout>
+        
             <tc:MaterialFrame
                 x:Name="FrameContainer"
                 Margin="15"
@@ -40,8 +40,7 @@
                             HeightRequest="50"/>
                     <Label x:Name="Msg" Text="" StyleClass="pageTitle,fontColor"/>
                 </StackLayout>
-            </tc:MaterialFrame>            
-        </AbsoluteLayout>
+            </tc:MaterialFrame> 
     </ScrollView>
 </pages:PopupPage>
 
