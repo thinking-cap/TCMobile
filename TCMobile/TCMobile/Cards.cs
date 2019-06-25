@@ -88,13 +88,16 @@ namespace TCMobile
 
             Grid titleGrid = new Grid()
             {
-                HorizontalOptions = LayoutOptions.FillAndExpand
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                Padding = 0,
+                Margin = 0
             };
             if (courseRecord != null && courseRecord.Downloaded != false)
             {
-                titleGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(80) });
+                titleGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(40) });
                 titleGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                titleGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(50) });
+                titleGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(80) });
             }
             else
             {
@@ -143,7 +146,9 @@ namespace TCMobile
                     Chart = completionChart,
                     HorizontalOptions = LayoutOptions.CenterAndExpand,
                     VerticalOptions = LayoutOptions.CenterAndExpand,                    
-                    HeightRequest = 100
+                    HeightRequest = 40,
+                    Margin = 0
+                    
                 };
             }
             Label dueDate = new Label
@@ -245,13 +250,26 @@ namespace TCMobile
                     Text = perc_complete.ToString() + "%",
                     HorizontalOptions = LayoutOptions.CenterAndExpand,
                     VerticalOptions = LayoutOptions.FillAndExpand,
-                    HorizontalTextAlignment = TextAlignment.Start,
+                    HorizontalTextAlignment = TextAlignment.Center,
                     VerticalTextAlignment = TextAlignment.Center,
                     TextColor = Color.Black,
-                    FontSize = 22
+                    FontSize = 16
                 };
+                var completeLabel = new Label
+                {
+                    Text = "Complete",
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                    VerticalOptions = LayoutOptions.FillAndExpand,
+                    HorizontalTextAlignment = TextAlignment.Center,
+                    VerticalTextAlignment = TextAlignment.End,
+                    TextColor = Color.Black,
+                    FontSize = 10
+
+                };
+                
                 titleGrid.Children.Add(chartView, 1, 0);
-                titleGrid.Children.Add(percLabel,1,0);
+                titleGrid.Children.Add(percLabel, 1, 0);
+                titleGrid.Children.Add(completeLabel, 1, 0);
             }
             cardBody.Children.Add(titleGrid);
             cardBody.Children.Add(dueDate);
