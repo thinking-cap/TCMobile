@@ -106,7 +106,7 @@ namespace TCMobile
 
             }
             string duedateText = "";
-            ChartView chartView = null;
+            //ChartView chartView = null;
             if (!String.IsNullOrEmpty(duedate))
             {
                 DateTime dt = Convert.ToDateTime(duedate);
@@ -125,31 +125,7 @@ namespace TCMobile
                     perc_complete = (courseRecord != null && courseRecord.CompletionStatus.ToLower() == "completed") ?  100 :(courseRecord != null) ? 50 : 0;
                     perc_incomplete = (courseRecord != null && courseRecord.CompletionStatus.ToLower() != "completed") ? (courseRecord != null) ? 50 : 0 : 100;
                 }
-
-                List<Microcharts.ChartEntry> entries = new List<ChartEntry>
-                {
-                    new ChartEntry(perc_complete)
-                    {
-
-                        Color = SKColor.Parse(Constants.MenuBackgroundColour)
-                    },
-                    new ChartEntry(perc_incomplete)
-                    {
-                        Color = SKColor.Parse(Constants.HeaderColour)
-                    }
-                    
-            };
-            
-            var completionChart = new DonutChart() { Entries = entries, IsAnimated = false  };
-                chartView = new ChartView
-                {
-                    Chart = completionChart,
-                    HorizontalOptions = LayoutOptions.CenterAndExpand,
-                    VerticalOptions = LayoutOptions.CenterAndExpand,                    
-                    HeightRequest = 40,
-                    Margin = 0
-                    
-                };
+           
             }
             Label dueDate = new Label
             {
@@ -218,19 +194,7 @@ namespace TCMobile
                 Padding = new Thickness(16, 0, 16, 8),
                 ClassId = "course_" + courseid
             };
-
-            //launchBtn = new DownloadButton
-            //{
-            //    Text = (courseRecord == null) ? "open" :
-            //            (courseRecord.CompletionStatus.ToLower() == "completed") ? "review" :
-            //            (courseRecord.CMI == "") ? "open" : "resume",
-            //    IsVisible = (courseRecord == null) ? false : (courseRecord.Deleted == "false") ? true : false,
-            //    Image = "launch_w.png",
-            //    Style = (Style)Application.Current.Resources["buttonStyle"],
-            //    ClassId = courseid,
-            //    CourseID = courseid
-
-            //};
+            
             DownloadImageButton launchBtn = BuildImageLaunch(courseid, courseRecord, spinner,lbl);
             downloadBtn.LaunchButton = launchBtn;
             launchBtn.Clicked += launchCourse;
@@ -243,33 +207,10 @@ namespace TCMobile
 
 
             if (courseRecord != null && courseRecord.Downloaded != false)
-            {
-                var percLabel = new Label
-                {
-
-                    Text = perc_complete.ToString() + "%",
-                    HorizontalOptions = LayoutOptions.CenterAndExpand,
-                    VerticalOptions = LayoutOptions.FillAndExpand,
-                    HorizontalTextAlignment = TextAlignment.Center,
-                    VerticalTextAlignment = TextAlignment.Center,
-                    TextColor = Color.Black,
-                    FontSize = 16
-                };
-                var completeLabel = new Label
-                {
-                    Text = "Complete",
-                    HorizontalOptions = LayoutOptions.CenterAndExpand,
-                    VerticalOptions = LayoutOptions.FillAndExpand,
-                    HorizontalTextAlignment = TextAlignment.Center,
-                    VerticalTextAlignment = TextAlignment.End,
-                    TextColor = Color.Black,
-                    FontSize = 10
-
-                };
-                
-                titleGrid.Children.Add(chartView, 1, 0);
-                titleGrid.Children.Add(percLabel, 1, 0);
-                titleGrid.Children.Add(completeLabel, 1, 0);
+            {                
+                Doughnut doughnut = new Doughnut();
+                Grid doughnutContainer = doughnut.CompletionChart("Completed", perc_complete, perc_incomplete);
+                titleGrid.Children.Add(doughnutContainer,1,0);
             }
             cardBody.Children.Add(titleGrid);
             cardBody.Children.Add(dueDate);
@@ -537,8 +478,8 @@ namespace TCMobile
                 {
                     if (courseRecord.ProgressMeasure != null && courseRecord.ProgressMeasure != "")
                     {
-                        perc_complete = float.Parse(courseRecord.ProgressMeasure) * 10;
-                        perc_incomplete = 10 - perc_complete;
+                        perc_complete = float.Parse(courseRecord.ProgressMeasure) * 100;
+                        perc_incomplete = 100 - perc_complete;
 
                     }
                     else
@@ -550,30 +491,10 @@ namespace TCMobile
                 }
 
 
-                //******************* chart ***************************
+                
 
-
-                List<Microcharts.ChartEntry> entries = new List<ChartEntry>
-                    {
-                        new ChartEntry(perc_complete)
-                        {
-                            Color = SKColor.Parse("#266489")
-                        },
-                        new ChartEntry(perc_incomplete)
-                        {
-                            Color = SKColor.Parse("#FF0000")
-                        }
-
-                    };
-                var completionChart = new DonutChart() { Entries = entries, BackgroundColor = SKColors.Transparent };
-                chartView = new ChartView
-                {
-                    Chart = completionChart,
-                    HorizontalOptions = LayoutOptions.CenterAndExpand,
-                    HeightRequest = 100,
-                    BackgroundColor = Color.Transparent
-
-                };
+                Doughnut doughnut = new Doughnut();
+                Grid doughnutGrid = doughnut.CompletionChart("Completed", perc_complete, perc_incomplete);
 
                 //*****************************************************
                 Grid activityContainer = new Grid
@@ -618,7 +539,8 @@ namespace TCMobile
                 // Button Grid
                 Grid btnGrid = new Grid()
                 {
-                    HorizontalOptions = LayoutOptions.CenterAndExpand
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                    VerticalOptions = LayoutOptions.EndAndExpand
                 };
                 btnGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(50) });
                 btnGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(20) });
@@ -630,8 +552,10 @@ namespace TCMobile
                 btnGrid.Children.Add(lbl, 0, 1);
 
                 Courses c = new Courses();
+                downloadBtn.VerticalOptions = LayoutOptions.EndAndExpand;
                 downloadBtn.Clicked += c.DownloadClicked;
                 launchBtn.Clicked += c.launchCourse;
+                launchBtn.VerticalOptions = LayoutOptions.EndAndExpand;
                 downloadBtn.LaunchButton = launchBtn;
                 downloadBtn.CourseID = act.CourseID;
                 // add the image
@@ -639,7 +563,8 @@ namespace TCMobile
                 marquee.HorizontalOptions = LayoutOptions.StartAndExpand;
 
                 activityContainer.Children.Add(coursetitle,0,0);
-                activityContainer.Children.Add(chartView, 1, 0);
+                // activityContainer.Children.Add(chartView, 1, 0);
+                activityContainer.Children.Add(doughnutGrid, 1, 0);
                 Grid.SetColumnSpan(coursetitle, 2);
                 activityContainer.Children.Add(marquee,0,1);
                 activityContainer.Children.Add(btnGrid, 1, 1);
