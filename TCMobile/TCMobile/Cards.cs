@@ -485,7 +485,7 @@ namespace TCMobile
                     else
                     {
                         perc_complete = (courseRecord.CompletionStatus.ToLower() == "completed") ? 100 : (courseRecord.CompletionStatus.ToLower() == "unknown" || courseRecord.CompletionStatus.ToLower() == "attempted") ? 50 : 0;
-                        perc_incomplete = (courseRecord.CompletionStatus.ToLower() == "not started") ? 0 : (courseRecord.CompletionStatus.ToLower() == "completed") ? 100 : 50;
+                        perc_incomplete = (courseRecord.CompletionStatus.ToLower() == "not started") ? 100 : (courseRecord.CompletionStatus.ToLower() == "completed") ? 100 : 50;
                     }
                 
                 }
@@ -494,7 +494,8 @@ namespace TCMobile
                 
 
                 Doughnut doughnut = new Doughnut();
-                Grid doughnutGrid = doughnut.CompletionChart("Completed", perc_complete, perc_incomplete);
+                
+                Grid doughnutGrid = doughnut.CompletionChart("complete", perc_complete, perc_incomplete);
 
                 //*****************************************************
                 Grid activityContainer = new Grid
@@ -644,7 +645,7 @@ namespace TCMobile
                 BackgroundColor = Color.Transparent,
                 BorderColor = Color.Transparent,
                 BtnLabel = txt,
-                IsVisible = (courseRecord == null) ? true : (courseRecord.Deleted == "true" && courseRecord.Downloaded == false) ? true : false
+                IsVisible = (courseRecord == null) ? true : (courseRecord.Deleted == "true" || courseRecord.Downloaded == false) ? true : false
             };
 
             return downloadBtn;
