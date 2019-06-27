@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"         
             xmlns:constants="clr-namespace:TCMobile;assembly=TCMobile"
+             xmlns:app="clr-namespace:TCMobile.App"
             xmlns:vm="clr-namespace:TCMobile.ViewModels" 
              xmlns:views="clr-namespace:TCMobile.Views"
             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
@@ -31,9 +32,11 @@
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
                         </Grid.RowDefinitions>
                         <Switch Toggled="Wifi_Toggled" VerticalOptions="Center"  Grid.Row="0" Grid.Column="1" HorizontalOptions="End" IsToggled="{Binding Source={x:Static constants:Constants.WifiOnly}}"></Switch>
                         <Label Grid.Row="0" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" Text="Download only over Wifi"/>
+                        <Label Grid.Row="1" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" Text="{Binding FreeSpace}"/>
                     </Grid>
                     <StackLayout x:Name="Container"/>
                 </StackLayout>

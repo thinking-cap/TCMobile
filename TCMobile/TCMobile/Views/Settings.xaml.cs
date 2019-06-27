@@ -7,26 +7,55 @@ using System.Threading.Tasks;
 using TCMobile.CustomControls;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using TCMobile.Services;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace TCMobile.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class Settings : ContentPage
 	{
-		public Settings ()
+        private string _freeSpace;
+        public String FreeSpace 
+        {
+            get { return _freeSpace; }
+            set
+            {
+                _freeSpace = value;
+                OnPropertyChanged();
+            }
+        }
+
+       
+
+
+        public Settings ()
 		{
 			InitializeComponent ();
-		}
-
-        protected override void OnAppearing()
+            BindingContext = this;
+        }
+        
+        protected async override void OnAppearing()
         {
             base.OnAppearing();
-
+            getFreeStorage();
+            
             buildSettings();
+        }
+
+        public async void getFreeStorage()
+        {
+            var freeSpace = await DependencyService.Get<iStorage>().GetFreeSpace();
+            double FreeGigabytes = Math.Round(freeSpace / 1024.0 / 1024.0 / 1024.0, 2);
+            FreeSpace = FreeGigabytes.ToString() + "gbs of free storage";
+            
         }
 
         public async void buildSettings()
         {
+
+
             Container.Children.Clear();
             Courses c = new Courses();
             List<Models.Record> courses = await c.CheckForCourses();
@@ -100,6 +129,7 @@ namespace TCMobile.Views
             {
                 dir.Delete(true);
             }
+            await Task.Delay(500).ContinueWith(t => getFreeStorage());
 
         }
      

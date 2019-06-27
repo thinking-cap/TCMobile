@@ -96,6 +96,7 @@
     <Compile Include="Renderers\FrameRenderer.cs" />
     <Compile Include="Renderers\NavBarRenderer.cs" />
     <Compile Include="Renderers\WebViewRenderer.cs" />
+    <Compile Include="Services\StorageiOS.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist">
       <SubType>Designer</SubType>

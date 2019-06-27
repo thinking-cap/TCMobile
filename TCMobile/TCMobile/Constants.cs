@@ -29,7 +29,7 @@ namespace TCMobile
         public static double deviceWidth;
         public static string WifiOnly { get; set; }
         public static string HeaderColour { get; set; }
-
+        public string FreeSpace { get; set; }
         public static string MenuBackgroundColour { get; set; }
 
 
