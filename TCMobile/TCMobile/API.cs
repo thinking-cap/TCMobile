@@ -20,6 +20,9 @@ namespace TCMobile
                 courseRecord.CompletionStatus = data.completion_status;
                 courseRecord.SuccessStatus = data.success_status;
                 courseRecord.Score = data.score.scaled;
+                courseRecord.ScoreMax = data.score.max;
+                courseRecord.ScoreMin = data.score.min;
+                courseRecord.ScoreRaw = data.score.raw;
                 courseRecord.ProgressMeasure = data.progress_measure;
 
 

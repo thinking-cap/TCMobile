@@ -81,7 +81,20 @@ namespace TCMobile.Views
                     
                     string completion = (course.CompletionStatus == "") ? (course.CompletionStatus == "unknown") ? "In Progress" : "Not Attempted" : course.CompletionStatus;
                     string success = (course.SuccessStatus == "" || course.SuccessStatus == "unknown") ? "" : "/" + course.SuccessStatus;
-                    string score = (course.Score == "") ? "" : "  " + Math.Round(Double.Parse(course.Score)*100).ToString() + "%";
+
+                    string score;
+                    if(course.ScoreRaw != "")
+                    {
+                        int raw = Convert.ToInt32(course.ScoreRaw);
+                        int max = Convert.ToInt32(course.ScoreMax);
+                        int min = Convert.ToInt32(course.ScoreMin);
+                        int scaled = (raw - min) / (max - min) * 100;
+                        score = scaled.ToString();
+                    }
+                    else {
+                        score = (course.Score == "") ? "" : "  " + Math.Round(Double.Parse(course.Score) * 100).ToString() + "%";
+                    }
+                     
                     Label status = new Label
                     {
                         Text = completion + success + score,

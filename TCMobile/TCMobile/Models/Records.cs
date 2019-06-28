@@ -15,6 +15,10 @@ namespace TCMobile.Models
         public string CompletionStatus { get; set; }
         public string SuccessStatus { get; set; }
         public string Score { get; set; }
+
+        public string ScoreMax { get; set; }
+        public string ScoreMin { get; set; }
+        public string ScoreRaw { get; set; }
         public string ProgressMeasure { get; set; }
         public string CMI { get; set; }
         public string Manifest { get; set; }

@@ -42,6 +42,9 @@ namespace TCMobile
                 rec.CompletionStatus = "Not Started";
                 rec.SuccessStatus = "";
                 rec.Score = "";
+                rec.ScoreMax = "";
+                rec.ScoreMin = "";
+                rec.ScoreRaw = "";
                 rec.Deleted = "false";
                 rec.ProgressMeasure = "0";
                 rec.DueDate = App.CourseCatalogue.courses.Find(x => x.courseid == courseid).duedate;
@@ -57,6 +60,12 @@ namespace TCMobile
                 courseExists.Downloaded = true;
                 if (String.IsNullOrEmpty(courseExists.CMI))
                     courseExists.CMI = cmi;
+                if (String.IsNullOrEmpty(courseExists.ScoreMax))
+                {
+                    courseExists.ScoreMax = "";
+                    courseExists.ScoreMin = "";
+                    courseExists.ScoreRaw = "";
+                }
                 await App.Database.SaveItemAsync(courseExists);
             }
         }
@@ -260,7 +269,12 @@ namespace TCMobile
         {
             string courseID = ((System.Net.WebClient)(sender)).QueryString["CourseID"];
             Courses courses = new Courses();
-            string cmi = await getCMIObjectFromLMS(courseID);
+            Models.Record courseExists = await App.Database.GetCourseByID(courseID);
+            string cmi;
+            if (courseExists == null)
+                cmi = await getCMIObjectFromLMS(courseID);
+            else
+                cmi = "";
             courses.Unzip(courseID, cmi);
             
         }
