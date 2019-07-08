@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using TCMobile.CustomControls;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -72,44 +73,84 @@ namespace TCMobile.Views
 
                     };
 
-                    //Label description = new Label
-                    //{
-                    //    Text = course.CourseDescription,
-                    //    Style = (Style)Application.Current.Resources["textStyle"]
-                    //};
+                    Grid chartGrid = new Grid()
+                    {
+                        HorizontalOptions = LayoutOptions.FillAndExpand,
+                        VerticalOptions = LayoutOptions.FillAndExpand,
+                        Padding = 0,
+                        Margin = 0
+                    };
 
-                    
+                    chartGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(100) });
+                    chartGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                    chartGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+
+
+
                     string completion = (course.CompletionStatus == "") ? (course.CompletionStatus == "unknown") ? "In Progress" : "Not Attempted" : course.CompletionStatus;
                     string success = (course.SuccessStatus == "" || course.SuccessStatus == "unknown") ? "" : "/" + course.SuccessStatus;
 
                     string score;
-                    if(course.ScoreRaw != "")
+                    float score_a;
+                    float score_b;
+                    float perc_complete;
+                    float perc_incomplete;
+                    if (String.IsNullOrEmpty(course.ProgressMeasure))
+                    {
+                        perc_complete = (course.CompletionStatus == "") ? 0 : (course.CompletionStatus == "Completed") ? 100 : 50;
+                        perc_incomplete = 100 - perc_complete;
+                    }
+                    else
+                    {
+                        perc_complete = float.Parse(courseRecord.ProgressMeasure) * 100;
+                        perc_incomplete = 100 - perc_complete;
+                    }
+               
+                    
+                    if (course.ScoreRaw != "")
                     {
                         int raw = Convert.ToInt32(course.ScoreRaw);
                         int max = Convert.ToInt32(course.ScoreMax);
                         int min = Convert.ToInt32(course.ScoreMin);
                         int scaled = (raw - min) / (max - min) * 100;
                         score = scaled.ToString();
+                        score_a = scaled;
+                        score_b = (scaled < 100) ? 100 - score_a : 0;
                     }
                     else {
                         score = (course.Score == "") ? "" : "  " + Math.Round(Double.Parse(course.Score) * 100).ToString() + "%";
+                        score_a = (float)Math.Round(Double.Parse(course.Score) * 100);
+                        score_b = (Math.Round(Double.Parse(course.Score) * 100) < 100) ? 100 - score_a : 0;
                     }
-                     
+
+                   
+
+                    Doughnut doughnut = new Doughnut();
+                    Grid doughnutContainer = doughnut.CompletionChart("Score", score_a, score_b);
+
                     Label status = new Label
                     {
-                        Text = completion + success + score,
+                        Text = completion + success,
                         Style = (Style)Application.Current.Resources["headerStyle"]
                     };
 
-
-
+                    Doughnut completeDoughnut = new Doughnut();
+                    Grid completeDoughnutContainer = completeDoughnut.CompletionChart("Complete", perc_complete, perc_incomplete);
 
 
                     StackLayout layout = new StackLayout();
                     card.Content = layout;
                     layout.Children.Add(title);
-                    layout.Children.Add(status);
-                    layout.Children.Add(description);
+                    doughnutContainer.VerticalOptions = LayoutOptions.CenterAndExpand;
+                    completeDoughnutContainer.VerticalOptions = LayoutOptions.CenterAndExpand;
+                    doughnutContainer.HorizontalOptions = LayoutOptions.CenterAndExpand;
+                    completeDoughnutContainer.HorizontalOptions = LayoutOptions.CenterAndExpand;
+                    chartGrid.Children.Add(doughnutContainer, 0, 0);
+                    chartGrid.Children.Add(completeDoughnutContainer, 1, 0);
+                    layout.Children.Add(chartGrid);
+                   // layout.Children.Add(completeDoughnutContainer);
+                   // layout.Children.Add(doughnutContainer);
+                    //layout.Children.Add(description);
 
                     Courses.Children.Add(card);
                 }
