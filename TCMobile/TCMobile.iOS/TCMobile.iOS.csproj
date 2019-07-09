@@ -54,13 +54,14 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <MtouchArch>ARM64</MtouchArch>
-    <CodesignKey>iPhone Developer: Campbell Macmillan (QUGL7N6WAP)</CodesignKey>
+    <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>
     </CodesignEntitlements>
     <CodesignExtraArgs />
     <CodesignResourceRules />
-    <CodesignProvision>VS: WildCard Development</CodesignProvision>
+    <CodesignProvision>
+    </CodesignProvision>
     <MtouchSdkVersion>12.1</MtouchSdkVersion>
     <IOSDebugOverWiFi>true</IOSDebugOverWiFi>
     <MtouchProfiling>false</MtouchProfiling>
