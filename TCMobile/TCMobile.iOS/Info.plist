@@ -122,7 +122,7 @@
 	<key>MinimumOSVersion</key>
 	<string>9.0</string>
 	<key>CFBundleDisplayName</key>
-	<string>TCMobile</string>
+	<string>British Council</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.companyname.TCMobile</string>
 	<key>CFBundleVersion</key>
