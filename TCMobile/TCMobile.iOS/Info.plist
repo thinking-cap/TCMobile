@@ -131,8 +131,6 @@
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
 	<string>TCMobile</string>
-	<key>XSAppIconAssets</key>
-	<string>Assets.xcassets/AppIcon.appiconset</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Need permission to save files.</string>
 	<key>NSPhotoLibraryUsageDescription </key>
@@ -145,7 +143,5 @@
 	<true/>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>XSLaunchImageAssets</key>
-	<string>Assets.xcassets/LaunchImages.launchimage</string>
 </dict>
 </plist>
