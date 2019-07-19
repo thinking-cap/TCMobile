@@ -149,5 +149,7 @@
 	<string>Assets.xcassets/LaunchImages.launchimage</string>
   <key>NSLocationWhenInUseUsageDescription</key>
   <string>Your location may be required for debugging purposes.</string>
+  <key>NSLocationAlwaysUsageDescription</key>
+  <string>Your location may be required for debugging purposes.</string>
 </dict>
 </plist>
