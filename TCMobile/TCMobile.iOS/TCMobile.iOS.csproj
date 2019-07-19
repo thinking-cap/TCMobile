@@ -60,10 +60,15 @@
     </CodesignEntitlements>
     <CodesignExtraArgs />
     <CodesignResourceRules />
-    <CodesignProvision>TCMOBILE</CodesignProvision>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
     <MtouchSdkVersion>12.1</MtouchSdkVersion>
     <IOSDebugOverWiFi>true</IOSDebugOverWiFi>
     <MtouchProfiling>false</MtouchProfiling>
+    <BuildIpa>true</BuildIpa>
+    <IpaPackageName>Thinking Cap LMS</IpaPackageName>
+    <IpaMetadata>
+    </IpaMetadata>
+    <IpaIncludeArtwork>true</IpaIncludeArtwork>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
