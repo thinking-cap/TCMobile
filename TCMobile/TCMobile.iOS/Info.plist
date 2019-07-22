@@ -25,6 +25,25 @@
 				<key>NSRequiresCertificateTransparency</key>
 				<false/>
 			</dict>
+			<key>https://tcstable.blob.core.windows.net</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSExceptionRequiresForwardSecrecy</key>
+				<true/>
+				<key>NSExceptionMinimumTLSVersion</key>
+				<string>TLSv1.2</string>
+				<key>NSThirdPartyExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+				<true/>
+				<key>NSThirdPartyExceptionMinimumTLSVersion</key>
+				<string>TLSv1.2</string>
+				<key>NSRequiresCertificateTransparency</key>
+				<false/>
+			</dict>
 			<key>fonts.googleapis.com</key>
 			<dict>
 				<key>NSIncludesSubdomains</key>
@@ -122,7 +141,7 @@
 	<key>MinimumOSVersion</key>
 	<string>9.0</string>
 	<key>CFBundleDisplayName</key>
-	<string>TCMobile</string>
+	<string>Thinking Cap Mobile LMS</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.companyname.TCMobile</string>
 	<key>CFBundleVersion</key>
@@ -147,9 +166,9 @@
 	<false/>
 	<key>XSLaunchImageAssets</key>
 	<string>Assets.xcassets/LaunchImages.launchimage</string>
-  <key>NSLocationWhenInUseUsageDescription</key>
-  <string>Your location may be required for debugging purposes.</string>
-  <key>NSLocationAlwaysUsageDescription</key>
-  <string>Your location may be required for debugging purposes.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your location may be required for debugging purposes.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Your location may be required for debugging purposes.</string>
 </dict>
 </plist>
