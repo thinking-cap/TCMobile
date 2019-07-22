@@ -342,8 +342,8 @@
   <ItemGroup>
     <BundleResource Include="Resources\outline_arrow_back_white_48%403x.png" />
   </ItemGroup>
-<!-- NOP out CompileITunesMetadata task, which creates a rouge metadata plist file -->
-<Target Name="_CompileITunesMetadata" DependsOnTargets="_DetectSdkLocations;_DetectAppManifest;_GenerateBundleName;_CompileAppManifest">
-  <Message Text="Skipping CompileITunesMetadata task to prevent inclusion of iTunesMetadata.plist in the IPA" />
-</Target>
+  <!-- NOP out CompileITunesMetadata task, which creates a rouge metadata plist file -->
+  <Target Name="_CompileITunesMetadata" DependsOnTargets="_DetectSdkLocations;_DetectAppManifest;_GenerateBundleName;_CompileAppManifest">
+    <Message Text="Skipping CompileITunesMetadata task to prevent inclusion of iTunesMetadata.plist in the IPA" />
+  </Target>
 </Project>
