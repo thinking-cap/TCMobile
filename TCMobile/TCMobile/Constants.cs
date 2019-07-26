@@ -31,6 +31,7 @@ namespace TCMobile
         public static string HeaderColour { get; set; }
         public string FreeSpace { get; set; }
         public static string MenuBackgroundColour { get; set; }
+        public static string MenuTextColour { get; set; }
 
 
 

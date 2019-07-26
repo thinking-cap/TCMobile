@@ -36,6 +36,8 @@ namespace TCMobile
 
         public string menuBackgroundColour { get; set; }
 
+        public string menuTextColour { get; set; }
+
         public string homedomain { get; set; }
 
         public string firstName { get; set; }
