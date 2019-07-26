@@ -58,10 +58,12 @@ namespace TCMobile.Views
                 App.IsUserLoggedIn = true;
                 Constants.HeaderColour = login.headerColour;
                 Constants.MenuBackgroundColour = login.menuBackgroundColour;
+                Constants.MenuTextColour = login.menuTextColour;
                
                 Application.Current.MainPage = new MainPage();
                 Application.Current.Properties["HeaderColour"] = login.headerColour;
                 Application.Current.Properties["MenuBGColour"] = login.menuBackgroundColour;
+                Application.Current.Properties["MenuTextColour"] = login.menuTextColour;
                 Application.Current.Properties["HeadingTextColour"] = login.headingTextColour;
                 await Application.Current.SavePropertiesAsync();
                 s.LabelColour("fontColor", Application.Current.Properties["HeadingTextColour"].ToString());

@@ -29,7 +29,7 @@ namespace TCMobile
     {
 
         public async void CreateCourseRecord(string courseid, string cmi)
-        {
+        { 
             Models.Record courseExists = await App.Database.GetCourseByID(courseid);
             if (courseExists == null)
             {

@@ -72,6 +72,9 @@ namespace TCMobile
                     Constants.Logo = new Uri(Constants.Url + "/FormatResource.ashx/programLearnerView_" + CredentialsService.HomeDomain + "/logo.gif");
                     if (Application.Current.Properties.ContainsKey("MenuBGColour"))
                         Constants.MenuBackgroundColour = Application.Current.Properties["MenuBGColour"].ToString();
+
+                    if (Application.Current.Properties.ContainsKey("MenuTextColour"))
+                        Constants.MenuTextColour = Application.Current.Properties["MenuTextColour"].ToString();
                     Constants.BlobLocation = CredentialsService.BlobLoc;
                      MainPage = new MainPage();
                     Constants.deviceWidth = Application.Current.MainPage.Width;
