@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
               xmlns:vm="clr-namespace:TCMobile.ViewModels"
               xmlns:Custom="clr-namespace:TCMobile;assembly=TCMobile"
+              xmlns:constants="clr-namespace:TCMobile;assembly=TCMobile"
              x:Class="TCMobile.Views.Login"
-             BackgroundColor="{StaticResource colorPrimaryDark}"
              Title="{Binding Title}"
              NavigationPage.HasNavigationBar="False"
              NavigationPage.HasBackButton="False">
@@ -15,8 +15,11 @@
         <StyleSheetExtension Source="../style.css"></StyleSheetExtension>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout>
-        <StackLayout Spacing="10" Margin="0,150,0,0" BackgroundColor="White">
+        <StackLayout BackgroundColor="{Binding Source={x:Static constants:Constants.HeaderColour}}">
+            <StackLayout Spacing="10" Margin="0,80,0,0" >
+                <Image Style="{StaticResource headerImage}" Source="{Binding Source={x:Static constants:Constants.Logo}}"/>
+            </StackLayout>
+        <StackLayout Spacing="10" Margin="0,50,0,0" BackgroundColor="White">
            <StackLayout BackgroundColor="white" Margin="10,10,10,10" Padding="0">
                    <Custom:MyEntry x:Name="Email" Text="{Binding Email}"
                                    Placeholder="username"   
@@ -33,10 +36,13 @@
                 </StackLayout>
         </StackLayout>
         <StackLayout HorizontalOptions="Center">
-            <Button Text="login" Style="{StaticResource buttonStyle}" Clicked="OnLoginButtonClicked"/>
+                <Button Text="login" BackgroundColor="{Binding Source={x:Static constants:Constants.MenuBackgroundColour}}"
+                        BorderColor="{Binding Source={x:Static constants:Constants.MenuBackgroundColour}}"
+                        TextColor="{Binding Source={x:Static constants:Constants.MenuTextColour}}" 
+                        Clicked="OnLoginButtonClicked"/>
             <ActivityIndicator x:Name="Progress" IsVisible="False" HeightRequest="20"/>
             <Label x:Name="Error" HeightRequest="45" IsVisible="False"/>
-                <Button HorizontalOptions="CenterAndExpand" TextColor="White" Text="Forgot Password" BackgroundColor="Transparent" x:Name="ForgotPassword" Clicked="OnForgotPasswordClicked"/>
+                <Button WidthRequest="200" HorizontalOptions="CenterAndExpand" TextColor="{Binding Source={x:Static constants:Constants.MenuTextColour}}" Text="Forgot Password" BackgroundColor="Transparent" x:Name="ForgotPassword" Clicked="OnForgotPasswordClicked"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>
