@@ -215,13 +215,13 @@ if (typeof (API_1484_11) == 'undefined') {
                 cmi: JSON.stringify(cmi)
 
             }
-            try {
-                if (typeof (jsBridge) !== 'undefined') {
-                    jsBridge.invokeAction(JSON.stringify(msg));
-                }
-            } catch (e) {
+            
+            if (typeof (jsBridge) !== 'undefined') {
+                jsBridge.invokeAction(JSON.stringify(msg));
+            } else {
                 window.webkit.messageHandlers.invokeAction.postMessage(JSON.stringify(msg));
             }
+            
 
             if (config.dirtyCommit !== null) {
                 clearTimeout(config.dirtyCommit);
