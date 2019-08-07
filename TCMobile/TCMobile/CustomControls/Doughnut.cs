@@ -13,6 +13,8 @@ namespace TCMobile.CustomControls
     {
         public Grid CompletionChart(string label,float perc_complete, float perc_incomplete)
         {
+            
+            //perc_complete = (float)Math.Ceiling(perc_complete);
             Grid container = new Grid()
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,

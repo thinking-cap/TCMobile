@@ -32,7 +32,7 @@ namespace TCMobile.Views
             List<Models.Record> courses = await c.CheckForCourses();
 
 
-            
+
             if (courses.Count() > 0)
             {
                 foreach (Models.Record course in courses)
@@ -91,8 +91,8 @@ namespace TCMobile.Views
                     string success = (course.SuccessStatus == "" || course.SuccessStatus == "unknown") ? "" : "/" + course.SuccessStatus;
 
                     string score;
-                    float score_a;
-                    float score_b;
+                    float score_a = 0;
+                    float score_b = 0;
                     float perc_complete;
                     float perc_incomplete;
                     if (String.IsNullOrEmpty(course.ProgressMeasure))
@@ -102,31 +102,37 @@ namespace TCMobile.Views
                     }
                     else
                     {
-                        perc_complete = float.Parse(courseRecord.ProgressMeasure) * 100;
+                        perc_complete = (float.Parse(courseRecord.ProgressMeasure) < 0) ? float.Parse(courseRecord.ProgressMeasure) * 100 : float.Parse(courseRecord.ProgressMeasure);
                         perc_incomplete = 100 - perc_complete;
                     }
-               
+                    bool hasScore = false;  
                     
-                    if (course.ScoreRaw != "")
+                    if (course.ScoreRaw != "" && String.IsNullOrEmpty(course.Score))
                     {
                         int raw = Convert.ToInt32(course.ScoreRaw);
                         int max = Convert.ToInt32(course.ScoreMax);
                         int min = Convert.ToInt32(course.ScoreMin);
-                        int scaled = (raw - min) / (max - min) * 100;
+                        int scaled = ((raw - min) / (max - min)) * 100;
                         score = scaled.ToString();
                         score_a = scaled;
                         score_b = (scaled < 100) ? 100 - score_a : 0;
+                        hasScore = true;
                     }
                     else {
-                        score = (course.Score == "") ? "" : "  " + Math.Round(Double.Parse(course.Score) * 100).ToString() + "%";
-                        score_a = (float)Math.Round(Double.Parse(course.Score) * 100);
-                        score_b = (Math.Round(Double.Parse(course.Score) * 100) < 100) ? 100 - score_a : 0;
+                        if (!String.IsNullOrEmpty(course.Score))
+                        {
+                            score = (course.Score == "") ? "" : "  " + Math.Round(Double.Parse(course.Score)).ToString() + "%";
+                            score_a = (Double.Parse(course.Score) < 0) ? (float)Math.Round(Double.Parse(course.Score) * 100, 0, MidpointRounding.AwayFromZero) : (float)Double.Parse(course.Score);
+                            score_b = ((Math.Round(score_a)) < 100) ? 100 - score_a : 0;
+                            hasScore = true;
+                        }
                     }
 
                    
 
                     Doughnut doughnut = new Doughnut();
-                    Grid doughnutContainer = doughnut.CompletionChart("Score", score_a, score_b);
+                    
+                    Grid doughnutContainer = (hasScore == false) ? null : doughnut.CompletionChart("Score", (float)Math.Round(score_a,0,MidpointRounding.AwayFromZero), score_b);
 
                     Label status = new Label
                     {
@@ -135,22 +141,22 @@ namespace TCMobile.Views
                     };
 
                     Doughnut completeDoughnut = new Doughnut();
-                    Grid completeDoughnutContainer = completeDoughnut.CompletionChart("Complete", perc_complete, perc_incomplete);
-
-
+                    Grid completeDoughnutContainer = completeDoughnut.CompletionChart("Complete",(float)Math.Round(perc_complete,0,MidpointRounding.AwayFromZero), perc_incomplete);
+                    if (doughnutContainer != null)
+                    {
+                        doughnutContainer.VerticalOptions = LayoutOptions.CenterAndExpand;
+                        doughnutContainer.HorizontalOptions = LayoutOptions.CenterAndExpand;
+                        chartGrid.Children.Add(doughnutContainer, 0, 0);
+                    }
                     StackLayout layout = new StackLayout();
                     card.Content = layout;
                     layout.Children.Add(title);
-                    doughnutContainer.VerticalOptions = LayoutOptions.CenterAndExpand;
-                    completeDoughnutContainer.VerticalOptions = LayoutOptions.CenterAndExpand;
-                    doughnutContainer.HorizontalOptions = LayoutOptions.CenterAndExpand;
+                    
+                    completeDoughnutContainer.VerticalOptions = LayoutOptions.CenterAndExpand;                   
                     completeDoughnutContainer.HorizontalOptions = LayoutOptions.CenterAndExpand;
-                    chartGrid.Children.Add(doughnutContainer, 0, 0);
+                    
                     chartGrid.Children.Add(completeDoughnutContainer, 1, 0);
                     layout.Children.Add(chartGrid);
-                   // layout.Children.Add(completeDoughnutContainer);
-                   // layout.Children.Add(doughnutContainer);
-                    //layout.Children.Add(description);
 
                     Courses.Children.Add(card);
                 }
