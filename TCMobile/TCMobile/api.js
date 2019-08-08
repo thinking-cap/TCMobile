@@ -326,7 +326,7 @@ var GetCMIInteractions = function (key) {
 
 var GetCMIObjectives = function (key) {
     //cmi.objectives._count = (typeof(cmi.objectives) !== 'undefined') ? cmi.objectives.length : 0;
-    if (typeof (cmi.objectives === 'undefined')) {
+    if (typeof (cmi.objectives) === 'undefined') {
         cmi.objectives = [];
     }
     if (key === "cmi.objectives._count") {
@@ -463,6 +463,7 @@ SetInteractionType = function (interaction, value) {
 var SetCMIObjectives = function (key, value) {
     if (typeof (cmi.objectives) === 'undefined')
         cmi.objectives = [];
+    cmi.objectives._count = cmi.objectives.length;
     if (key === "cmi.objectives._count") {
         return false;
     } else if (key === "cmi.objectives._children") {
@@ -471,9 +472,9 @@ var SetCMIObjectives = function (key, value) {
         var x = key.split(".");
         var property = x[3];
         var p2 = x[4];
-        var objective = (function () { return eval("cmi.objectives[" + x[2] + "]"); })();
+        var objective = eval("cmi.objectives[" + x[2] + "]");
         if (typeof objective === 'undefined') {
-            if (x[2] > cmi.objectives._count) {
+            if (x[2] > cmi.objectives.length) {
                 config.error = 201;
                 return false;
             } else {
@@ -483,7 +484,11 @@ var SetCMIObjectives = function (key, value) {
                         cmi.objectives.push(objective);
                         config.error = 0;
                         return true;
-                    default: config.error = 201; return false;
+                    default:
+                        var objective = Objective('Objective ' + guid())
+                        cmi.objectives.push(objective);
+                        config.error = 0;
+                        return true;
                 }
             }
         } else {
@@ -498,7 +503,7 @@ var SetCMIObjectives = function (key, value) {
                 case "score": objective[property][p2] = value; config.error = 0; break;
                 default: returnval = false; config.error = 201; break;
             };
-
+            console.log(cmi.objectives);
             return returnval;
         }
     }

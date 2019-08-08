@@ -107,7 +107,7 @@ namespace TCMobile.Views
                     }
                     bool hasScore = false;  
                     
-                    if (course.ScoreRaw != "" && String.IsNullOrEmpty(course.Score))
+                    if (!String.IsNullOrEmpty(course.ScoreRaw) && String.IsNullOrEmpty(course.Score))
                     {
                         int raw = Convert.ToInt32(course.ScoreRaw);
                         int max = Convert.ToInt32(course.ScoreMax);
@@ -121,8 +121,8 @@ namespace TCMobile.Views
                     else {
                         if (!String.IsNullOrEmpty(course.Score))
                         {
-                            score = (course.Score == "") ? "" : "  " + Math.Round(Double.Parse(course.Score)).ToString() + "%";
-                            score_a = (Double.Parse(course.Score) < 0) ? (float)Math.Round(Double.Parse(course.Score) * 100, 0, MidpointRounding.AwayFromZero) : (float)Double.Parse(course.Score);
+                            score = (course.Score == "") ? "" : "  " + Math.Round(double.Parse(course.Score)).ToString() + "%";
+                            score_a = (double.Parse(course.Score) < 1) ? (float)Math.Round(double.Parse(course.Score) * 100, 0, MidpointRounding.AwayFromZero) : (float)double.Parse(course.Score);
                             score_b = ((Math.Round(score_a)) < 100) ? 100 - score_a : 0;
                             hasScore = true;
                         }
