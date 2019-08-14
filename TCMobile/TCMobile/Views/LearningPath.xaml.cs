@@ -75,9 +75,10 @@ namespace TCMobile.Views
            // var x = await App.Database.SaveLpRecord(lp);
             Cards card = new Cards();
             bool x = await Courses.SaveMap(lpid, lp);
+            int count = lp.Objective.Count;
             foreach (Objective obj in lp.Objective)
             {
-               await card.buildObjectiveCard(obj,LP,lpid);
+               await card.buildObjectiveCard(obj,LP,lpid,count);
             }
             return true;
         }

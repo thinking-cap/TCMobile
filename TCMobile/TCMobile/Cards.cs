@@ -83,7 +83,7 @@ namespace TCMobile
             Label title = new Label
             {
                 Text = coursetitle,
-                Style = (Style)Application.Current.Resources["headerStyle"]
+                Style = (Style)Application.Current.Resources["headerStyle"]                
             };
 
             Grid titleGrid = new Grid()
@@ -91,7 +91,7 @@ namespace TCMobile
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 Padding = 0,
-                Margin = 0
+                Margin = 15
             };
             if (courseRecord != null && courseRecord.Downloaded != false)
             {
@@ -117,7 +117,7 @@ namespace TCMobile
             if(courseRecord != null && courseRecord.Downloaded == true) {
                 if (courseRecord.ProgressMeasure != null && courseRecord.ProgressMeasure != "")
                 {
-                   perc_complete = float.Parse(courseRecord.ProgressMeasure) * 100;
+                   perc_complete = (float)Math.Round(float.Parse(courseRecord.ProgressMeasure), 0, MidpointRounding.AwayFromZero);
                    perc_incomplete = 100 - perc_complete;
                     
                 }
@@ -203,7 +203,7 @@ namespace TCMobile
             btnGrid.Children.Add(launchBtn, 0, 0);
             btnGrid.Children.Add(spinner, 0, 0);
             btnGrid.Children.Add(lbl, 0, 1);
-            titleGrid.Children.Add(title, 0, 0);
+            //titleGrid.Children.Add(title, 0, 0);
 
 
             if (courseRecord != null && courseRecord.Downloaded != false)
@@ -219,7 +219,7 @@ namespace TCMobile
             //             (courseRecord.CMI == "") ? "open" : "resume";
             
             cardBody.Children.Add(webViewGrid);
-           
+            layout.Children.Add(title);
             layout.Children.Add(marqueeContainer);
             layout.Children.Add(cardBody);
             layout.Children.Add(cardFooter);
@@ -246,6 +246,8 @@ namespace TCMobile
             MaterialFrame frame;
             StackLayout layout;
             Label status = new Label();
+            LearningPath lpObj = new LearningPath();
+            int completionPercent = await lpObj.GetCompletion(id);
             Models.LPDBRecord lp = await getMap(id);
             if(lp.LPMap != "")
             {
@@ -273,6 +275,11 @@ namespace TCMobile
                 Margin = new Thickness(0, 8, 0, 24),
                 CornerRadius = 0
             };
+
+            // need to add doughnut
+            Doughnut doughnut = new Doughnut();
+            int percentIncomplete = 100 - completionPercent;
+            Grid doughnutContainer = doughnut.CompletionChart("Completed", completionPercent, percentIncomplete);
 
             Label lbl = new Label()
             {
@@ -350,6 +357,7 @@ namespace TCMobile
 
             btnGrid.Children.Add(moreBtn, 0, 0);
             btnGrid.Children.Add(lbl, 0, 1);
+            cardFooter.Children.Add(doughnutContainer);
             cardFooter.Children.Add(btnGrid);
             cardBody.Children.Add(title);
            
@@ -366,7 +374,7 @@ namespace TCMobile
          * 
          * 
          *****************************************************/
-        public async  Task<bool>buildObjectiveCard(Objective obj, StackLayout container, string lpid)
+        public async  Task<bool>buildObjectiveCard(Objective obj, StackLayout container, string lpid,int count)
         {
            
             Grid layout;
@@ -404,9 +412,10 @@ namespace TCMobile
                 ClassId = "course_" + obj.id,
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                IsVisible = false,
-                Opacity = 0
-               
+                IsVisible = (count > 1) ? false : true,
+                Opacity = (count > 1) ? 0 : 100
+
+
             };
 
              // used to expand accordion

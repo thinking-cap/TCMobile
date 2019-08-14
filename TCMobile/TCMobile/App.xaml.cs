@@ -57,20 +57,16 @@ namespace TCMobile
             /// GetLMSSettings();
             Styles s = new Styles();
 
+            if (Application.Current.Properties.ContainsKey("ProgramID"))
+                Constants.Logo = new Uri(Constants.Url + "/FormatResource.ashx/programLearnerView_" + Application.Current.Properties["ProgramID"].ToString() + "/logo.gif");
             if (Application.Current.Properties.ContainsKey("HeaderColour"))
                 Constants.HeaderColour = Application.Current.Properties["HeaderColour"].ToString();
-            Constants.Logo = new Uri(Constants.Url + "/FormatResource.ashx/programLearnerView_" + CredentialsService.HomeDomain + "/logo.gif");
+           // Constants.Logo = new Uri(Constants.Url + "/FormatResource.ashx/programLearnerView_" + CredentialsService.HomeDomain + "/logo.gif");
             if (Application.Current.Properties.ContainsKey("MenuBGColour"))
                 Constants.MenuBackgroundColour = Application.Current.Properties["MenuBGColour"].ToString();
-            try
-            {
-                if (Application.Current.Properties.ContainsKey("MenuTextColour"))
-                    Constants.MenuTextColour = Application.Current.Properties["MenuTextColour"].ToString();
-            }
-            catch
-            {
-                Constants.MenuTextColour = "#000000";
-            }
+
+            if (Application.Current.Properties.ContainsKey("MenuTextColour"))
+                Constants.MenuTextColour = Application.Current.Properties["MenuTextColour"].ToString();
 
             if (CredentialsService.DoCredentialsExist() && !String.IsNullOrEmpty(CredentialsService.HomeDomain) && !String.IsNullOrEmpty(CredentialsService.UserID))
             {
@@ -83,7 +79,14 @@ namespace TCMobile
                     s.LabelColour("fontColor", Application.Current.Properties["HeadingTextColour"].ToString());
                     s.SpinnerColour("bgColor", Application.Current.Properties["HeadingTextColour"].ToString());
                     // need to set a variable for the width of the current device 
-                   
+                    if (Application.Current.Properties.ContainsKey("HeaderColour"))
+                        Constants.HeaderColour = Application.Current.Properties["HeaderColour"].ToString();
+                    Constants.Logo = new Uri(Constants.Url + "/FormatResource.ashx/programLearnerView_" + CredentialsService.HomeDomain + "/logo.gif");
+                    if (Application.Current.Properties.ContainsKey("MenuBGColour"))
+                        Constants.MenuBackgroundColour = Application.Current.Properties["MenuBGColour"].ToString();
+
+                    if (Application.Current.Properties.ContainsKey("MenuTextColour"))
+                        Constants.MenuTextColour = Application.Current.Properties["MenuTextColour"].ToString();
                     Constants.BlobLocation = CredentialsService.BlobLoc;
                      MainPage = new MainPage();
                     Constants.deviceWidth = Application.Current.MainPage.Width;
