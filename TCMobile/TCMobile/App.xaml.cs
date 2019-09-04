@@ -129,7 +129,7 @@ namespace TCMobile
         {
             // Handle when your app starts
             AppCenter.Start("ios=35d5cf8e-f79c-4e64-9390-d7169eda5555;" 
-                + "android={6f839c85-8c8a-4e6a-89ac-d4b82b3d49b1;}", typeof(Analytics), typeof(Crashes));
+                + "android=6f839c85-8c8a-4e6a-89ac-d4b82b3d49b1;", typeof(Analytics), typeof(Crashes));
 
            
         }
