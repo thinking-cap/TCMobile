@@ -12,12 +12,14 @@ namespace TCMobile
         // public static string Url = "https://192.168.0.126";
         //public static string Url = "https://stable.thinkingcap.com";
         public static string Url = "https://camp.thinkingcap.com";
+        public static string Key = "9b5ibe91jlq7o9nr4saglg";
         public static string ForgotPassword = Url + "/Login/EmailPassword.aspx?modal=true";
         public static string StudentCatalogue = Url +"/Mobile/Catalogue.ashx";
         public static string LearningPaths = Url + "/Mobile/GetLPS.ashx";
         public static string LearningPath = Url + "/Mobile/LPDetails.ashx";
         public static string SetCMI = Url + "/WebService/LearnerManagement.asmx/SetSCORMValues";
         public static string GetCMI = Url + "/WebService/LearnerManagement.asmx/GetSCORMDetails";
+        public static string EnrollUser = Url + "/WebService/learnermanagement.asmx?op=EnrollStudent";
         public static ImageSource Logo { get; set; }
         public static string StudentID = "740ad541-661a-43ea-b825-cec3788f2c3a";
         //public static string ProgramID = "612e7450-2370-45b7-b2f9-8686b1d7c7f9";
