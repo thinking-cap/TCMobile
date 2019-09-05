@@ -403,12 +403,12 @@ namespace TCMobile
 
         }
 
-        public async Task<string> EnrollInCourse(string courseid)
-        {
-            string uri = Constants.EnrollUser + "?apiKey="+Constants.Key + "&enrollmentDomainID=" + App.CredentialsService.HomeDomain+ "&studentID=" + App.CredentialsService.UserID + "&learningObjectID=" + courseid;
-            string loginObj = await DataService.GetCMI(uri).ConfigureAwait(false);
-            return loginObj;
+        //public async Task<string> EnrollInCourse(string courseid)
+        //{
+        //    string uri = Constants.EnrollUser + "?apiKey="+Constants.Key + "&enrollmentDomainID=" + App.CredentialsService.HomeDomain+ "&studentID=" + App.CredentialsService.UserID + "&learningObjectID=" + courseid;
+        //    string loginObj = await DataService.GetCMI(uri).ConfigureAwait(false);
+        //    return loginObj;
 
-        }
+        //}
     }
 }
