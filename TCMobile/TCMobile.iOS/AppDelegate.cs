@@ -5,6 +5,10 @@ using Refractored.XamForms.PullToRefresh.iOS;
 using FFImageLoading.Forms.Platform;
 using Foundation;
 using UIKit;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Crashes;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Distribute;
 
 namespace TCMobile.iOS
 {
@@ -31,7 +35,7 @@ namespace TCMobile.iOS
             CachedImageRenderer.Init();
             LoadApplication(new App());
             UIApplication.SharedApplication.StatusBarHidden = true;
-
+            AppCenter.Start("35d5cf8e-f79c-4e64-9390-d7169eda5555", typeof(Analytics), typeof(Crashes));
             App.ScreenHeight = (int)UIScreen.MainScreen.Bounds.Height;
             App.ScreenWidth = (int)UIScreen.MainScreen.Bounds.Width;
 
