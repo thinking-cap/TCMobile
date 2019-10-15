@@ -11,7 +11,7 @@ using Android;
 using Plugin.Permissions;
 using Plugin.CurrentActivity;
 using System.Net;
-using Refractored.XamForms.PullToRefresh.Droid;
+//using Refractored.XamForms.PullToRefresh.Droid;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;

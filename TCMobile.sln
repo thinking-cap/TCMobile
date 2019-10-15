@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCMobile.iOS", "TCMobile\TC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCMobile.UWP", "TCMobile\TCMobile.UWP\TCMobile.UWP.csproj", "{5B40D0AA-D963-4424-ABC3-EAD954FB73D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCMobile", "TCMobile\TCMobile\TCMobile.csproj", "{4E21F9BB-72E6-4931-8C13-BEBCDCBC35A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TCMobile", "TCMobile\TCMobile\TCMobile.csproj", "{4E21F9BB-72E6-4931-8C13-BEBCDCBC35A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,9 +87,9 @@ Global
 		{9E211E9A-4C5A-4973-8009-1C28D7531FA3}.Release|ARM.ActiveCfg = Release|iPhone
 		{9E211E9A-4C5A-4973-8009-1C28D7531FA3}.Release|ARM.Build.0 = Release|iPhone
 		{9E211E9A-4C5A-4973-8009-1C28D7531FA3}.Release|ARM.Deploy.0 = Release|iPhone
-		{9E211E9A-4C5A-4973-8009-1C28D7531FA3}.Release|iPhone.ActiveCfg = Release|iPhone
-		{9E211E9A-4C5A-4973-8009-1C28D7531FA3}.Release|iPhone.Build.0 = Release|iPhone
-		{9E211E9A-4C5A-4973-8009-1C28D7531FA3}.Release|iPhone.Deploy.0 = Release|iPhone
+		{9E211E9A-4C5A-4973-8009-1C28D7531FA3}.Release|iPhone.ActiveCfg = Debug|iPhone
+		{9E211E9A-4C5A-4973-8009-1C28D7531FA3}.Release|iPhone.Build.0 = Debug|iPhone
+		{9E211E9A-4C5A-4973-8009-1C28D7531FA3}.Release|iPhone.Deploy.0 = Debug|iPhone
 		{9E211E9A-4C5A-4973-8009-1C28D7531FA3}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
 		{9E211E9A-4C5A-4973-8009-1C28D7531FA3}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{9E211E9A-4C5A-4973-8009-1C28D7531FA3}.Release|iPhoneSimulator.Deploy.0 = Release|iPhoneSimulator

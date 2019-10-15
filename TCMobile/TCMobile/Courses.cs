@@ -204,8 +204,16 @@ namespace TCMobile
                 {
                     string url = Constants.Url + "/mobile/GetCourse.ashx?CourseID=" + id + "&Version=1";
                     //string url = "https://tcstable.blob.core.windows.net/coursepackages/" + id + "/" + version + "/CoursePackage.zip";
-                    Download(url, "TCLMS/Temp", id);
-                    //downloader.DownloadFile(url, "TCLMS/Temp",id);
+                    if (courseObj.pdf != "True")
+                    {
+                        Download(url, "TCLMS/Temp", id);
+                        //downloader.DownloadFile(url, "TCLMS/Temp",id);
+                    }
+                    else
+                    {
+                        DownloadPDF(url, "Courses/" + id, id);
+                        // await Application.Current.MainPage.DisplayAlert("Warning", "This is a pdf Course", "OK");
+                    }
                 }
                 else if (status != PermissionStatus.Unknown)
                 {
@@ -235,7 +243,24 @@ namespace TCMobile
             if (_downloadPage != null)
                 await PopupNavigation.Instance.PopAllAsync(true);
         }
-
+        void DownloadPDF(string url, string folder, string id)
+        {
+            try
+            {
+                openPopup("Downloading");
+                WebClient webClient = new WebClient();
+                webClient.QueryString.Add("CourseID", id);
+                webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback);
+                webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(PDFCompleted);
+                string pathToNewFile = Path.Combine(Constants.LocalFolder, Path.GetFileName("CoursePackage.pdf"));
+                webClient.DownloadFileAsync(new Uri(url), pathToNewFile);
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+                string x = "failed";
+            }
+        }
         void Download(string url, string folder, string id)
             {
             
@@ -263,6 +288,43 @@ namespace TCMobile
                 ((int)e.BytesReceived / 1000000)
                );
 
+        }
+        private async void PDFCompleted(object sender, AsyncCompletedEventArgs e)
+        {
+            string courseID = ((System.Net.WebClient)(sender)).QueryString["CourseID"];
+            Courses courses = new Courses();
+            Models.Record courseExists = await App.Database.GetCourseByID(courseID);
+            string cmi;
+            if (courseExists == null)
+                cmi = await getCMIObjectFromLMS(courseID);
+            else
+                cmi = "";
+            courses.CreatePDFCourse(courseID, cmi);
+
+        }
+
+
+        public async void CreatePDFCourse(string CourseID, string cmi)
+        {
+            Courses courses = new Courses();
+            courses.CreateCourseRecord(CourseID, cmi);
+
+            closePopup();
+            var action = await Application.Current.MainPage.DisplayAlert("Finished", "Would you like to launch the course?", "Yes", "No");
+            //DisplayAlert("Finished", "Course had successfully been download.", "OK");
+            // Debug.WriteLine("action " + action);
+            if (action)
+            {
+                string test = await Courses.openCourse(CourseID, Application.Current.MainPage.Navigation);
+            }
+
+
+            App.Currentdownload.IsVisible = false;
+
+            App.Currentdownload.Spinner.IsVisible = false;
+            App.Currentdownload.LaunchButton.IsVisible = true;
+            App.Currentdownload.BtnLabel.Text = "Open";
+            App.Currentdownload.BtnLabel.IsVisible = true;
         }
 
         private async void Completed(object sender, AsyncCompletedEventArgs e)

@@ -43,7 +43,7 @@ namespace TCMobile
         public string IsAccesscode { get; set; }
         public string canenter { get; set; }
         public string entermode { get; set; }
-
+        public string pdf { get; set; }
         public string version { get; set; }
     }
 

@@ -99,7 +99,8 @@ namespace TCMobile.Views
 
             string CMI = await cmiInit(courseid);
             // build the path to the local file
-            string courseindex = "Courses/" + courseid + "/" + launch;
+            string courseindex = (!String.IsNullOrEmpty(launch)) ? "Courses/" + courseid + "/" + launch : "Courses/" + courseid + "/CoursePackage.pdf";
+
             string localFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             string coursePath = Path.Combine(localFolder, courseindex);
             // get the api connector
