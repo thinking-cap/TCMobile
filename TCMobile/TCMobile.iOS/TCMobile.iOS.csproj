@@ -63,7 +63,8 @@
     <CodesignExtraArgs />
     <CodesignResourceRules />
     <CodesignProvision>VS: WildCard Development</CodesignProvision>
-    <MtouchSdkVersion>12.1</MtouchSdkVersion>
+    <MtouchSdkVersion>
+    </MtouchSdkVersion>
     <IOSDebugOverWiFi>true</IOSDebugOverWiFi>
     <MtouchProfiling>false</MtouchProfiling>
     <BuildIpa>true</BuildIpa>
