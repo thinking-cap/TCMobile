@@ -42,8 +42,8 @@ namespace TCMobile.Views
         {
             // create an api object
             API api = new API();
-            
 
+            Models.Record courseRecord = await App.Database.GetCourseByID(courseid);
             // use MessagingCenter to talk to the webview //
             MessagingCenter.Subscribe<string>(this, "API", async(cmi) =>
             {
@@ -67,7 +67,7 @@ namespace TCMobile.Views
                 {
                     // api.CommitToLMS(CMIString, courseid); // not working yet
                     //Navigation.PopAsync();
-                    Models.Record courseRecord = await App.Database.GetCourseByID(courseid);
+                   // Models.Record courseRecord = await App.Database.GetCourseByID(courseid);
                     var connection = Connectivity.NetworkAccess;
                     try
                     {
@@ -91,7 +91,7 @@ namespace TCMobile.Views
                     await App.Database.SaveItemAsync(courseRecord);
                 }
             });
-
+           
             // find the html path
             string launch = itemPath(courseid);
             string item_id = itemID(courseid);
@@ -223,6 +223,9 @@ namespace TCMobile.Views
         // get the item from the manifest.xml
         public string itemPath(string courseid)
         {
+
+            // need to add code to support pdf launching 
+            // basically pdf courses downloaded do not have an imsmanifest file
             XNamespace ns = "http://www.imsglobal.org/xsd/imscp_v1p1";
             
             string localFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
