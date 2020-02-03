@@ -13,7 +13,7 @@
     <MasterDetailPage.Detail>
         <NavigationPage BarBackgroundColor="{Binding Source={x:Static constants:Constants.HeaderColour}}">
             <x:Arguments>
-                <views:Catalogue/>
+                <views:LearningPaths/>
             </x:Arguments>
         </NavigationPage>
     </MasterDetailPage.Detail>

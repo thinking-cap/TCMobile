@@ -61,6 +61,8 @@ namespace TCMobile
                 Constants.Logo = new Uri(Constants.Url + "/FormatResource.ashx/programLearnerView_" + Application.Current.Properties["ProgramID"].ToString() + "/logo.gif");
             if (Application.Current.Properties.ContainsKey("HeaderColour"))
                 Constants.HeaderColour = Application.Current.Properties["HeaderColour"].ToString();
+            else
+                Constants.HeaderColour = "#0C79FF";
            // Constants.Logo = new Uri(Constants.Url + "/FormatResource.ashx/programLearnerView_" + CredentialsService.HomeDomain + "/logo.gif");
             if (Application.Current.Properties.ContainsKey("MenuBGColour"))
                 Constants.MenuBackgroundColour = Application.Current.Properties["MenuBGColour"].ToString();

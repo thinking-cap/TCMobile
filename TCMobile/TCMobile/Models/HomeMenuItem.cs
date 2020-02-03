@@ -6,9 +6,9 @@ namespace TCMobile.Models
 {
     public enum MenuItemType
     {       
+        LearningPaths,
         Catalogue,
         MyCourses,
-        LearningPaths,
         MyTranscripts,
         Settings,
         Logout

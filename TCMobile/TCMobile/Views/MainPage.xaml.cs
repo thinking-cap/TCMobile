@@ -16,7 +16,7 @@ namespace TCMobile.Views
             InitializeComponent();
             MasterBehavior = MasterBehavior.Popover;
             NavigationPage.SetHasNavigationBar(this, false);
-            MenuPages.Add((int)MenuItemType.Catalogue, (NavigationPage)Detail);
+            MenuPages.Add((int)MenuItemType.LearningPaths, (NavigationPage)Detail);
         }
 
         public async Task NavigateFromMenu(int id)
