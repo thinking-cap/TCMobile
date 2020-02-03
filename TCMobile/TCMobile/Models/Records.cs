@@ -30,6 +30,7 @@ namespace TCMobile.Models
         public string LP { get; set; }
         public string Objective { get; set; }
         public string PercentComplete { get; set; }
+        public bool PDF { get; set; }
         public bool Synced { get; set; }
     }
 

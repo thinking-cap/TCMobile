@@ -10,8 +10,8 @@ namespace TCMobile
     {
         public static  string LocalFolder;
         // public static string Url = "https://192.168.0.126";
-        //public static string Url = "https://stable.thinkingcap.com";// for local testing
-        public static string Url = "https://camp.thinkingcap.com";// for beta testing
+        public static string Url = "https://stable.thinkingcap.com";// for local testing
+        /*public static string Url = "https://camp.thinkingcap.com";*/// for beta testing
         public static string Key = "9b5ibe91jlq7o9nr4saglg";
         public static string ForgotPassword = Url + "/Login/EmailPassword.aspx?modal=true";
         public static string StudentCatalogue = Url +"/Mobile/Catalogue.ashx";

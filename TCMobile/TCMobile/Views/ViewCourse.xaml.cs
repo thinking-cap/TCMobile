@@ -93,8 +93,8 @@ namespace TCMobile.Views
             });
            
             // find the html path
-            string launch = itemPath(courseid);
-            string item_id = itemID(courseid);
+            string launch = (!courseRecord.PDF) ? itemPath(courseid) : "";
+            string item_id = (!courseRecord.PDF) ? itemID(courseid) : courseid;
             // get the cmi object
 
             string CMI = await cmiInit(courseid);

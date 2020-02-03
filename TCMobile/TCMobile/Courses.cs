@@ -28,7 +28,7 @@ namespace TCMobile
     class Courses
     {
 
-        public async void CreateCourseRecord(string courseid, string cmi)
+        public async void CreateCourseRecord(string courseid, string cmi, bool pdf)
         { 
             Models.Record courseExists = await App.Database.GetCourseByID(courseid);
             if (courseExists == null)
@@ -51,6 +51,7 @@ namespace TCMobile
                 rec.Synced = false;
                 rec.CMI = cmi;
                 rec.Downloaded = true;
+                rec.PDF = pdf;
                 App.LocalFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
                 await App.Database.SaveItemAsync(rec);
             }
@@ -58,6 +59,7 @@ namespace TCMobile
             {
                 courseExists.Deleted = "false";
                 courseExists.Downloaded = true;
+                courseExists.PDF = pdf;
                 if (String.IsNullOrEmpty(courseExists.CMI))
                     courseExists.CMI = cmi;
                 if (String.IsNullOrEmpty(courseExists.ScoreMax))
@@ -118,7 +120,7 @@ namespace TCMobile
 
             File.Delete(pathToNewFolder);
             Courses courses = new Courses();
-            courses.CreateCourseRecord(CourseID,cmi);
+            courses.CreateCourseRecord(CourseID,cmi,false);
 
             closePopup();
             var action = await Application.Current.MainPage.DisplayAlert("Finished", "Would you like to launch the course?", "Yes", "No");
@@ -252,7 +254,12 @@ namespace TCMobile
                 webClient.QueryString.Add("CourseID", id);
                 webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback);
                 webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(PDFCompleted);
-                string pathToNewFile = Path.Combine(Constants.LocalFolder, Path.GetFileName("CoursePackage.pdf"));
+                string localFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                string courseDir = Path.Combine(localFolder, "Courses/" + id);
+                string directoryName = Path.GetDirectoryName(courseDir);
+                if (directoryName.Length > 0)
+                    Directory.CreateDirectory(directoryName);
+                string pathToNewFile = Path.Combine(courseDir,Path.GetFileName("CoursePackage.pdf"));
                 webClient.DownloadFileAsync(new Uri(url), pathToNewFile);
             }
             catch (Exception ex)
@@ -307,7 +314,7 @@ namespace TCMobile
         public async void CreatePDFCourse(string CourseID, string cmi)
         {
             Courses courses = new Courses();
-            courses.CreateCourseRecord(CourseID, cmi);
+            courses.CreateCourseRecord(CourseID, cmi,true);
 
             closePopup();
             var action = await Application.Current.MainPage.DisplayAlert("Finished", "Would you like to launch the course?", "Yes", "No");
