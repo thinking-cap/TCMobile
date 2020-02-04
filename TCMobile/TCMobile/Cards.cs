@@ -239,7 +239,7 @@ namespace TCMobile
             Courses m = new Courses();
             return await m.GetActivityMap(id);
         }
-
+        // adding LP Marquee //
         public async void  buildLPCard(string id, string lptitle, string lpdescription,FlexLayout LP, EventHandler detailsClicked)
         {
             StudentActivityMap map = null;
@@ -275,7 +275,8 @@ namespace TCMobile
                 Margin = new Thickness(0, 8, 0, 24),
                 CornerRadius = 0
             };
-
+            CachedImage marquee = BuildMarquee(id, false);
+            marquee.HorizontalOptions = LayoutOptions.StartAndExpand;
             // need to add doughnut
             Doughnut doughnut = new Doughnut();
             int percentIncomplete = 100 - completionPercent;
@@ -360,6 +361,7 @@ namespace TCMobile
             cardFooter.Children.Add(doughnutContainer);
             cardFooter.Children.Add(btnGrid);
             cardBody.Children.Add(title);
+            cardBody.Children.Add(marquee);
            
             cardBody.Children.Add(status);
             cardBody.Children.Add(description);
@@ -633,7 +635,7 @@ namespace TCMobile
                 DownsampleToViewSize = true,
                 RetryCount = 0,
                 RetryDelay = 250,
-                LoadingPlaceholder = "placeholder.png",
+                LoadingPlaceholder = "loading.png",
                 ErrorPlaceholder = "placeholder.png",
                 Source = Constants.BlobLocation + "/coursecontent/" + id + "/courselogo.gif"
 
