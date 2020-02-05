@@ -13,6 +13,7 @@ using TCMobile;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using TCMobile.Droid;
+using WebView = Android.Webkit.WebView;
 
 
 [assembly: ExportRenderer(typeof(CustomWebview), typeof(TransparentWebViewRenderer))]
@@ -22,16 +23,38 @@ namespace TCMobile.Droid
     
     class TransparentWebViewRenderer : WebViewRenderer
     {
-
+        static CustomWebview myweb = null;
+        WebView web;
         public TransparentWebViewRenderer(Context context) : base(context)
         {
         }
-        protected override void OnElementChanged(ElementChangedEventArgs<WebView> e)
+        class ExtendedWebViewClient : Android.Webkit.WebViewClient
         {
-            base.OnElementChanged(e);
+            public override async void OnPageFinished(WebView view, string url)
+            {
+                if (myweb != null)
+                {
+                    int i = 10;
+                    while (view.ContentHeight == 0 && i-- > 0)
+                        await System.Threading.Tasks.Task.Delay(100);
+                    myweb.HeightRequest = view.ContentHeight;
+                }
+                base.OnPageFinished(view, url);
+            }
+        }
 
-            // Setting the background as transparent
-            Control.SetBackgroundColor(Android.Graphics.Color.Transparent);
+        protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.WebView> e)
+        {
+                base.OnElementChanged(e);
+            myweb = e.NewElement as CustomWebview;
+                web = Control;
+
+                if (e.OldElement == null)
+                {
+                    web.SetWebViewClient(new ExtendedWebViewClient());
+                }
+
+                web.SetBackgroundColor(Android.Graphics.Color.Transparent);
         }
 
        

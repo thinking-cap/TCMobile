@@ -3,6 +3,7 @@ using Xamarin.Forms;
 
 namespace TCMobile
 {
+    public class ExtendedWebView : WebView { }
     public class HybridWebView : View
     {
         Action<string> action;

@@ -140,13 +140,14 @@ namespace TCMobile
                                                     border:0px;padding:0px;margin:0px;
                                                     background-color:transparent;
                                                     overflow:hidden;
+                                                    height:100%;
                                                 }
                                         </style>    
                                     </head>
-                                    <body>" + HttpUtility.HtmlDecode(coursedescription) + "</body></html>";
+                                    <body><div style='min-height:50px;'>" + HttpUtility.HtmlDecode(coursedescription) + "</div></body></html>";
             var description = new CustomWebview
             {
-               HeightRequest = 250,
+               HeightRequest = 50,
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 Source = new HtmlWebViewSource
                 {
@@ -281,6 +282,18 @@ namespace TCMobile
             Doughnut doughnut = new Doughnut();
             int percentIncomplete = 100 - completionPercent;
             Grid doughnutContainer = doughnut.CompletionChart("Completed", completionPercent, percentIncomplete);
+            /** add a grid to put the html view in ****/
+            Grid HtmlContainer = new Grid()
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                Padding = 0,
+                Margin = 0,
+                MinimumHeightRequest = 100
+            };
+            HtmlContainer.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            HtmlContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+
 
             Label lbl = new Label()
             {
@@ -333,14 +346,17 @@ namespace TCMobile
                                                     border:0px;padding:0px;margin:0px;
                                                     background-color:transparent;
                                                     overflow:hidden;
+                                                    height:100%;
                                                 }
                                         </style>    
                                     </head>
-                                    <body>" + HttpUtility.HtmlDecode(lpdescription) + "</body></html>";
+                                    <body><div style='min-height:50px;'>" + HttpUtility.HtmlDecode(lpdescription) + "</div></body></html>";
 
             CustomWebview description = new CustomWebview
             {
-                HeightRequest = 300,
+               HeightRequest = 50,
+                WidthRequest = 2,
+                VerticalOptions = LayoutOptions.FillAndExpand,
                 Source = new HtmlWebViewSource
                 {
                     Html = htmlText
@@ -348,6 +364,7 @@ namespace TCMobile
                 Style = (Style)Application.Current.Resources["descriptionWebView"]
 
             };
+            HtmlContainer.Children.Add(description, 0, 0);
             Grid btnGrid = new Grid()
             {
                 HorizontalOptions = LayoutOptions.Center
@@ -364,7 +381,7 @@ namespace TCMobile
             cardBody.Children.Add(marquee);
            
             cardBody.Children.Add(status);
-            cardBody.Children.Add(description);
+            cardBody.Children.Add(HtmlContainer);
             layout.Children.Add(cardBody);
             layout.Children.Add(cardFooter);
             frame.Content = layout;

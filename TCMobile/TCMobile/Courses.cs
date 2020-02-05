@@ -174,7 +174,7 @@ namespace TCMobile
                 }
            
                 string id = button.CourseID;
-                var courseObj = App.CourseCatalogue.courses.Where(course => course.courseid == id).FirstOrDefault();
+               // var courseObj = App.CourseCatalogue.courses.Where(course => course.courseid == id).FirstOrDefault();
 
                 string version = button.Parent.ClassId;
                 // disable the button to prevent double clicking
