@@ -97,7 +97,7 @@ namespace TCMobile.Views
                     float perc_incomplete;
                     if (String.IsNullOrEmpty(course.ProgressMeasure))
                     {
-                        perc_complete = (course.CompletionStatus == "") ? 0 : (course.CompletionStatus == "Completed") ? 100 : 50;
+                        perc_complete = (course.CompletionStatus == "" || course.CompletionStatus == "Not Started") ? 0 : (course.CompletionStatus == "Completed") ? 100 : 50;
                         perc_incomplete = 100 - perc_complete;
                     }
                     else
