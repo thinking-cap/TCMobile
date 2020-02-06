@@ -81,6 +81,15 @@ namespace TCMobile.Views
                     card.buildLPCard(lp.LPID, lp.LPTitle, lp.LPDescription, LP, DetailsClicked);
                 }
             }
+            else
+            {
+                Label message = new Label
+                {
+                    Text = "You are not enrolled in any Learning Paths.",
+                    Style = (Style)Application.Current.Resources["headerStyle"]
+                };
+                LP.Children.Add(message);
+            }
         }
 
         public void buildLPS(List<LPRecord> lp)
@@ -94,6 +103,15 @@ namespace TCMobile.Views
                 {
                     CreateLPRecord(l);
                 }
+            }
+            else
+            {
+                Label message = new Label
+                {
+                    Text = "You are not enrolled in any Learning Paths.",
+                    Style = (Style)Application.Current.Resources["headerStyle"]
+                };
+                LP.Children.Add(message);
             }
             closePopup();
         }
