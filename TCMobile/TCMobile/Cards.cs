@@ -43,6 +43,7 @@ namespace TCMobile
             // wrap the course Marquee in a stack layout so we have more control with the layout
             marqueeContainer = new StackLayout
             {
+                HorizontalOptions = LayoutOptions.FillAndExpand
             };
 
           
