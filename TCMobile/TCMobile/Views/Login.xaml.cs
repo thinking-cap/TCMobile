@@ -57,13 +57,13 @@ namespace TCMobile.Views
 
                 App.IsUserLoggedIn = true;
                 Constants.HeaderColour = login.headerColour;
-                Constants.MenuBackgroundColour = login.menuBackgroundColour;
+                Constants.MenuBackgroundColour = (login.menuBackgroundColour != "Transparent") ? login.menuBackgroundColour : "#00FFFFFF";
                 Constants.MenuTextColour = login.menuTextColour;
                
                 Application.Current.MainPage = new MainPage();
-                Application.Current.Properties["HeaderColour"] = login.headerColour;
-                Application.Current.Properties["MenuBGColour"] = login.menuBackgroundColour;
-                Application.Current.Properties["MenuTextColour"] = login.menuTextColour;
+                Application.Current.Properties["HeaderColour"] = Constants.HeaderColour;
+                Application.Current.Properties["MenuBGColour"] = Constants.MenuBackgroundColour;
+                Application.Current.Properties["MenuTextColour"] = Constants.MenuTextColour;
                 Application.Current.Properties["HeadingTextColour"] = login.headingTextColour;
                // Application.Current.Properties["Logo"] = Constants.Logo;
                 Application.Current.Properties["ProgramID"] = login.homedomain;
