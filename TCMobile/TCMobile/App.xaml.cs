@@ -115,13 +115,15 @@ namespace TCMobile
         {
 
         }
+
+        // change this to create a new db per user
         public static LMSDataBase Database
         {
             get
             {
                 if (database == null)
                 {
-                    database = new LMSDataBase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "TodoSQLite.db3"));
+                    database = new LMSDataBase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Constants.StudentID + ".db3"));
                 }
                 return database;
             }

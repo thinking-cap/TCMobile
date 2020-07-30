@@ -142,7 +142,7 @@ namespace TCMobile.Views
             Courses click = new Courses();
             foreach (Models.Record course in courses)
             {
-                bool x = await card.buildCourseCard(course.CourseID, course.CourseName, course.CourseDescription,Cat,click.DownloadClicked, click.launchCourse,course.DueDate);
+                bool x = await card.buildCourseCard(course.CourseID, course.CourseName, course.CourseDescription,Cat,click.DownloadClicked, click.launchCourse,course.DueDate,course.EndDate);
             }
         }
 
@@ -160,7 +160,7 @@ namespace TCMobile.Views
                 Courses click = new Courses();
                 foreach (Course course in courses)
                 {
-                    bool x = await card.buildCourseCard(course.courseid, course.title, course.description,Cat,click.DownloadClicked,click.launchCourse,course.duedate);
+                    bool x = await card.buildCourseCard(course.courseid, course.title, course.description,Cat,click.DownloadClicked,click.launchCourse,course.duedate,course.enddate);
                 }
 
             }

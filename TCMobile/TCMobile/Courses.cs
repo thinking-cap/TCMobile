@@ -49,6 +49,7 @@ namespace TCMobile
                 rec.ProgressMeasure = "0";
                 rec.DueDate = App.CourseCatalogue.courses.Find(x => x.courseid == courseid).duedate;
                 rec.Synced = false;
+                rec.EndDate = App.CourseCatalogue.courses.Find(x => x.courseid == courseid).enddate;
                 rec.CMI = cmi;
                 rec.Downloaded = true;
                 App.LocalFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
@@ -121,7 +122,7 @@ namespace TCMobile
             courses.CreateCourseRecord(CourseID,cmi);
 
             closePopup();
-            var action = await Application.Current.MainPage.DisplayAlert("Finished", "Would you like to launch the course?", "Yes", "No");
+            var action = await Application.Current.MainPage.DisplayAlert("Open", "", "Yes", "No");
             //DisplayAlert("Finished", "Course had successfully been download.", "OK");
            // Debug.WriteLine("action " + action);
             if (action)

@@ -21,8 +21,12 @@ namespace TCMobile
 {
     class Cards
     {
-        public async Task<bool> buildCourseCard(string courseid, string coursetitle, string coursedescription, StackLayout container,EventHandler downloadClicked, EventHandler launchCourse,string duedate)
+        public async Task<bool> buildCourseCard(string courseid, string coursetitle, string coursedescription, StackLayout container,EventHandler downloadClicked, EventHandler launchCourse,string duedate, string enddate)
         {
+            DateTime today = DateTime.Today;
+            DateTime expiry = DateTime.Parse(enddate);
+            bool expired = today >= expiry;
+
             MaterialFrame frame;
             StackLayout layout;
             // let's try to sync all the courses
@@ -481,6 +485,7 @@ namespace TCMobile
                         rec.Score = "";
                         rec.Deleted = "false";
                         rec.Downloaded = false;
+                        rec.EndDate = "";
                         rec.DueDate = "";
                         rec.LP = lpid;
                         rec.Objective = obj.id;
