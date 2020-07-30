@@ -205,10 +205,14 @@ namespace TCMobile
             downloadBtn.LaunchButton = launchBtn;
             launchBtn.Clicked += launchCourse;
             downloadBtn.Clicked += downloadClicked;
-            btnGrid.Children.Add(downloadBtn, 0, 0);
-            btnGrid.Children.Add(launchBtn, 0, 0);
-            btnGrid.Children.Add(spinner, 0, 0);
-            btnGrid.Children.Add(lbl, 0, 1);
+            if (!expired)
+            {
+                btnGrid.Children.Add(downloadBtn, 0, 0);
+                btnGrid.Children.Add(launchBtn, 0, 0);
+                btnGrid.Children.Add(spinner, 0, 0);
+                btnGrid.Children.Add(lbl, 0, 1);
+            }
+           
             //titleGrid.Children.Add(title, 0, 0);
 
 
